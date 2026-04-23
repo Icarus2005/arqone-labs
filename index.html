@@ -1084,7 +1084,7 @@
                 <canvas id="orbit-canvas"></canvas>
 
                 <!-- Platform satellites (7 nodes) -->
-                <a href="https://shieldpilot.io" target="_blank" class="orbit-node" data-angle="0">
+                <a href="https://shieldpilot.io" target="_blank" class="orbit-node" data-angle="15">
                     <div class="orbit-node-dot"><span class="node-initial">SP</span></div>
                     <div class="orbit-node-info">
                         <div class="orbit-node-name">ShieldPilot</div>
@@ -1093,7 +1093,7 @@
                     </div>
                 </a>
 
-                <a href="https://getsalesx.com" target="_blank" class="orbit-node" data-angle="45">
+                <a href="https://getsalesx.com" target="_blank" class="orbit-node" data-angle="55">
                     <div class="orbit-node-dot"><span class="node-initial">SX</span></div>
                     <div class="orbit-node-info">
                         <div class="orbit-node-name">SalesX</div>
@@ -1111,7 +1111,7 @@
                     </div>
                 </a>
 
-                <a href="https://voicex.chat" target="_blank" class="orbit-node" data-angle="145">
+                <a href="https://voicex.chat" target="_blank" class="orbit-node" data-angle="150">
                     <div class="orbit-node-dot"><span class="node-initial">Sy</span></div>
                     <div class="orbit-node-info">
                         <div class="orbit-node-name">Synqra</div>
@@ -1120,7 +1120,7 @@
                     </div>
                 </a>
 
-                <a href="https://ainavigator.info" target="_blank" class="orbit-node" data-angle="215">
+                <a href="https://ainavigator.info" target="_blank" class="orbit-node" data-angle="225">
                     <div class="orbit-node-dot"><span class="node-initial">AI</span></div>
                     <div class="orbit-node-info">
                         <div class="orbit-node-name">AI Navigator</div>
@@ -1129,7 +1129,7 @@
                     </div>
                 </a>
 
-                <a href="#" class="orbit-node" data-angle="285">
+                <a href="#" class="orbit-node" data-angle="300">
                     <div class="orbit-node-dot"><span class="node-initial">UC</span></div>
                     <div class="orbit-node-info">
                         <div class="orbit-node-name">UniClarity</div>
@@ -1138,7 +1138,7 @@
                     </div>
                 </a>
 
-                <a href="https://plymio.com" target="_blank" class="orbit-node" data-angle="325">
+                <a href="https://plymio.com" target="_blank" class="orbit-node" data-angle="335">
                     <div class="orbit-node-dot"><span class="node-initial">Pl</span></div>
                     <div class="orbit-node-info">
                         <div class="orbit-node-name">Plymio</div>
@@ -1569,16 +1569,21 @@
 
         function positionNodes() {
             const r = orbitRadius();
-            const cx = container.offsetWidth / 2;
-            const cy = container.offsetHeight / 2;
-            nodePositions = [];
+const cx = container.offsetWidth / 2;
+const cy = container.offsetHeight / 2;
 
-            nodes.forEach((node, i) => {
-                const baseAngle = parseFloat(node.dataset.angle);
-                const angle = (baseAngle + orbitAngleOffset) % 360;
-                const rad = angle * (Math.PI / 180);
-                const x = cx + r * Math.cos(rad);
-                const y = cy + r * Math.sin(rad);
+// Ellipse radii
+const rx = r * 1.12;
+const ry = r * 0.78;
+
+nodePositions = [];
+
+nodes.forEach((node, i) => {
+    const baseAngle = parseFloat(node.dataset.angle);
+    const angle = (baseAngle + orbitAngleOffset) % 360;
+    const rad = angle * (Math.PI / 180);
+    const x = cx + rx * Math.cos(rad);
+    const y = cy + ry * Math.sin(rad);
 
                 nodePositions.push({ x, y, angle, baseAngle, rad });
 
