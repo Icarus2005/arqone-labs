@@ -1,0 +1,90 @@
+﻿## Bracket Library
+
+Audience-specific vocabulary to plug into formulas. Build these for each audience:
+
+| Bracket | Description | Examples |
+|---------|-------------|----------|
+| **(OUTCOME)** | What they really want | "book more sales calls", "lose 10kg", "grow to 10k followers" |
+| **(PROBLEM)** | What's in the way | "no time", "inconsistent leads", "algorithm changes" |
+| **(MISTAKE)** | Predictable error they make | "posting without a hook", "skipping the CTA" |
+| **(BAD HABIT)** | Behavior keeping them stuck | "doom scrolling", "perfectionism", "shiny object syndrome" |
+| **(MYTH)** | Belief that needs debunking | "you need expensive gear", "post at 3pm for best reach" |
+| **(COMMON ADVICE)** | Cliché advice to challenge | "be consistent", "just provide value" |
+| **(HACK)** | Small surprising tactic | "blur the key ingredient", "use numbers in hooks" |
+| **(METRIC)** | Proof number | "watch time", "save rate", "close rate" |
+| **(TIMEFRAME)** | Time constraint | "7 days", "30 seconds", "before your next post" |
+| **(NUMBER)** | Specific quantity | "3 steps", "$10k/month", "100,000 views" |
+| **(TRENDY TACTIC)** | Current fad in the niche | "AI agents", "faceless reels", "carousel posts" |
+| **(MILESTONE)** | Meaningful checkpoint | "first 1k followers", "first client", "10k months" |
+| **(COUNTERINTUITIVE ACTION)** | Unexpected move | "post less often", "ignore the algorithm" |
+
+## Formula Templates by Angle
+
+### Curiosity Formulas
+- "Why is no one talking about (TOPIC) this way?"
+- "What actually happens when you drop (BAD HABIT) for (TIMEFRAME)?"
+- "Is (MYTH) the real reason you're stuck at (MILESTONE)?"
+- "Do you really need (RESOURCE) to reach (OUTCOME)?"
+- "What's the hidden cost of ignoring (PROBLEM) for (TIMEFRAME)?"
+
+### Bold Callout Formulas
+- "(NUMBER) reasons your (STRATEGY) isn't working—and #(NUMBER) hurts"
+- "You're not lazy—you're stuck in (BAD HABIT)"
+- "You'll never hit (OUTCOME) while you're still doing (TRENDY TACTIC)"
+- "(MYTH) is the slowest possible way to get (OUTCOME)"
+- "Let's be honest... (COMMON ADVICE) is why you're still at (MILESTONE)"
+
+### Cliffhanger Formulas
+- "Give me (TIMEFRAME) and I'll rewire how you see (TOPIC)"
+- "By step (NUMBER), (OUTCOME) will start to feel automatic"
+- "Stay to the end—the (HACK) I give you there is the game-changer"
+- "If you're stuck at (MILESTONE), the third mistake will sting"
+
+### Fix-It Formulas
+- "Here's how to hit (OUTCOME) in (NUMBER) steps"
+- "If (PROBLEM) keeps coming back, try this instead: (COUNTERINTUITIVE ACTION)"
+- "Low (METRIC)? Steal this two-minute ritual"
+- "Want faster (OUTCOME)? Stop doing (ACTION) and do this instead"
+
+### Mirror Formulas
+- "You're doing (TRENDY TACTIC), but it's not moving your (METRIC)"
+- "You say you want (OUTCOME), but your calendar screams (BAD HABIT)"
+- "You've hit (OUTCOME) before—what's actually stopping you now?"
+- "Every push toward (MILESTONE) starts strong... then dies in the same place"
+
+### Challenge Formulas
+- "Bet you didn't know (MYTH) is what's holding you back"
+- "Prove me wrong: use this (HACK) for (TIMEFRAME)"
+- "I bet your 'quick fix' is why (PROBLEM) keeps coming back"
+- "You're one tweak away from (OUTCOME)—and it's not what you think"
+
+## Visual Hook Principles
+
+For video hooks, the visual is as important as the text:
+
+**Clean first frame:**
+- Subject clear, background simple
+- Text in "safe zone" (not covered by platform UI)
+- Text smaller than you think
+- Good lighting creates depth
+
+**Deepen the mystery visually:**
+- Blur key ingredients/reveals
+- Create visual contrast (fit person + bowl of carbs)
+- Don't let them solve the puzzle from the thumbnail
+
+**Text overlay best practices:**
+- Use font weight hierarchy (bold key words)
+- Match a color from the image
+- Subtle outer glow for readability
+
+## Quick Quality Check
+
+Before finalizing any hook:
+
+- [ ] **Specific?** Clear topic/outcome/problem mentioned?
+- [ ] **Emotional?** Touches frustration, desire, curiosity, or ego?
+- [ ] **Simple?** Would a 12-year-old understand on first read?
+- [ ] **Tension?** Conflict present (myth vs truth, old vs new)?
+- [ ] **Pattern Interrupt?** Stands out in a feed of generic advice?
+- [ ] **Loop open?** Question planted that requires watching to answer?

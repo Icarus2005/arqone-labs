@@ -1,0 +1,1847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArqOne Labs - AI Platforms for the Modern Business</title>
+    <meta name="description" content="ArqOne Labs builds AI platforms that give small and mid-size businesses access to capabilities that used to require entire departments.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- GSAP Core + ScrollTrigger -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollToPlugin.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #08080C;
+            --bg-elevated: #0E0E14;
+            --bg-card: #12121A;
+            --bg-card-hover: #181822;
+            --teal: #00DCD0;
+            --teal-dim: #00A89E;
+            --teal-glow: rgba(0, 220, 205, 0.12);
+            --teal-glow-strong: rgba(0, 220, 205, 0.25);
+            --teal-glow-intense: rgba(0, 220, 205, 0.4);
+            --white: #F0F0F4;
+            --gray-100: #C8C8D0;
+            --gray-200: #9898A4;
+            --gray-300: #68687A;
+            --gray-400: #3A3A4A;
+            --gray-500: #22222E;
+            --border: rgba(255, 255, 255, 0.06);
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg);
+            color: var(--gray-100);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ---- ANIMATED GRID BACKGROUND ---- */
+        .grid-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ---- HERO CANVAS ---- */
+        #hero-canvas {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .content { position: relative; z-index: 1; }
+
+        /* ---- NAV ---- */
+        nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: rgba(8, 8, 12, 0.7);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.4s;
+        }
+
+        nav.scrolled {
+            padding: 14px 40px;
+            background: rgba(8, 8, 12, 0.92);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-logo {
+            font-family: var(--font-sans);
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--white);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-logo span { color: var(--teal); }
+
+        .nav-links { display: flex; gap: 32px; align-items: center; }
+
+        .nav-links a {
+            font-size: 0.85rem;
+            color: var(--gray-200);
+            text-decoration: none;
+            font-weight: 400;
+            transition: color 0.3s;
+            letter-spacing: 0.02em;
+            position: relative;
+        }
+
+        .nav-links a:not(.nav-cta)::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 1px;
+            background: var(--teal);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:not(.nav-cta):hover::after { width: 100%; }
+        .nav-links a:hover { color: var(--teal); }
+
+        .nav-cta {
+            background: transparent !important;
+            border: 1px solid var(--gray-400) !important;
+            color: var(--white) !important;
+            padding: 8px 20px !important;
+            border-radius: 6px;
+            font-size: 0.85rem !important;
+            transition: all 0.3s !important;
+        }
+
+        .nav-cta:hover {
+            border-color: var(--teal) !important;
+            color: var(--teal) !important;
+            box-shadow: 0 0 20px rgba(0, 220, 205, 0.1) !important;
+        }
+
+        /* ---- HERO ---- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 40px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-glow {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -55%);
+            width: 800px; height: 800px;
+            background: radial-gradient(circle, rgba(0, 220, 205, 0.08) 0%, rgba(0, 220, 205, 0.03) 30%, transparent 70%);
+            pointer-events: none;
+            animation: glowPulse 6s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { transform: translate(-50%, -55%) scale(1); opacity: 1; }
+            50% { transform: translate(-50%, -55%) scale(1.15); opacity: 0.7; }
+        }
+
+        /* GSAP-ready: elements start hidden, fallback shows them if GSAP fails */
+        .gsap-ready .hero-badge,
+        .gsap-ready .hero h1,
+        .gsap-ready .hero-sub,
+        .gsap-ready .hero-cta-group,
+        .gsap-ready .hero-scroll {
+            opacity: 0;
+        }
+
+        .hero-badge {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--teal);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 28px;
+            padding: 6px 16px;
+            border: 1px solid rgba(0, 220, 205, 0.2);
+            border-radius: 20px;
+            background: rgba(0, 220, 205, 0.05);
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 6.5vw, 5rem);
+            font-weight: 800;
+            color: var(--white);
+            line-height: 1.05;
+            letter-spacing: -0.04em;
+            max-width: 850px;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 .accent {
+            color: var(--teal);
+            position: relative;
+        }
+
+        .hero h1 .accent::after {
+            content: '';
+            position: absolute;
+            bottom: -2px; left: 0;
+            width: 100%; height: 3px;
+            background: linear-gradient(90deg, var(--teal), transparent);
+            opacity: 0.4;
+            border-radius: 2px;
+        }
+
+        /* Split text for character animation */
+        .hero h1 .char {
+            display: inline-block;
+            opacity: 0;
+        }
+
+        .hero-sub {
+            font-size: clamp(1rem, 2vw, 1.15rem);
+            color: var(--gray-200);
+            max-width: 560px;
+            line-height: 1.75;
+            font-weight: 300;
+            margin-bottom: 48px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-cta-group {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .btn-primary {
+            padding: 14px 36px;
+            background: var(--teal);
+            color: var(--bg);
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 0; height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-primary:hover::before { width: 300px; height: 300px; }
+        .btn-primary:hover { background: #00F0E2; box-shadow: 0 0 40px var(--teal-glow-strong); transform: translateY(-1px); }
+
+        .btn-secondary {
+            padding: 14px 36px;
+            background: transparent;
+            color: var(--gray-100);
+            font-weight: 500;
+            font-size: 0.9rem;
+            border: 1px solid var(--gray-400);
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover { border-color: var(--teal-dim); color: var(--white); transform: translateY(-1px); }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            z-index: 2;
+        }
+
+        .scroll-line {
+            width: 1px; height: 40px;
+            background: linear-gradient(to bottom, var(--teal), transparent);
+            animation: scrollDraw 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollDraw {
+            0% { transform: scaleY(0); transform-origin: top; opacity: 1; }
+            50% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+            50.1% { transform: scaleY(1); transform-origin: bottom; }
+            100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+        }
+
+        .scroll-text {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--gray-300);
+            letter-spacing: 0.2em;
+        }
+
+        /* ---- SECTIONS ---- */
+        section {
+            padding: 120px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--teal);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-label::before {
+            content: '';
+            width: 24px; height: 1px;
+            background: var(--teal);
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4.5vw, 3rem);
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+            line-height: 1.1;
+        }
+
+        .section-sub {
+            font-size: 1.05rem;
+            color: var(--gray-200);
+            max-width: 560px;
+            line-height: 1.75;
+            font-weight: 300;
+            margin-bottom: 56px;
+        }
+
+        /* ============================================ */
+        /* ORBITAL ECOSYSTEM VISUALIZATION              */
+        /* ============================================ */
+        .ecosystem {
+            padding: 100px 40px 120px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .ecosystem-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .ecosystem-header .section-label {
+            justify-content: center;
+        }
+
+        .ecosystem-header .section-label::before { display: none; }
+
+        .orbit-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            height: 800px;
+            margin: 0 auto;
+        }
+
+        /* Orbit canvas for dynamic lines */
+        #orbit-canvas {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* Orbit rings */
+        .orbit-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 220, 208, 0.06);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .orbit-ring-1 { width: 300px; height: 300px; }
+        .orbit-ring-2 { width: 520px; height: 520px; border-style: dashed; border-color: rgba(0, 220, 208, 0.04); }
+        .orbit-ring-3 { width: 720px; height: 720px; border-color: rgba(0, 220, 208, 0.03); }
+
+        /* Center hub */
+        .orbit-center {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            text-align: center;
+        }
+
+        .orbit-center-glow {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px; height: 200px;
+            background: radial-gradient(circle, rgba(0, 220, 205, 0.15) 0%, rgba(0, 220, 205, 0.05) 40%, transparent 70%);
+            border-radius: 50%;
+            animation: centerPulse 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes centerPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.5; }
+        }
+
+        .orbit-center-logo {
+            width: 100px; height: 100px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-elevated) 100%);
+            border: 2px solid rgba(0, 220, 205, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 0 60px rgba(0, 220, 205, 0.1), 0 0 120px rgba(0, 220, 205, 0.05);
+        }
+
+        .orbit-center-logo .logo-text {
+            font-family: var(--font-sans);
+            font-weight: 800;
+            font-size: 1rem;
+            color: var(--white);
+            letter-spacing: -0.03em;
+        }
+
+        .orbit-center-logo .logo-text span { color: var(--teal); }
+
+        .orbit-center-logo .logo-sub {
+            font-family: var(--font-mono);
+            font-size: 0.5rem;
+            color: var(--gray-300);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        /* Satellite platform nodes */
+        .orbit-node {
+            position: absolute;
+            z-index: 5;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .orbit-node:hover { transform: scale(1.08); }
+
+        .orbit-node-dot {
+            width: 56px; height: 56px;
+            border-radius: 14px;
+            background: var(--bg-card);
+            border: 1px solid rgba(0, 220, 205, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.4s;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+        }
+
+        .orbit-node:hover .orbit-node-dot {
+            border-color: var(--teal);
+            box-shadow: 0 0 30px rgba(0, 220, 205, 0.15), 0 4px 24px rgba(0,0,0,0.3);
+        }
+
+        .orbit-node-dot .node-initial {
+            font-family: var(--font-sans);
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--teal);
+        }
+
+        .orbit-node-info { min-width: 120px; }
+
+        .orbit-node-name {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: -0.01em;
+            margin-bottom: 2px;
+        }
+
+        .orbit-node-tag {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--gray-300);
+            letter-spacing: 0.03em;
+        }
+
+        .orbit-node-status {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 0.55rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 2px 7px;
+            border-radius: 3px;
+            margin-top: 4px;
+        }
+
+        .orbit-node-status.live {
+            color: var(--teal);
+            background: rgba(0, 220, 205, 0.1);
+        }
+
+        .orbit-node-status.pre {
+            color: var(--gray-200);
+            background: rgba(152, 152, 164, 0.1);
+        }
+
+        /* Connection lines from center to satellites */
+        .orbit-line {
+            position: absolute;
+            top: 50%; left: 50%;
+            height: 1px;
+            transform-origin: 0 0;
+            z-index: 1;
+            opacity: 0;
+        }
+
+        .orbit-line-inner {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(0, 220, 205, 0.3), rgba(0, 220, 205, 0.02));
+        }
+
+        /* Data pulse animation along lines */
+        .orbit-pulse {
+            position: absolute;
+            top: -2px;
+            width: 5px; height: 5px;
+            background: var(--teal);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--teal);
+            opacity: 0;
+        }
+
+        /* ---- PORTFOLIO GRID ---- */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 20px;
+        }
+
+        .platform-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 36px 32px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            text-decoration: none;
+            display: block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .platform-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--teal), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .platform-card::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 220, 205, 0.06) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.4s;
+            pointer-events: none;
+        }
+
+        .platform-card:hover {
+            background: var(--bg-card-hover);
+            border-color: rgba(0, 220, 205, 0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 220, 205, 0.05);
+        }
+
+        .platform-card:hover::before { opacity: 1; }
+        .platform-card:hover::after { opacity: 1; }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .card-name {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: -0.02em;
+        }
+
+        .card-status {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .status-live {
+            color: var(--teal);
+            background: rgba(0, 220, 205, 0.1);
+            border: 1px solid rgba(0, 220, 205, 0.2);
+        }
+
+        .status-live::before {
+            content: '';
+            display: inline-block;
+            width: 5px; height: 5px;
+            background: var(--teal);
+            border-radius: 50%;
+            margin-right: 6px;
+            animation: livePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes livePulse {
+            0%, 100% { opacity: 0.4; box-shadow: 0 0 0 0 rgba(0, 220, 205, 0.4); }
+            50% { opacity: 1; box-shadow: 0 0 0 4px rgba(0, 220, 205, 0); }
+        }
+
+        .status-prelaunch {
+            color: var(--gray-200);
+            background: rgba(152, 152, 164, 0.1);
+            border: 1px solid rgba(152, 152, 164, 0.15);
+        }
+
+        .card-domain {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--teal-dim);
+            margin-bottom: 14px;
+        }
+
+        .card-desc {
+            font-size: 0.92rem;
+            color: var(--gray-200);
+            line-height: 1.65;
+            font-weight: 300;
+        }
+
+        .card-tag {
+            display: inline-block;
+            margin-top: 18px;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--gray-300);
+            padding: 4px 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 4px;
+            letter-spacing: 0.03em;
+            transition: color 0.3s, background 0.3s;
+        }
+
+        .platform-card:hover .card-tag {
+            color: var(--teal-dim);
+            background: rgba(0, 220, 205, 0.05);
+        }
+
+        /* ---- ABOUT ---- */
+        .about-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .about-left .section-label { margin-bottom: 16px; }
+
+        .about-name {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        .about-role {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--teal);
+            margin-bottom: 24px;
+            letter-spacing: 0.03em;
+        }
+
+        .about-bio {
+            font-size: 0.95rem;
+            color: var(--gray-200);
+            line-height: 1.75;
+            font-weight: 300;
+        }
+
+        .about-bio p + p { margin-top: 16px; }
+
+        .about-right {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px 36px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-right::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 200px; height: 200px;
+            background: radial-gradient(circle, rgba(0, 220, 205, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .about-right h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 24px;
+            letter-spacing: -0.01em;
+        }
+
+        .credential-list { list-style: none; }
+
+        .credential-list li {
+            font-size: 0.9rem;
+            color: var(--gray-100);
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            line-height: 1.55;
+            transition: all 0.3s;
+        }
+
+        .credential-list li:hover { padding-left: 8px; color: var(--white); }
+        .credential-list li:last-child { border-bottom: none; }
+
+        .credential-icon {
+            color: var(--teal);
+            font-size: 0.55rem;
+            margin-top: 7px;
+            flex-shrink: 0;
+            transition: transform 0.3s;
+        }
+
+        .credential-list li:hover .credential-icon { transform: translateX(2px); }
+
+        /* ---- SERVICES ---- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .service-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px 32px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0; height: 2px;
+            background: var(--teal);
+            transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .service-card:hover {
+            border-color: rgba(0, 220, 205, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+        }
+
+        .service-card:hover::after { width: 100%; }
+
+        .service-icon-wrap {
+            width: 52px; height: 52px;
+            border-radius: 12px;
+            background: rgba(0, 220, 205, 0.08);
+            border: 1px solid rgba(0, 220, 205, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            transition: all 0.4s;
+        }
+
+        .service-card:hover .service-icon-wrap {
+            background: rgba(0, 220, 205, 0.12);
+            box-shadow: 0 0 24px rgba(0, 220, 205, 0.1);
+        }
+
+        .service-icon-wrap svg {
+            width: 24px; height: 24px;
+            stroke: var(--teal);
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        .service-card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 12px;
+            letter-spacing: -0.01em;
+        }
+
+        .service-card p {
+            font-size: 0.9rem;
+            color: var(--gray-200);
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        /* ---- CTA SECTION ---- */
+        .cta-section {
+            text-align: center;
+            padding: 120px 40px;
+            position: relative;
+        }
+
+        .cta-glow {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(0, 220, 205, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+            animation: glowPulse 6s ease-in-out infinite;
+        }
+
+        .cta-section .section-title { margin-bottom: 20px; }
+        .cta-section .section-sub { margin: 0 auto 40px; }
+        .cta-section .section-label { justify-content: center; }
+        .cta-section .section-label::before { display: none; }
+
+        /* ---- FLOATING ORBS ---- */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            filter: blur(80px);
+            opacity: 0.3;
+        }
+
+        .orb-1 {
+            width: 300px; height: 300px;
+            background: rgba(0, 220, 205, 0.08);
+            top: 20%; right: -5%;
+            animation: orbFloat1 20s ease-in-out infinite;
+        }
+
+        .orb-2 {
+            width: 200px; height: 200px;
+            background: rgba(0, 180, 200, 0.06);
+            top: 60%; left: -3%;
+            animation: orbFloat2 25s ease-in-out infinite;
+        }
+
+        @keyframes orbFloat1 {
+            0%, 100% { transform: translate(0, 0); }
+            33% { transform: translate(-30px, 40px); }
+            66% { transform: translate(20px, -30px); }
+        }
+
+        @keyframes orbFloat2 {
+            0%, 100% { transform: translate(0, 0); }
+            33% { transform: translate(40px, -20px); }
+            66% { transform: translate(-20px, 40px); }
+        }
+
+        /* ---- FOOTER ---- */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-left {
+            font-size: 0.8rem;
+            color: var(--gray-300);
+        }
+
+        .footer-left span { color: var(--gray-200); }
+
+        .footer-right {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--gray-400);
+            letter-spacing: 0.05em;
+        }
+
+        /* ---- DIVIDER ---- */
+        .divider {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            height: 1px;
+            background: var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .divider::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 60%; height: 100%;
+            background: linear-gradient(90deg, transparent, var(--teal-dim), transparent);
+            opacity: 0.3;
+            animation: dividerSweep 4s ease-in-out infinite;
+        }
+
+        @keyframes dividerSweep {
+            0% { left: -60%; }
+            100% { left: 160%; }
+        }
+
+        /* ---- MAGNETIC CURSOR ---- */
+        .magnetic-target {
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* ---- RESPONSIVE ---- */
+        @media (max-width: 768px) {
+            nav { padding: 16px 20px; }
+            nav.scrolled { padding: 12px 20px; }
+            .nav-links { display: none; }
+            section { padding: 80px 20px; }
+            .hero { padding: 100px 20px 60px; }
+            .about-layout { grid-template-columns: 1fr; gap: 32px; }
+            .portfolio-grid { grid-template-columns: 1fr; }
+            .services-grid { grid-template-columns: 1fr; }
+            footer { flex-direction: column; gap: 16px; text-align: center; }
+
+            /* Orbital responsive */
+            .orbit-container { height: 600px; max-width: 100%; }
+            .orbit-ring-1 { width: 180px; height: 180px; }
+            .orbit-ring-2 { width: 340px; height: 340px; }
+            .orbit-ring-3 { width: 500px; height: 500px; }
+            .orbit-center-logo { width: 72px; height: 72px; }
+            .orbit-center-logo .logo-text { font-size: 0.8rem; }
+            .orbit-node-dot { width: 42px; height: 42px; }
+            .orbit-node-info { display: none; }
+            .ecosystem { padding: 60px 20px 80px; }
+        }
+
+        @media (max-width: 480px) {
+            .orbit-container { height: 450px; }
+            .orbit-ring-1 { width: 140px; height: 140px; }
+            .orbit-ring-2 { width: 260px; height: 260px; }
+            .orbit-ring-3 { width: 380px; height: 380px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-bg"></div>
+
+    <!-- Floating orbs -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <div class="content">
+
+        <!-- NAV -->
+        <nav>
+            <a href="#" class="nav-logo">Arq<span>One</span> Labs</a>
+            <div class="nav-links">
+                <a href="#ecosystem">Ecosystem</a>
+                <a href="#portfolio">Portfolio</a>
+                <a href="#about">About</a>
+                <a href="#services">Services</a>
+                <a href="mailto:pierosaleme@gmail.com" class="nav-cta magnetic-target">Get in Touch</a>
+            </div>
+        </nav>
+
+        <!-- HERO -->
+        <section class="hero">
+            <canvas id="hero-canvas"></canvas>
+            <div class="hero-glow"></div>
+            <div class="hero-badge">AI Product Studio</div>
+            <h1>AI platforms for the <span class="accent">modern business</span></h1>
+            <p class="hero-sub">We build intelligent systems that give small and mid-size businesses access to capabilities that used to require entire departments.</p>
+            <div class="hero-cta-group">
+                <a href="#ecosystem" class="btn-primary magnetic-target">Explore Our Platforms</a>
+                <a href="#services" class="btn-secondary magnetic-target">Work With Us</a>
+            </div>
+            <div class="hero-scroll">
+                <div class="scroll-line"></div>
+                <span class="scroll-text">SCROLL</span>
+            </div>
+        </section>
+
+        <!-- ORBITAL ECOSYSTEM -->
+        <div class="divider"></div>
+        <section class="ecosystem" id="ecosystem">
+            <div class="ecosystem-header">
+                <div class="section-label">Ecosystem</div>
+                <h2 class="section-title">One studio. Seven platforms.</h2>
+                <p class="section-sub" style="margin: 0 auto 0; max-width: 520px;">Every platform addresses a specialist function that businesses struggle to access. Connected by one thesis, operating independently.</p>
+            </div>
+
+            <div class="orbit-container" id="orbitContainer">
+                <!-- Orbit rings -->
+                <div class="orbit-ring orbit-ring-1"></div>
+                <div class="orbit-ring orbit-ring-2"></div>
+                <div class="orbit-ring orbit-ring-3"></div>
+
+                <!-- Center hub -->
+                <div class="orbit-center">
+                    <div class="orbit-center-glow"></div>
+                    <div class="orbit-center-logo">
+                        <div class="logo-text">Arq<span>One</span></div>
+                        <div class="logo-sub">Labs</div>
+                    </div>
+                </div>
+
+                <!-- Connection lines (drawn by JS) -->
+
+                <!-- Canvas for dynamic connection lines -->
+                <canvas id="orbit-canvas"></canvas>
+
+                <!-- Platform satellites (7 nodes) -->
+                <a href="https://shieldpilot.io" target="_blank" class="orbit-node" data-angle="270">
+                    <div class="orbit-node-dot"><span class="node-initial">SP</span></div>
+                    <div class="orbit-node-info">
+                        <div class="orbit-node-name">ShieldPilot</div>
+                        <div class="orbit-node-tag">Cybersecurity</div>
+                        <div class="orbit-node-status live">Live</div>
+                    </div>
+                </a>
+
+                <a href="https://getsalesx.com" target="_blank" class="orbit-node" data-angle="325">
+                    <div class="orbit-node-dot"><span class="node-initial">SX</span></div>
+                    <div class="orbit-node-info">
+                        <div class="orbit-node-name">SalesX</div>
+                        <div class="orbit-node-tag">Sales Automation</div>
+                        <div class="orbit-node-status live">Live</div>
+                    </div>
+                </a>
+
+                <a href="https://aitwiin.com" target="_blank" class="orbit-node" data-angle="20">
+                    <div class="orbit-node-dot"><span class="node-initial">TW</span></div>
+                    <div class="orbit-node-info">
+                        <div class="orbit-node-name">TWIIN</div>
+                        <div class="orbit-node-tag">AI Video</div>
+                        <div class="orbit-node-status live">Live</div>
+                    </div>
+                </a>
+
+                <a href="https://voicex.chat" target="_blank" class="orbit-node" data-angle="75">
+                    <div class="orbit-node-dot"><span class="node-initial">Sy</span></div>
+                    <div class="orbit-node-info">
+                        <div class="orbit-node-name">Synqra</div>
+                        <div class="orbit-node-tag">Marketing</div>
+                        <div class="orbit-node-status live">Live</div>
+                    </div>
+                </a>
+
+                <a href="https://ainavigator.info" target="_blank" class="orbit-node" data-angle="130">
+                    <div class="orbit-node-dot"><span class="node-initial">AI</span></div>
+                    <div class="orbit-node-info">
+                        <div class="orbit-node-name">AI Navigator</div>
+                        <div class="orbit-node-tag">Education</div>
+                        <div class="orbit-node-status live">Live</div>
+                    </div>
+                </a>
+
+                <a href="#" class="orbit-node" data-angle="180">
+                    <div class="orbit-node-dot"><span class="node-initial">UC</span></div>
+                    <div class="orbit-node-info">
+                        <div class="orbit-node-name">UniClarity</div>
+                        <div class="orbit-node-tag">University Decisions</div>
+                        <div class="orbit-node-status pre">Coming Soon</div>
+                    </div>
+                </a>
+
+                <a href="https://plymio.com" target="_blank" class="orbit-node" data-angle="225">
+                    <div class="orbit-node-dot"><span class="node-initial">Pl</span></div>
+                    <div class="orbit-node-info">
+                        <div class="orbit-node-name">Plymio</div>
+                        <div class="orbit-node-tag">Coaching</div>
+                        <div class="orbit-node-status pre">Pre-launch</div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- PORTFOLIO DETAIL -->
+        <div class="divider"></div>
+        <section id="portfolio">
+            <div class="section-label gs-reveal">Portfolio</div>
+            <h2 class="section-title gs-reveal">Seven platforms. One thesis.</h2>
+            <p class="section-sub gs-reveal">Every platform replaces a specialist function. Cybersecurity, sales, marketing, video, coaching, education, university decisions - all made accessible to the people who need it most.</p>
+
+            <div class="portfolio-grid">
+                <a href="https://shieldpilot.io" target="_blank" class="platform-card gs-reveal">
+                    <div class="card-header">
+                        <div class="card-name">ShieldPilot</div>
+                        <div class="card-status status-live">Live</div>
+                    </div>
+                    <div class="card-domain">shieldpilot.io</div>
+                    <p class="card-desc">AI-powered cyber triage that helps non-tech individuals and SMEs assess suspicious emails, links, and payment requests. It explains risk in plain business language with clear next steps.</p>
+                    <span class="card-tag">Replaces: Cybersecurity Analyst</span>
+                </a>
+
+                <a href="https://getsalesx.com" target="_blank" class="platform-card gs-reveal">
+                    <div class="card-header">
+                        <div class="card-name">SalesX</div>
+                        <div class="card-status status-live">Live</div>
+                    </div>
+                    <div class="card-domain">getsalesx.com</div>
+                    <p class="card-desc">AI-powered sales platform with intelligent voice agents and automated workflows. Handles inbound and outbound conversations, qualifies leads, and follows up consistently at scale.</p>
+                    <span class="card-tag">Replaces: Sales Ops Team</span>
+                </a>
+
+                <a href="https://aitwiin.com" target="_blank" class="platform-card gs-reveal">
+                    <div class="card-header">
+                        <div class="card-name">TWIIN</div>
+                        <div class="card-status status-live">Live</div>
+                    </div>
+                    <div class="card-domain">aitwiin.com</div>
+                    <p class="card-desc">AI video twin platform that clones your visual appearance, voice, and style to create branded videos at scale. Script to publish in minutes, across every platform, in multiple languages.</p>
+                    <span class="card-tag">Replaces: Video Production Team</span>
+                </a>
+
+                <a href="https://voicex.chat" target="_blank" class="platform-card gs-reveal">
+                    <div class="card-header">
+                        <div class="card-name">Synqra</div>
+                        <div class="card-status status-live">Live</div>
+                    </div>
+                    <div class="card-domain">voicex.chat</div>
+                    <p class="card-desc">AI-powered marketing platform for creative agencies and brands. Helps teams plan, create, and execute campaigns with more speed, consistency, and creative focus.</p>
+                    <span class="card-tag">Replaces: Marketing Strategy Team</span>
+                </a>
+
+                <a href="https://ainavigator.info" target="_blank" class="platform-card gs-reveal">
+                    <div class="card-header">
+                        <div class="card-name">AI Navigator</div>
+                        <div class="card-status status-live">Live</div>
+                    </div>
+                    <div class="card-domain">ainavigator.info</div>
+                    <p class="card-desc">Practical AI learning program for business leaders. Includes an online course, the book <em>AI Fluency For Leaders</em>, and executive briefings that cut through hype and deliver real business value.</p>
+                    <span class="card-tag">Replaces: AI Consulting Engagement</span>
+                </a>
+
+                <a href="#" class="platform-card gs-reveal">
+                    <div class="card-header">
+                        <div class="card-name">UniClarity</div>
+                        <div class="card-status status-prelaunch">Coming Soon</div>
+                    </div>
+                    <div class="card-domain">uniclarity.com</div>
+                    <p class="card-desc">Compare accepted university offers side-by-side. Track deadlines, costs, housing, and everything families need to make the right choice after acceptance. Built for parents navigating decisions.</p>
+                    <span class="card-tag">Replaces: Expensive Education Consultants</span>
+                </a>
+
+                <a href="https://plymio.com" target="_blank" class="platform-card gs-reveal">
+                    <div class="card-header">
+                        <div class="card-name">Plymio</div>
+                        <div class="card-status status-prelaunch">Pre-launch</div>
+                    </div>
+                    <div class="card-domain">plymio.com</div>
+                    <p class="card-desc">AI-powered coaching platform enabling professionals to scale expertise through intelligent avatars. Coaches clone their voice and knowledge; users get personalized guidance, always available.</p>
+                    <span class="card-tag">Replaces: Expensive 1:1 Coaching</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- ABOUT -->
+        <div class="divider"></div>
+        <section id="about">
+            <div class="about-layout">
+                <div class="about-left gs-reveal-left">
+                    <div class="section-label">Founder</div>
+                    <div class="about-name">Piero Saleme</div>
+                    <div class="about-role">Founder & CEO, ArqOne Labs</div>
+                    <div class="about-bio">
+                        <p>ArqOne Labs was born from a simple observation: small and mid-size businesses face the same complex challenges as enterprises. Cybersecurity threats, scaling sales, coordinating marketing, developing talent - all without the resources to hire specialist teams.</p>
+                        <p>I build AI platforms that close that gap. Each product in the ArqOne portfolio takes a domain that traditionally requires expensive specialists and makes it accessible through intelligent systems. Plain language, clear actions, real results.</p>
+                        <p>Operating at the intersection of AI, business strategy, and product design. Author of <em>AI Fluency For Leaders</em>.</p>
+                    </div>
+                </div>
+                <div class="about-right gs-reveal-right">
+                    <h3>The ArqOne Approach</h3>
+                    <ul class="credential-list">
+                        <li><span class="credential-icon">&#9654;</span> Every platform solves a real specialist gap, starting from the problem</li>
+                        <li><span class="credential-icon">&#9654;</span> Built for non-technical users first. Plain language, clear guidance, business outcomes</li>
+                        <li><span class="credential-icon">&#9654;</span> Portfolio thesis where each product reinforces the others</li>
+                        <li><span class="credential-icon">&#9654;</span> Ship fast, learn faster. We run like a lab</li>
+                        <li><span class="credential-icon">&#9654;</span> AI is the engine, business value is the product</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICES -->
+        <div class="divider"></div>
+        <section id="services">
+            <div class="section-label gs-reveal">Services</div>
+            <h2 class="section-title gs-reveal">Agentic Automation</h2>
+            <p class="section-sub gs-reveal">Beyond our platforms, we help businesses design and deploy intelligent automation systems using AI tools. Hands-on work, real deployments.</p>
+
+            <div class="services-grid">
+                <div class="service-card gs-reveal">
+                    <div class="service-icon-wrap">
+                        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <h3>Workflow Automation</h3>
+                    <p>We audit your operations and build AI-powered workflows that replace manual, repetitive tasks. Lead routing, customer onboarding, internal reporting. Built to run without you babysitting them.</p>
+                </div>
+                <div class="service-card gs-reveal">
+                    <div class="service-icon-wrap">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke-linecap="round"/></svg>
+                    </div>
+                    <h3>AI Agent Development</h3>
+                    <p>Custom AI agents that handle real business functions. Sales qualification, support triage, content generation, data analysis. Deployed on your infrastructure, trained on your context.</p>
+                </div>
+                <div class="service-card gs-reveal">
+                    <div class="service-icon-wrap">
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" stroke-linejoin="round"/></svg>
+                    </div>
+                    <h3>AI Strategy & Implementation</h3>
+                    <p>We identify high-impact opportunities, build the solution, and get it running. First conversation to live deployment in weeks.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <div class="divider"></div>
+        <section class="cta-section">
+            <div class="cta-glow"></div>
+            <div class="section-label gs-reveal">Let's Talk</div>
+            <h2 class="section-title gs-reveal">Ready to work smarter?</h2>
+            <p class="section-sub gs-reveal">Whether you're exploring one of our platforms or need custom AI automation for your business, we'd like to hear from you.</p>
+            <div class="gs-reveal">
+                <a href="mailto:pierosaleme@gmail.com" class="btn-primary magnetic-target">Get in Touch</a>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer>
+            <div class="footer-left"><span>Arq<span style="color: var(--teal);">One</span> Labs</span> - AI Platforms for the Modern Business</div>
+            <div class="footer-right">&copy; 2026</div>
+        </footer>
+
+    </div>
+
+    <script>
+    // ============================================
+    // GSAP INIT + FALLBACK
+    // ============================================
+    if (typeof gsap !== 'undefined') {
+        document.body.classList.add('gsap-ready');
+        gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+    } else {
+        // GSAP didn't load — all elements stay visible via CSS defaults
+        console.warn('GSAP not loaded — animations disabled, content visible.');
+    }
+
+    // Fallback: if GSAP loaded but animations haven't fired after 3s, force-show
+    setTimeout(function() {
+        document.querySelectorAll('.hero-badge, .hero h1, .hero-sub, .hero-cta-group, .hero-scroll').forEach(function(el) {
+            if (getComputedStyle(el).opacity === '0') el.style.opacity = '1';
+        });
+    }, 3000);
+
+    // ============================================
+    // HERO PARTICLE NETWORK ANIMATION
+    // ============================================
+    (function() {
+        const canvas = document.getElementById('hero-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouse = { x: null, y: null };
+
+        function resize() {
+            const hero = canvas.parentElement;
+            canvas.width = hero.offsetWidth;
+            canvas.height = hero.offsetHeight;
+        }
+
+        class Particle {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.4;
+                this.speedY = (Math.random() - 0.5) * 0.4;
+                this.opacity = Math.random() * 0.5 + 0.1;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+                if (mouse.x !== null) {
+                    const dx = mouse.x - this.x, dy = mouse.y - this.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 150) {
+                        const force = (150 - dist) / 150;
+                        this.x -= dx * force * 0.01;
+                        this.y -= dy * force * 0.01;
+                    }
+                }
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(0, 220, 205, ${this.opacity})`;
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            resize();
+            particles = [];
+            const count = Math.min(Math.floor((canvas.width * canvas.height) / 12000), 80);
+            for (let i = 0; i < count; i++) particles.push(new Particle());
+        }
+
+        function connectParticles() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 160) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(0, 220, 205, ${(1 - dist / 160) * 0.15})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            connectParticles();
+            requestAnimationFrame(animate);
+        }
+
+        canvas.parentElement.addEventListener('mousemove', e => {
+            const rect = canvas.getBoundingClientRect();
+            mouse.x = e.clientX - rect.left;
+            mouse.y = e.clientY - rect.top;
+        });
+        canvas.parentElement.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
+        window.addEventListener('resize', () => {
+            resize();
+            const needed = Math.min(Math.floor((canvas.width * canvas.height) / 12000), 80);
+            if (Math.abs(particles.length - needed) > 10) init();
+        });
+
+        init();
+        animate();
+    })();
+
+    // ============================================
+    // GSAP HERO ENTRANCE ANIMATION
+    // ============================================
+    if (typeof gsap === 'undefined') { /* skip all GSAP blocks */ } else {
+
+    (function() {
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+        tl.from('.hero-badge', { y: 20, opacity: 0, duration: 0.8, delay: 0.2 })
+          .to('.hero-badge', { opacity: 1, duration: 0 }, '<')
+          .from('.hero h1', { y: 40, opacity: 0, duration: 1, filter: 'blur(8px)' }, '-=0.4')
+          .to('.hero h1', { opacity: 1, filter: 'blur(0px)', duration: 0 }, '<')
+          .from('.hero-sub', { y: 25, opacity: 0, duration: 0.8 }, '-=0.5')
+          .to('.hero-sub', { opacity: 1, duration: 0 }, '<')
+          .from('.hero-cta-group', { y: 25, opacity: 0, duration: 0.8 }, '-=0.4')
+          .to('.hero-cta-group', { opacity: 1, duration: 0 }, '<')
+          .from('.hero-scroll', { opacity: 0, duration: 1 }, '-=0.2')
+          .to('.hero-scroll', { opacity: 1, duration: 0 }, '<');
+    })();
+
+    // ============================================
+    // GSAP SCROLL REVEAL ANIMATIONS
+    // ============================================
+    (function() {
+        // Fade up reveals
+        gsap.utils.toArray('.gs-reveal').forEach(el => {
+            gsap.from(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: 'top 88%',
+                    toggleActions: 'play none none none'
+                },
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                ease: 'power3.out'
+            });
+        });
+
+        // Left reveals
+        gsap.utils.toArray('.gs-reveal-left').forEach(el => {
+            gsap.from(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: 'top 85%',
+                    toggleActions: 'play none none none'
+                },
+                x: -60,
+                opacity: 0,
+                duration: 1,
+                ease: 'power3.out'
+            });
+        });
+
+        // Right reveals
+        gsap.utils.toArray('.gs-reveal-right').forEach(el => {
+            gsap.from(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: 'top 85%',
+                    toggleActions: 'play none none none'
+                },
+                x: 60,
+                opacity: 0,
+                duration: 1,
+                ease: 'power3.out'
+            });
+        });
+
+        // Staggered card entrances
+        gsap.utils.toArray('.portfolio-grid, .services-grid').forEach(grid => {
+            const cards = grid.children;
+            gsap.from(cards, {
+                scrollTrigger: {
+                    trigger: grid,
+                    start: 'top 85%',
+                    toggleActions: 'play none none none'
+                },
+                y: 60,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.12,
+                ease: 'power3.out'
+            });
+        });
+
+        // Credential list stagger
+        ScrollTrigger.create({
+            trigger: '.credential-list',
+            start: 'top 85%',
+            onEnter: () => {
+                gsap.from('.credential-list li', {
+                    x: -30,
+                    opacity: 0,
+                    duration: 0.6,
+                    stagger: 0.08,
+                    ease: 'power3.out'
+                });
+            }
+        });
+
+        // Divider animations - draw in on scroll
+        gsap.utils.toArray('.divider').forEach(div => {
+            gsap.from(div, {
+                scrollTrigger: {
+                    trigger: div,
+                    start: 'top 90%',
+                    toggleActions: 'play none none none'
+                },
+                scaleX: 0,
+                transformOrigin: 'left center',
+                duration: 1.2,
+                ease: 'power3.inOut'
+            });
+        });
+    })();
+
+    // ============================================
+    // ORBITAL ECOSYSTEM - DYNAMIC CANVAS + ANIMATION
+    // ============================================
+    (function() {
+        const container = document.getElementById('orbitContainer');
+        const oCanvas = document.getElementById('orbit-canvas');
+        if (!container || !oCanvas) return;
+
+        const oCtx = oCanvas.getContext('2d');
+        const nodes = container.querySelectorAll('.orbit-node');
+        let nodePositions = []; // {x, y, angle, baseAngle} for each node
+        let pulses = []; // active data pulses
+        let orbitAngleOffset = 0; // slow global rotation
+        let hoveredNode = -1;
+
+        function orbitRadius() {
+            const w = container.offsetWidth;
+            if (w < 480) return w * 0.4;
+            if (w < 768) return Math.min(w * 0.38, 230);
+            return Math.min(w * 0.38, 300);
+        }
+
+        function resizeOrbitCanvas() {
+            oCanvas.width = container.offsetWidth;
+            oCanvas.height = container.offsetHeight;
+        }
+
+        function positionNodes() {
+            const r = orbitRadius();
+            const cx = container.offsetWidth / 2;
+            const cy = container.offsetHeight / 2;
+            nodePositions = [];
+
+            nodes.forEach((node, i) => {
+                const baseAngle = parseFloat(node.dataset.angle);
+                const angle = (baseAngle + orbitAngleOffset) % 360;
+                const rad = angle * (Math.PI / 180);
+                const x = cx + r * Math.cos(rad);
+                const y = cy + r * Math.sin(rad);
+
+                nodePositions.push({ x, y, angle, baseAngle, rad });
+
+                const isRight = angle < 90 || angle > 270;
+                node.style.position = 'absolute';
+                node.style.left = x + 'px';
+                node.style.top = y + 'px';
+                node.style.transform = 'translate(-28px, -28px)';
+                node.style.flexDirection = isRight ? 'row' : 'row-reverse';
+
+                const info = node.querySelector('.orbit-node-info');
+                if (info) info.style.textAlign = isRight ? 'left' : 'right';
+            });
+        }
+
+        // Draw dynamic connection lines + pulses on canvas
+        function drawConnections() {
+            oCtx.clearRect(0, 0, oCanvas.width, oCanvas.height);
+            const cx = oCanvas.width / 2;
+            const cy = oCanvas.height / 2;
+
+            // Draw lines from center to each node
+            nodePositions.forEach((pos, i) => {
+                const isHovered = hoveredNode === i;
+                const alpha = isHovered ? 0.35 : 0.1;
+
+                // Gradient line
+                const grad = oCtx.createLinearGradient(cx, cy, pos.x, pos.y);
+                grad.addColorStop(0, `rgba(0, 220, 205, ${alpha})`);
+                grad.addColorStop(1, `rgba(0, 220, 205, ${alpha * 0.3})`);
+
+                oCtx.beginPath();
+                oCtx.strokeStyle = grad;
+                oCtx.lineWidth = isHovered ? 1.5 : 0.8;
+                oCtx.moveTo(cx, cy);
+                oCtx.lineTo(pos.x, pos.y);
+                oCtx.stroke();
+
+                // Small dot at connection point on node side
+                oCtx.beginPath();
+                oCtx.arc(pos.x, pos.y, isHovered ? 3 : 2, 0, Math.PI * 2);
+                oCtx.fillStyle = `rgba(0, 220, 205, ${isHovered ? 0.6 : 0.25})`;
+                oCtx.fill();
+            });
+
+            // Draw inter-node connections (adjacent nodes)
+            for (let i = 0; i < nodePositions.length; i++) {
+                const j = (i + 1) % nodePositions.length;
+                const a = nodePositions[i], b = nodePositions[j];
+                oCtx.beginPath();
+                oCtx.strokeStyle = 'rgba(0, 220, 205, 0.04)';
+                oCtx.lineWidth = 0.5;
+                oCtx.moveTo(a.x, a.y);
+                oCtx.lineTo(b.x, b.y);
+                oCtx.stroke();
+            }
+
+            // Draw active pulses
+            pulses.forEach(p => {
+                const t = p.progress;
+                const px = cx + (p.targetX - cx) * t;
+                const py = cy + (p.targetY - cy) * t;
+                const size = 3 + Math.sin(t * Math.PI) * 2;
+                const alpha = Math.sin(t * Math.PI) * 0.8;
+
+                oCtx.beginPath();
+                oCtx.arc(px, py, size, 0, Math.PI * 2);
+                oCtx.fillStyle = `rgba(0, 220, 205, ${alpha})`;
+                oCtx.fill();
+
+                // Glow
+                oCtx.beginPath();
+                oCtx.arc(px, py, size * 3, 0, Math.PI * 2);
+                oCtx.fillStyle = `rgba(0, 220, 205, ${alpha * 0.15})`;
+                oCtx.fill();
+            });
+        }
+
+        // Animate pulses
+        function updatePulses() {
+            pulses = pulses.filter(p => {
+                p.progress += p.speed;
+                return p.progress < 1;
+            });
+        }
+
+        function firePulse() {
+            if (nodePositions.length === 0) return;
+            const idx = Math.floor(Math.random() * nodePositions.length);
+            const pos = nodePositions[idx];
+            pulses.push({
+                targetX: pos.x,
+                targetY: pos.y,
+                progress: 0,
+                speed: 0.008 + Math.random() * 0.006
+            });
+
+            // Occasionally fire a return pulse (node to center)
+            if (Math.random() > 0.6) {
+                setTimeout(() => {
+                    const cx = oCanvas.width / 2, cy = oCanvas.height / 2;
+                    pulses.push({
+                        targetX: cx + (cx - pos.x), // reverse - we draw from center, so fake it
+                        targetY: cy + (cy - pos.y),
+                        progress: 0,
+                        speed: 0.01
+                    });
+                }, 600);
+            }
+        }
+
+        // Main orbit animation loop
+        let lastPulseTime = 0;
+        function orbitLoop(timestamp) {
+            // Slow rotation (0.5 deg per second)
+            orbitAngleOffset += 0.008;
+            positionNodes();
+            resizeOrbitCanvas();
+            updatePulses();
+            drawConnections();
+
+            // Fire pulse every 1.5-3s
+            if (timestamp - lastPulseTime > 1500 + Math.random() * 1500) {
+                firePulse();
+                lastPulseTime = timestamp;
+            }
+
+            requestAnimationFrame(orbitLoop);
+        }
+
+        // Hover interactions
+        nodes.forEach((node, i) => {
+            node.addEventListener('mouseenter', () => { hoveredNode = i; });
+            node.addEventListener('mouseleave', () => { hoveredNode = -1; });
+        });
+
+        // Init
+        resizeOrbitCanvas();
+        positionNodes();
+        window.addEventListener('resize', () => { resizeOrbitCanvas(); positionNodes(); });
+
+        // GSAP scroll-triggered entrance
+        const orbitTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: '.ecosystem',
+                start: 'top 70%',
+                toggleActions: 'play none none none'
+            }
+        });
+
+        orbitTl.from('.orbit-ring', {
+            scale: 0, opacity: 0, duration: 1, stagger: 0.15,
+            ease: 'power3.out', transformOrigin: 'center center'
+        });
+
+        orbitTl.from('.orbit-center', {
+            scale: 0, opacity: 0, duration: 0.8,
+            ease: 'elastic.out(1, 0.5)'
+        }, '-=0.6');
+
+        orbitTl.from('.orbit-node', {
+            scale: 0, opacity: 0, duration: 0.7, stagger: 0.08,
+            ease: 'back.out(1.4)',
+            onComplete: () => { requestAnimationFrame(orbitLoop); }
+        }, '-=0.3');
+
+        // Orbit ring rotation
+        gsap.to('.orbit-ring-2', {
+            rotation: 360, duration: 120, repeat: -1, ease: 'none',
+            transformOrigin: 'center center'
+        });
+        gsap.to('.orbit-ring-3', {
+            rotation: -360, duration: 180, repeat: -1, ease: 'none',
+            transformOrigin: 'center center'
+        });
+
+        // Node floating
+        nodes.forEach((node, i) => {
+            gsap.to(node, {
+                y: '+=6', x: '+=' + (Math.random() > 0.5 ? '3' : '-3'),
+                duration: 2.5 + i * 0.2, repeat: -1, yoyo: true,
+                ease: 'sine.inOut', delay: i * 0.15
+            });
+        });
+    })();
+
+    // ============================================
+    // NAV SCROLL EFFECT
+    // ============================================
+    (function() {
+        const nav = document.querySelector('nav');
+        ScrollTrigger.create({
+            start: 60,
+            onUpdate: (self) => {
+                nav.classList.toggle('scrolled', self.scroll() > 60);
+            }
+        });
+    })();
+
+    // ============================================
+    // CARD MOUSE GLOW TRACKING
+    // ============================================
+    (function() {
+        document.querySelectorAll('.platform-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                card.style.setProperty('--mouse-x', ((e.clientX - rect.left) / rect.width) * 100 + '%');
+                card.style.setProperty('--mouse-y', ((e.clientY - rect.top) / rect.height) * 100 + '%');
+            });
+        });
+    })();
+
+    // ============================================
+    // MAGNETIC BUTTON EFFECT
+    // ============================================
+    (function() {
+        document.querySelectorAll('.magnetic-target').forEach(btn => {
+            btn.addEventListener('mousemove', e => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                gsap.to(btn, { x: x * 0.2, y: y * 0.2, duration: 0.3, ease: 'power2.out' });
+            });
+            btn.addEventListener('mouseleave', () => {
+                gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.3)' });
+            });
+        });
+    })();
+
+    // ============================================
+    // SMOOTH SCROLL FOR ANCHOR LINKS
+    // ============================================
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                if (typeof gsap !== 'undefined' && gsap.plugins && gsap.plugins.scrollTo) {
+                    gsap.to(window, { scrollTo: { y: target, offsetY: 80 }, duration: 1, ease: 'power3.inOut' });
+                } else {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+        });
+    });
+
+    // ============================================
+    // PARALLAX FLOATING ORBS
+    // ============================================
+    (function() {
+        gsap.utils.toArray('.orb').forEach((orb, i) => {
+            gsap.to(orb, {
+                scrollTrigger: {
+                    scrub: 1
+                },
+                y: (i + 1) * -120,
+                ease: 'none'
+            });
+        });
+    })();
+
+    } // end GSAP guard
+
+    </script>
+</body>
+</html>

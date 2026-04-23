@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Conditions - ArqOne Labs</title>
+    <meta name="description" content="ArqOne Labs Terms and Conditions. Read the terms governing your use of our website and services.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #08080C;
+            --bg-elevated: #0E0E14;
+            --bg-card: #12121A;
+            --teal: #00DCD0;
+            --teal-dim: #00A89E;
+            --white: #F0F0F4;
+            --gray-100: #C8C8D0;
+            --gray-200: #9898A4;
+            --gray-300: #68687A;
+            --gray-400: #3A3A4A;
+            --border: rgba(255, 255, 255, 0.06);
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg);
+            color: var(--gray-100);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .grid-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .content { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; }
+
+        nav {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(8, 8, 12, 0.7);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-logo {
+            font-family: var(--font-sans);
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--white);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-logo span { color: var(--teal); }
+
+        .nav-back {
+            font-size: 0.85rem;
+            color: var(--gray-200);
+            text-decoration: none;
+            font-weight: 400;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-back:hover { color: var(--teal); }
+
+        .nav-back svg {
+            width: 16px; height: 16px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .page-main {
+            flex: 1;
+            padding: 80px 40px;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .page-badge {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--teal);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            padding: 6px 16px;
+            border: 1px solid rgba(0, 220, 205, 0.2);
+            border-radius: 20px;
+            background: rgba(0, 220, 205, 0.05);
+            display: inline-block;
+        }
+
+        .page-title {
+            font-size: clamp(2rem, 4.5vw, 2.8rem);
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -0.03em;
+            margin-bottom: 12px;
+            line-height: 1.1;
+        }
+
+        .page-meta {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--gray-300);
+            margin-bottom: 48px;
+            letter-spacing: 0.03em;
+        }
+
+        .legal-content h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--white);
+            margin: 40px 0 16px;
+            letter-spacing: -0.01em;
+        }
+
+        .legal-content h2:first-child { margin-top: 0; }
+
+        .legal-content p {
+            font-size: 0.95rem;
+            color: var(--gray-100);
+            line-height: 1.8;
+            font-weight: 300;
+            margin-bottom: 16px;
+        }
+
+        .legal-content a {
+            color: var(--teal-dim);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .legal-content a:hover { color: var(--teal); }
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .footer-left {
+            font-size: 0.8rem;
+            color: var(--gray-300);
+        }
+
+        .footer-left span { color: var(--gray-200); }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            font-size: 0.75rem;
+            color: var(--gray-300);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-family: var(--font-mono);
+            letter-spacing: 0.03em;
+        }
+
+        .footer-links a:hover { color: var(--teal); }
+
+        .footer-right {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--gray-400);
+            letter-spacing: 0.05em;
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 16px 20px; }
+            .page-main { padding: 60px 20px; }
+            footer { flex-direction: column; gap: 16px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-bg"></div>
+
+    <div class="content">
+
+        <nav>
+            <a href="arqonelabs_landing.html" class="nav-logo">Arq<span>One</span> Labs</a>
+            <a href="arqonelabs_landing.html" class="nav-back">
+                <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                Back to Home
+            </a>
+        </nav>
+
+        <main class="page-main">
+            <div class="page-badge">Legal</div>
+            <h1 class="page-title">Terms & Conditions</h1>
+            <p class="page-meta">Last updated: April 19, 2026</p>
+
+            <div class="legal-content">
+                <h2>1. Agreement to Terms</h2>
+                <p>By accessing or using the ArqOne Labs website (arqonelabs.com) and any of our associated platforms and services, you agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, you should not use our website or services.</p>
+
+                <h2>2. Description of Services</h2>
+                <p>ArqOne Labs operates a portfolio of AI-powered platforms designed for small and mid-size businesses. Our services include access to these platforms, agentic automation consulting, and related AI implementation services. Specific terms for individual platforms may apply in addition to these general terms.</p>
+
+                <h2>3. Use of Our Services</h2>
+                <p>You agree to use our website and services only for lawful purposes and in a way that does not infringe on the rights of others or restrict their use of the services. You are responsible for ensuring that your use complies with all applicable laws and regulations.</p>
+
+                <h2>4. Intellectual Property</h2>
+                <p>All content on this website, including text, graphics, logos, icons, images, software, and the compilation thereof, is the property of ArqOne Labs or its content suppliers and is protected by applicable intellectual property laws. You may not reproduce, distribute, or create derivative works from any content without our prior written consent.</p>
+
+                <h2>5. User Accounts</h2>
+                <p>Certain platforms and services may require you to create an account. You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account. You agree to notify us immediately of any unauthorized use of your account.</p>
+
+                <h2>6. Payment Terms</h2>
+                <p>Fees for our platforms and services are as described on the relevant product pages or in separate service agreements. All fees are non-refundable unless otherwise stated. We reserve the right to modify our pricing with reasonable notice.</p>
+
+                <h2>7. Limitation of Liability</h2>
+                <p>To the fullest extent permitted by law, ArqOne Labs shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising out of or related to your use of our website or services. Our total liability shall not exceed the amount you have paid to us in the twelve months preceding the claim.</p>
+
+                <h2>8. Disclaimer of Warranties</h2>
+                <p>Our website and services are provided on an "as is" and "as available" basis. We make no warranties, express or implied, regarding the operation of our website, the accuracy of information provided, or the suitability of our services for your specific needs.</p>
+
+                <h2>9. Indemnification</h2>
+                <p>You agree to indemnify and hold harmless ArqOne Labs, its officers, and employees from any claims, damages, losses, or expenses arising from your use of our services or violation of these terms.</p>
+
+                <h2>10. Governing Law</h2>
+                <p>These Terms and Conditions shall be governed by and construed in accordance with the laws of the United Arab Emirates. Any disputes shall be subject to the exclusive jurisdiction of the courts of Sharjah, UAE.</p>
+
+                <h2>11. Changes to These Terms</h2>
+                <p>We reserve the right to modify these terms at any time. Changes will be posted on this page with an updated revision date. Your continued use of our website and services after modifications constitutes your acceptance of the updated terms.</p>
+
+                <h2>12. Contact</h2>
+                <p>If you have questions about these Terms and Conditions, please contact us at <a href="mailto:pierosaleme@gmail.com">pierosaleme@gmail.com</a> or through our <a href="contact.html">contact form</a>.</p>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-left"><span>Arq<span style="color: var(--teal);">One</span> Labs</span> - AI Platforms for the Modern Business</div>
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms & Conditions</a>
+            </div>
+            <div class="footer-right">&copy; 2026</div>
+        </footer>
+
+    </div>
+</body>
+</html>
