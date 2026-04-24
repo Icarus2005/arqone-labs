@@ -1159,9 +1159,9 @@
         }
 
         .athena-avatar-core {
-            width: 68px; height: 68px;
+            width: 82px; height: 82px;
             border-radius: 50%;
-            background: linear-gradient(135deg, rgba(0, 220, 205, 0.15), rgba(0, 220, 205, 0.04));
+            overflow: hidden;
             border: 2px solid rgba(0, 220, 205, 0.4);
             display: flex;
             align-items: center;
@@ -1169,16 +1169,53 @@
             position: relative;
             z-index: 1;
             transition: all 0.4s;
-            box-shadow: 0 0 30px rgba(0, 220, 205, 0.12), inset 0 0 20px rgba(0, 220, 205, 0.04);
+            box-shadow: 0 0 30px rgba(0, 220, 205, 0.15), inset 0 0 20px rgba(0, 220, 205, 0.04);
+            background: var(--bg-card);
         }
+
+        .athena-avatar-core img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            display: block;
+            border-radius: 50%;
+        }
+
+        .athena-avatar-core .athena-icon-fallback {
+            width: 30px; height: 30px;
+            color: var(--teal);
+            display: none;
+        }
+
+        .athena-avatar-core img[data-error] ~ .athena-icon-fallback { display: block; }
 
         .athena-avatar:hover .athena-avatar-core {
-            background: linear-gradient(135deg, rgba(0, 220, 205, 0.28), rgba(0, 220, 205, 0.1));
-            box-shadow: 0 0 50px rgba(0, 220, 205, 0.28), inset 0 0 20px rgba(0, 220, 205, 0.08);
-            transform: scale(1.06);
+            box-shadow: 0 0 50px rgba(0, 220, 205, 0.3);
+            border-color: var(--teal);
+            transform: scale(1.05);
         }
 
-        .athena-avatar-core svg { width: 30px; height: 30px; color: var(--teal); }
+        /* Active call state */
+        .athena-avatar.athena-call-active .athena-avatar-ring {
+            border-color: rgba(0, 220, 205, 0.7);
+            animation: athenaRingPulse 0.8s ease-in-out infinite;
+        }
+        .athena-avatar.athena-call-active .athena-avatar-core {
+            border-color: var(--teal);
+            box-shadow: 0 0 50px rgba(0, 220, 205, 0.4);
+        }
+
+        /* ElevenLabs widget — hidden off-screen by default, slides up during active call */
+        elevenlabs-convai {
+            position: fixed !important;
+            bottom: -300px !important;
+            right: 24px !important;
+            transition: bottom 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+            z-index: 9999 !important;
+        }
+        elevenlabs-convai.athena-active {
+            bottom: 24px !important;
+        }
 
         .athena-avatar-name {
             font-family: var(--font-mono);
@@ -1511,7 +1548,9 @@
                             <div class="athena-avatar-ring"></div>
                             <div class="athena-avatar-ring athena-avatar-ring-2"></div>
                             <div class="athena-avatar-core">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <img src="athena.jpg" alt="Athena" id="athena-photo"
+                                     onerror="this.setAttribute('data-error','1');this.style.display='none';document.querySelector('.athena-icon-fallback').style.display='block';" />
+                                <svg class="athena-icon-fallback" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M12 2a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z"/>
                                     <path d="M19 10v1a7 7 0 0 1-14 0v-1"/>
                                     <line x1="12" y1="19" x2="12" y2="23"/>
@@ -2091,21 +2130,50 @@
     // ATHENA WIDGET TRIGGERS
     // ============================================
     (function() {
+        var widget = document.querySelector('elevenlabs-convai');
+        var isActive = false;
+
         function openAthenaWidget() {
-            var widget = document.querySelector('elevenlabs-convai');
-            if (!widget) return;
+            if (!widget || isActive) return;
+            var triggered = false;
+            // Try shadow DOM — multiple selectors for robustness
             try {
-                var shadow = widget.shadowRoot;
-                if (shadow) {
-                    var btn = shadow.querySelector('button');
-                    if (btn) { btn.click(); return; }
+                if (widget.shadowRoot) {
+                    var selectors = ['button', '[role="button"]', 'button[part]', '.call-button', '.start-call', '[class*="call"]', '[class*="start"]', '[class*="trigger"]'];
+                    for (var i = 0; i < selectors.length; i++) {
+                        var btn = widget.shadowRoot.querySelector(selectors[i]);
+                        if (btn) { btn.click(); triggered = true; break; }
+                    }
                 }
             } catch(e) {}
-            // Fallback: scroll Athena card into view
-            var card = document.getElementById('athena');
-            if (card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // Fallback: try widget public method
+            if (!triggered && typeof widget.startSession === 'function') {
+                widget.startSession(); triggered = true;
+            }
+            // Last fallback: scroll to card
+            if (!triggered) {
+                var card = document.getElementById('athena');
+                if (card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
         }
 
+        // Show/hide the ElevenLabs UI based on call state
+        if (widget) {
+            widget.addEventListener('elevenlabs-convai:call_started', function() {
+                isActive = true;
+                widget.classList.add('athena-active');
+                var av = document.querySelector('.athena-avatar');
+                if (av) av.classList.add('athena-call-active');
+            });
+            widget.addEventListener('elevenlabs-convai:call_ended', function() {
+                isActive = false;
+                widget.classList.remove('athena-active');
+                var av = document.querySelector('.athena-avatar');
+                if (av) av.classList.remove('athena-call-active');
+            });
+        }
+
+        // Wire up all trigger elements
         ['athena-avatar-btn', 'athena-start-btn', 'hero-athena-trigger'].forEach(function(id) {
             var el = document.getElementById(id);
             if (el) el.addEventListener('click', function(e) {
