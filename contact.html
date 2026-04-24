@@ -44,7 +44,6 @@
             flex-direction: column;
         }
 
-        /* Grid background */
         .grid-bg {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -58,16 +57,19 @@
 
         .content { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; }
 
-        /* Nav */
+        /* ---- NAV ---- */
         nav {
             padding: 20px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(8, 8, 12, 0.7);
+            background: rgba(8, 8, 12, 0.85);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
             border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .nav-logo {
@@ -102,32 +104,35 @@
             stroke-width: 2;
         }
 
-        /* Main */
+        /* ---- PAGE LAYOUT ---- */
         .page-main {
             flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             padding: 80px 40px;
+            max-width: 1100px;
+            margin: 0 auto;
+            width: 100%;
         }
 
-        .contact-wrapper {
-            width: 100%;
-            max-width: 600px;
+        .page-header {
+            margin-bottom: 64px;
         }
 
         .page-badge {
             font-family: var(--font-mono);
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--teal);
-            letter-spacing: 0.15em;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
-            margin-bottom: 20px;
-            padding: 6px 16px;
-            border: 1px solid rgba(0, 220, 205, 0.2);
-            border-radius: 20px;
-            background: rgba(0, 220, 205, 0.05);
-            display: inline-block;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .page-badge::before {
+            content: '';
+            width: 24px; height: 1px;
+            background: var(--teal);
         }
 
         .page-title {
@@ -135,23 +140,164 @@
             font-weight: 800;
             color: var(--white);
             letter-spacing: -0.03em;
-            margin-bottom: 12px;
             line-height: 1.1;
         }
 
-        .page-sub {
-            font-size: 1.05rem;
+        /* ---- TWO COLUMN LAYOUT ---- */
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 64px;
+            align-items: start;
+        }
+
+        /* ---- LEFT: CONTACT DETAILS ---- */
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            position: sticky;
+            top: 100px;
+        }
+
+        .contact-details-intro {
+            font-size: 1rem;
             color: var(--gray-200);
             line-height: 1.75;
             font-weight: 300;
-            margin-bottom: 48px;
         }
 
-        /* Form */
+        .contact-info-block {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact-info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .contact-info-icon {
+            width: 40px; height: 40px;
+            border-radius: 10px;
+            background: rgba(0, 220, 205, 0.06);
+            border: 1px solid rgba(0, 220, 205, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .contact-info-icon svg {
+            width: 18px; height: 18px;
+            stroke: var(--teal);
+            fill: none;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .contact-info-text {
+            padding-top: 2px;
+        }
+
+        .contact-info-label {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--gray-300);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .contact-info-value {
+            font-size: 0.9rem;
+            color: var(--gray-100);
+            font-weight: 400;
+        }
+
+        .contact-info-value a {
+            color: var(--teal-dim);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-info-value a:hover { color: var(--teal); }
+
+        .contact-promise {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-promise::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--teal), transparent);
+            opacity: 0.4;
+        }
+
+        .contact-promise h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 12px;
+        }
+
+        .promise-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .promise-list li {
+            font-size: 0.85rem;
+            color: var(--gray-200);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            line-height: 1.5;
+        }
+
+        .promise-list li::before {
+            content: '';
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            background: var(--teal);
+            flex-shrink: 0;
+        }
+
+        /* ---- RIGHT: FORM ---- */
+        .contact-form-wrap {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 48px 44px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-form-wrap::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--teal), transparent);
+            opacity: 0.3;
+        }
+
         .contact-form {
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 20px;
         }
 
         .form-group {
@@ -163,41 +309,36 @@
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 24px;
+            gap: 20px;
         }
 
         .form-label {
-            font-size: 0.85rem;
+            font-size: 0.83rem;
             font-weight: 500;
             color: var(--gray-100);
             letter-spacing: 0.01em;
         }
 
-        .form-label .required {
-            color: var(--teal);
-            margin-left: 2px;
-        }
+        .form-label .required { color: var(--teal); margin-left: 2px; }
 
         .form-input,
         .form-textarea,
         .form-select {
             width: 100%;
-            padding: 14px 18px;
-            background: var(--bg-card);
+            padding: 13px 16px;
+            background: var(--bg-elevated);
             border: 1px solid var(--border);
             border-radius: 10px;
             color: var(--white);
             font-family: var(--font-sans);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 400;
             transition: all 0.3s;
             outline: none;
         }
 
         .form-input::placeholder,
-        .form-textarea::placeholder {
-            color: var(--gray-400);
-        }
+        .form-textarea::placeholder { color: var(--gray-400); }
 
         .form-input:focus,
         .form-textarea:focus,
@@ -216,23 +357,20 @@
             padding-right: 44px;
         }
 
-        .form-select option {
-            background: var(--bg-card);
-            color: var(--white);
-        }
+        .form-select option { background: var(--bg-card); color: var(--white); }
 
         .form-textarea {
-            min-height: 140px;
+            min-height: 130px;
             resize: vertical;
             line-height: 1.6;
         }
 
         .btn-submit {
-            padding: 16px 36px;
+            padding: 15px 36px;
             background: var(--teal);
             color: var(--bg);
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             border: none;
             border-radius: 8px;
             cursor: pointer;
@@ -242,6 +380,9 @@
             font-family: var(--font-sans);
             letter-spacing: 0.01em;
             align-self: flex-start;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .btn-submit:hover {
@@ -250,8 +391,28 @@
             transform: translateY(-1px);
         }
 
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-submit .spinner {
+            width: 16px; height: 16px;
+            border: 2px solid rgba(8, 8, 12, 0.3);
+            border-top-color: var(--bg);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: none;
+        }
+
+        .btn-submit.loading .spinner { display: block; }
+        .btn-submit.loading .btn-text { opacity: 0.7; }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
         .form-note {
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             color: var(--gray-300);
             line-height: 1.6;
         }
@@ -264,14 +425,27 @@
 
         .form-note a:hover { color: var(--teal); }
 
+        /* Error state */
+        .form-error {
+            display: none;
+            padding: 14px 18px;
+            background: rgba(255, 80, 80, 0.08);
+            border: 1px solid rgba(255, 80, 80, 0.2);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: #ff8080;
+        }
+
+        .form-error.visible { display: block; }
+
         /* Success state */
         .form-success {
             display: none;
             text-align: center;
-            padding: 60px 20px;
+            padding: 48px 20px;
         }
 
-        .form-success.visible { display: block; }
+        .form-success.visible { display: flex; flex-direction: column; align-items: center; gap: 20px; }
 
         .success-icon {
             width: 64px; height: 64px;
@@ -281,7 +455,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 24px;
         }
 
         .success-icon svg {
@@ -292,24 +465,34 @@
         }
 
         .success-title {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 700;
             color: var(--white);
-            margin-bottom: 12px;
         }
 
         .success-text {
             font-size: 0.95rem;
             color: var(--gray-200);
             line-height: 1.7;
-            max-width: 400px;
-            margin: 0 auto;
+            max-width: 380px;
         }
 
-        /* Footer */
+        .success-back {
+            font-size: 0.85rem;
+            color: var(--teal-dim);
+            text-decoration: none;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .success-back:hover { color: var(--teal); }
+
+        /* ---- FOOTER ---- */
         footer {
             border-top: 1px solid var(--border);
-            padding: 40px;
+            padding: 32px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -318,17 +501,10 @@
             width: 100%;
         }
 
-        .footer-left {
-            font-size: 0.8rem;
-            color: var(--gray-300);
-        }
-
+        .footer-left { font-size: 0.8rem; color: var(--gray-300); }
         .footer-left span { color: var(--gray-200); }
 
-        .footer-links {
-            display: flex;
-            gap: 24px;
-        }
+        .footer-links { display: flex; gap: 24px; }
 
         .footer-links a {
             font-size: 0.75rem;
@@ -348,12 +524,19 @@
             letter-spacing: 0.05em;
         }
 
-        /* Responsive */
+        /* ---- RESPONSIVE ---- */
+        @media (max-width: 900px) {
+            .contact-layout { grid-template-columns: 1fr; gap: 48px; }
+            .contact-details { position: static; }
+        }
+
         @media (max-width: 768px) {
             nav { padding: 16px 20px; }
-            .page-main { padding: 60px 20px; }
+            .page-main { padding: 48px 20px; }
+            .contact-form-wrap { padding: 32px 24px; }
             .form-row { grid-template-columns: 1fr; }
             footer { flex-direction: column; gap: 16px; text-align: center; }
+            .footer-links { justify-content: center; }
         }
     </style>
 </head>
@@ -362,82 +545,157 @@
 
     <div class="content">
 
-        <!-- Nav -->
+        <!-- NAV -->
         <nav>
-            <a href="arqonelabs_landing.html" class="nav-logo">Arq<span>One</span> Labs</a>
-            <a href="arqonelabs_landing.html" class="nav-back">
+            <a href="index.html" class="nav-logo">Arq<span>One</span> Labs</a>
+            <a href="index.html" class="nav-back">
                 <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
                 Back to Home
             </a>
         </nav>
 
-        <!-- Main -->
+        <!-- MAIN -->
         <main class="page-main">
-            <div class="contact-wrapper">
-                <div class="page-badge">Get in Touch</div>
+
+            <div class="page-header">
+                <div class="page-badge">Contact</div>
                 <h1 class="page-title">Let's build something together</h1>
-                <p class="page-sub">Whether you're exploring one of our platforms or need custom AI automation for your business, we'd like to hear from you.</p>
+            </div>
 
-                <form class="contact-form" id="contactForm" action="https://formspree.io/f/placeholder" method="POST">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label">Name <span class="required">*</span></label>
-                            <input type="text" name="name" class="form-input" placeholder="Your name" required>
+            <div class="contact-layout">
+
+                <!-- LEFT: CONTACT DETAILS -->
+                <div class="contact-details">
+                    <p class="contact-details-intro">Whether you're exploring one of our platforms, need custom AI automation for your business, or want to discuss a partnership — we'd like to hear from you.</p>
+
+                    <div class="contact-info-block">
+                        <div class="contact-info-item">
+                            <div class="contact-info-icon">
+                                <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            </div>
+                            <div class="contact-info-text">
+                                <div class="contact-info-label">Email</div>
+                                <div class="contact-info-value"><a href="mailto:arqonelabs@ainavigator.info">arqonelabs@ainavigator.info</a></div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">Email <span class="required">*</span></label>
-                            <input type="email" name="email" class="form-input" placeholder="you@company.com" required>
+
+                        <div class="contact-info-item">
+                            <div class="contact-info-icon">
+                                <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            </div>
+                            <div class="contact-info-text">
+                                <div class="contact-info-label">Location</div>
+                                <div class="contact-info-value">Shams Free Zone, Sharjah, UAE</div>
+                            </div>
+                        </div>
+
+                        <div class="contact-info-item">
+                            <div class="contact-info-icon">
+                                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            </div>
+                            <div class="contact-info-text">
+                                <div class="contact-info-label">Response Time</div>
+                                <div class="contact-info-value">Within 24 hours</div>
+                            </div>
+                        </div>
+
+                        <div class="contact-info-item">
+                            <div class="contact-info-icon">
+                                <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                            </div>
+                            <div class="contact-info-text">
+                                <div class="contact-info-label">Platforms</div>
+                                <div class="contact-info-value">Synqra · ShieldPilot · SalesX · TWIIN · AI Navigator · UniClarity · Plymio</div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="form-label">Company</label>
-                        <input type="text" name="company" class="form-input" placeholder="Your company (optional)">
+                    <div class="contact-promise">
+                        <h4>What happens next</h4>
+                        <ul class="promise-list">
+                            <li>We read every message personally</li>
+                            <li>You'll hear back within 24 hours</li>
+                            <li>No sales scripts — a real conversation</li>
+                            <li>If we're not the right fit, we'll say so</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- RIGHT: FORM -->
+                <div class="contact-form-wrap">
+
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Name <span class="required">*</span></label>
+                                <input type="text" name="name" class="form-input" placeholder="Your name" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email <span class="required">*</span></label>
+                                <input type="email" name="email" class="form-input" placeholder="you@company.com" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Company</label>
+                            <input type="text" name="company" class="form-input" placeholder="Your company (optional)">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">I'm interested in <span class="required">*</span></label>
+                            <select name="interest" class="form-select" required>
+                                <option value="" disabled selected>Select a topic</option>
+                                <option value="AI Readiness Assessment">AI Readiness Assessment (Athena)</option>
+                                <option value="Agentic Automation Services">Agentic Automation Services</option>
+                                <option value="ShieldPilot">ShieldPilot — Cybersecurity</option>
+                                <option value="SalesX">SalesX — Sales Automation</option>
+                                <option value="TWIIN">TWIIN — AI Video</option>
+                                <option value="Synqra">Synqra — Marketing</option>
+                                <option value="AI Navigator">AI Navigator — Education</option>
+                                <option value="UniClarity">UniClarity — University Decisions</option>
+                                <option value="Plymio">Plymio — Coaching</option>
+                                <option value="Partnership / Investment">Partnership / Investment</option>
+                                <option value="Something else">Something else</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Message <span class="required">*</span></label>
+                            <textarea name="message" class="form-textarea" placeholder="Tell us about your project, business, or question..." required></textarea>
+                        </div>
+
+                        <div class="form-error" id="formError">Something went wrong. Please try again or email us directly at arqonelabs@ainavigator.info</div>
+
+                        <button type="submit" class="btn-submit" id="submitBtn">
+                            <span class="btn-text">Send Message</span>
+                            <div class="spinner"></div>
+                        </button>
+
+                        <p class="form-note">By submitting this form you agree to our <a href="privacy.html">Privacy Policy</a>. We respond within 24 hours.</p>
+                    </form>
+
+                    <div class="form-success" id="formSuccess">
+                        <div class="success-icon">
+                            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        </div>
+                        <h2 class="success-title">Message sent</h2>
+                        <p class="success-text">Thanks for reaching out. We'll get back to you within 24 hours.</p>
+                        <a href="index.html" class="success-back">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                            Back to ArqOne Labs
+                        </a>
                     </div>
 
-                    <div class="form-group">
-                        <label class="form-label">I'm interested in <span class="required">*</span></label>
-                        <select name="interest" class="form-select" required>
-                            <option value="" disabled selected>Select a topic</option>
-                            <option value="shieldpilot">ShieldPilot - Cybersecurity</option>
-                            <option value="salesx">SalesX - Sales Automation</option>
-                            <option value="twiin">TWIIN - AI Video</option>
-                            <option value="synqra">Synqra - Marketing</option>
-                            <option value="ainavigator">AI Navigator - Education</option>
-                            <option value="uniclarity">UniClarity - University Decisions</option>
-                            <option value="plymio">Plymio - Coaching</option>
-                            <option value="automation">Agentic Automation Services</option>
-                            <option value="partnership">Partnership / Investment</option>
-                            <option value="other">Something else</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Message <span class="required">*</span></label>
-                        <textarea name="message" class="form-textarea" placeholder="Tell us about your project or question..." required></textarea>
-                    </div>
-
-                    <button type="submit" class="btn-submit">Send Message</button>
-
-                    <p class="form-note">By submitting this form, you agree to our <a href="privacy.html">Privacy Policy</a>. We'll respond within 24 hours.</p>
-                </form>
-
-                <div class="form-success" id="formSuccess">
-                    <div class="success-icon">
-                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </div>
-                    <h2 class="success-title">Message sent</h2>
-                    <p class="success-text">Thanks for reaching out. We'll get back to you within 24 hours.</p>
                 </div>
             </div>
         </main>
 
-        <!-- Footer -->
+        <!-- FOOTER -->
         <footer>
-            <div class="footer-left"><span>Arq<span style="color: var(--teal);">One</span> Labs</span> - AI Platforms for the Modern Business</div>
+            <div class="footer-left"><span>Arq<span style="color: var(--teal);">One</span> Labs</span> — AI Platforms for the Modern Business</div>
             <div class="footer-links">
                 <a href="privacy.html">Privacy Policy</a>
-                <a href="terms.html">Terms & Conditions</a>
+                <a href="terms.html">Terms &amp; Conditions</a>
             </div>
             <div class="footer-right">&copy; 2026</div>
         </footer>
@@ -445,25 +703,67 @@
     </div>
 
     <script>
-    // Form submission handling
+    // -----------------------------------------------
+    // FORM SUBMISSION via Cloudflare Worker → Resend
+    // After deploying contact-worker.js to Cloudflare Workers,
+    // replace YOUR_WORKER_URL below with your Worker's URL.
+    // e.g. 'https://arqone-contact.YOUR_SUBDOMAIN.workers.dev'
+    // -----------------------------------------------
+    const WORKER_URL = 'YOUR_WORKER_URL';
+
     const form = document.getElementById('contactForm');
-    const success = document.getElementById('formSuccess');
+    const successPanel = document.getElementById('formSuccess');
+    const errorMsg = document.getElementById('formError');
+    const submitBtn = document.getElementById('submitBtn');
 
-    form.addEventListener('submit', function(e) {
+    form.addEventListener('submit', async function(e) {
         e.preventDefault();
+        errorMsg.classList.remove('visible');
+        submitBtn.classList.add('loading');
+        submitBtn.disabled = true;
 
-        // In production, this would submit to your form handler (Formspree, Netlify Forms, etc.)
-        // For now, show the success state
-        form.style.display = 'none';
-        success.classList.add('visible');
+        const data = new FormData(form);
 
-        // Optional: actually submit via fetch
-        // fetch(form.action, {
-        //     method: 'POST',
-        //     body: new FormData(form),
-        //     headers: { 'Accept': 'application/json' }
-        // });
+        if (WORKER_URL !== 'YOUR_WORKER_URL') {
+            try {
+                const res = await fetch(WORKER_URL, {
+                    method: 'POST',
+                    body: data
+                });
+                const json = await res.json();
+                if (res.ok && json.success) {
+                    showSuccess();
+                } else {
+                    throw new Error(json.error || 'Server error');
+                }
+            } catch(err) {
+                showError();
+            }
+        } else {
+            // Fallback until Worker is deployed: open mail client
+            var name     = data.get('name') || '';
+            var email    = data.get('email') || '';
+            var company  = data.get('company') || 'Not provided';
+            var interest = data.get('interest') || '';
+            var message  = data.get('message') || '';
+            var body = 'Name: ' + name + '\nEmail: ' + email + '\nCompany: ' + company + '\nInterested in: ' + interest + '\n\nMessage:\n' + message;
+            window.location.href = 'mailto:arqonelabs@ainavigator.info'
+                + '?subject=' + encodeURIComponent('ArqOne Labs Enquiry — ' + interest)
+                + '&body=' + encodeURIComponent(body);
+            showSuccess();
+        }
     });
+
+    function showSuccess() {
+        form.style.display = 'none';
+        successPanel.classList.add('visible');
+    }
+
+    function showError() {
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+        errorMsg.classList.add('visible');
+    }
     </script>
 </body>
 </html>
