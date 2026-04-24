@@ -1272,7 +1272,7 @@
                 <a href="#about">About</a>
                 <a href="#services">Services</a>
                 <a href="#athena" class="nav-athena-link">Athena</a>
-                <a href="mailto:arqonelabs@ainavigator.info" class="nav-cta magnetic-target">Get in Touch</a>
+                <a href="contact.html" class="nav-cta magnetic-target">Get in Touch</a>
             </div>
         </nav>
 
@@ -1574,7 +1574,7 @@
             <h2 class="section-title gs-reveal">Ready to work smarter?</h2>
             <p class="section-sub gs-reveal">Whether you're exploring one of our platforms or need custom AI automation for your business, we'd like to hear from you.</p>
             <div class="gs-reveal">
-                <a href="mailto:arqonelabs@ainavigator.info" class="btn-primary magnetic-target">Get in Touch</a>
+                <a href="contact.html" class="btn-primary magnetic-target">Get in Touch</a>
             </div>
         </section>
 
@@ -1602,10 +1602,13 @@
         console.warn('GSAP not loaded — animations disabled, content visible.');
     }
 
-    // Fallback: if GSAP loaded but animations haven't fired after 3s, force-show
+    // Fallback: force-show any element that is still invisible after 3s
     setTimeout(function() {
-        document.querySelectorAll('.hero-badge, .hero h1, .hero-sub, .hero-cta-group, .hero-athena-hint, .hero-scroll').forEach(function(el) {
-            if (getComputedStyle(el).opacity === '0') el.style.opacity = '1';
+        document.querySelectorAll('.hero-badge, .hero h1, .hero-sub, .hero-cta-group, .hero-athena-hint, .hero-scroll, .gs-reveal, .platform-card, .service-card, .athena-card, .gs-reveal-left, .gs-reveal-right').forEach(function(el) {
+            if (parseFloat(getComputedStyle(el).opacity) < 0.1) {
+                el.style.opacity = '1';
+                el.style.transform = 'none';
+            }
         });
     }, 3000);
 
@@ -1736,13 +1739,14 @@
             gsap.from(el, {
                 scrollTrigger: {
                     trigger: el,
-                    start: 'top 88%',
+                    start: 'top 92%',
                     toggleActions: 'play none none none'
                 },
                 y: 50,
                 opacity: 0,
                 duration: 1,
-                ease: 'power3.out'
+                ease: 'power3.out',
+                immediateRender: false
             });
         });
 
@@ -1776,22 +1780,6 @@
             });
         });
 
-        // Staggered card entrances
-        gsap.utils.toArray('.portfolio-grid, .services-grid').forEach(grid => {
-            const cards = grid.children;
-            gsap.from(cards, {
-                scrollTrigger: {
-                    trigger: grid,
-                    start: 'top 85%',
-                    toggleActions: 'play none none none'
-                },
-                y: 60,
-                opacity: 0,
-                duration: 0.8,
-                stagger: 0.12,
-                ease: 'power3.out'
-            });
-        });
 
         // Credential list stagger
         ScrollTrigger.create({
@@ -2123,6 +2111,11 @@
             });
         });
     })();
+
+    // Refresh all ScrollTriggers after full page layout is settled
+    window.addEventListener('load', function() {
+        ScrollTrigger.refresh();
+    });
 
     } // end GSAP guard
 
