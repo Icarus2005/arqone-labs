@@ -175,6 +175,7 @@
         .gsap-ready .hero h1,
         .gsap-ready .hero-sub,
         .gsap-ready .hero-cta-group,
+        .gsap-ready .hero-athena-hint,
         .gsap-ready .hero-scroll {
             opacity: 0;
         }
@@ -1014,6 +1015,206 @@
             .orbit-ring-2 { width: 260px; height: 260px; }
             .orbit-ring-3 { width: 380px; height: 380px; }
         }
+
+        /* ---- ATHENA AI AGENT ---- */
+        .nav-athena-link { color: var(--teal) !important; font-weight: 500 !important; }
+
+        .hero-athena-hint {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            font-size: 0.82rem;
+            color: var(--gray-300);
+            transition: color 0.3s;
+            position: relative;
+            z-index: 2;
+            margin-top: 14px;
+            background: none;
+            border: none;
+            font-family: var(--font-sans);
+        }
+        .hero-athena-hint:hover { color: var(--teal); }
+
+        .athena-pulse-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--teal);
+            flex-shrink: 0;
+            animation: livePulse 2s ease-in-out infinite;
+        }
+
+        .athena-card {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, rgba(0, 220, 205, 0.06) 0%, var(--bg-card) 60%);
+            border: 1px solid rgba(0, 220, 205, 0.28);
+            border-radius: 20px;
+            padding: 48px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 48px;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .athena-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--teal), transparent);
+            opacity: 0.5;
+        }
+
+        .athena-card::after {
+            content: '';
+            position: absolute;
+            top: -100px; right: -100px;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(0, 220, 205, 0.04) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .athena-badge {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: var(--teal);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 4px 12px;
+            border: 1px solid rgba(0, 220, 205, 0.25);
+            border-radius: 4px;
+            background: rgba(0, 220, 205, 0.06);
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+
+        .athena-card h3 {
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -0.03em;
+            margin-bottom: 14px;
+        }
+
+        .athena-card-left p {
+            font-size: 0.95rem;
+            color: var(--gray-200);
+            line-height: 1.75;
+            max-width: 540px;
+            font-weight: 300;
+            margin-bottom: 24px;
+        }
+
+        .athena-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .athena-features span {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: var(--teal-dim);
+            padding: 4px 10px;
+            background: rgba(0, 220, 205, 0.06);
+            border: 1px solid rgba(0, 220, 205, 0.12);
+            border-radius: 4px;
+            letter-spacing: 0.02em;
+        }
+
+        .athena-card-right {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            min-width: 180px;
+        }
+
+        .athena-avatar {
+            position: relative;
+            width: 130px; height: 130px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .athena-avatar-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 220, 205, 0.2);
+            animation: athenaRingPulse 3s ease-in-out infinite;
+        }
+
+        .athena-avatar-ring:first-child { width: 110px; height: 110px; }
+        .athena-avatar-ring-2 { width: 86px; height: 86px; border-color: rgba(0, 220, 205, 0.3); animation-delay: 0.6s; }
+
+        @keyframes athenaRingPulse {
+            0%, 100% { transform: scale(1); opacity: 0.4; }
+            50% { transform: scale(1.06); opacity: 0.9; }
+        }
+
+        .athena-avatar-core {
+            width: 68px; height: 68px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(0, 220, 205, 0.15), rgba(0, 220, 205, 0.04));
+            border: 2px solid rgba(0, 220, 205, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s;
+            box-shadow: 0 0 30px rgba(0, 220, 205, 0.12), inset 0 0 20px rgba(0, 220, 205, 0.04);
+        }
+
+        .athena-avatar:hover .athena-avatar-core {
+            background: linear-gradient(135deg, rgba(0, 220, 205, 0.28), rgba(0, 220, 205, 0.1));
+            box-shadow: 0 0 50px rgba(0, 220, 205, 0.28), inset 0 0 20px rgba(0, 220, 205, 0.08);
+            transform: scale(1.06);
+        }
+
+        .athena-avatar-core svg { width: 30px; height: 30px; color: var(--teal); }
+
+        .athena-avatar-name {
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            color: var(--gray-300);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            position: absolute;
+            bottom: 0;
+        }
+
+        .athena-cta-btn {
+            white-space: nowrap;
+            font-size: 0.85rem !important;
+            padding: 12px 28px !important;
+        }
+
+        .athena-sub-note {
+            font-family: var(--font-mono);
+            font-size: 0.63rem;
+            color: var(--gray-300);
+            letter-spacing: 0.04em;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .athena-card {
+                grid-template-columns: 1fr;
+                padding: 32px 24px;
+                gap: 32px;
+                text-align: center;
+            }
+            .athena-card-left p { max-width: 100%; }
+            .athena-features { justify-content: center; }
+            .athena-card-right { margin: 0 auto; }
+        }
     </style>
 </head>
 <body>
@@ -1033,6 +1234,7 @@
                 <a href="#portfolio">Portfolio</a>
                 <a href="#about">About</a>
                 <a href="#services">Services</a>
+                <a href="#athena" class="nav-athena-link">Athena</a>
                 <a href="mailto:arqonelabs@ainavigator.info" class="nav-cta magnetic-target">Get in Touch</a>
             </div>
         </nav>
@@ -1048,6 +1250,10 @@
                 <a href="#ecosystem" class="btn-primary magnetic-target">Explore Our Platforms</a>
                 <a href="#services" class="btn-secondary magnetic-target">Work With Us</a>
             </div>
+            <button class="hero-athena-hint" id="hero-athena-trigger">
+                <div class="athena-pulse-dot"></div>
+                <span>Or speak to Athena, our AI Assessment Agent &rarr;</span>
+            </button>
             <div class="hero-scroll">
                 <div class="scroll-line"></div>
                 <span class="scroll-text">SCROLL</span>
@@ -1285,6 +1491,39 @@
                     <h3>AI Strategy & Implementation</h3>
                     <p>We identify high-impact opportunities, build the solution, and get it running. First conversation to live deployment in weeks.</p>
                 </div>
+
+                <!-- ATHENA FEATURED CARD -->
+                <div class="athena-card gs-reveal" id="athena">
+                    <div class="athena-card-left">
+                        <div class="athena-badge">AI Assessment Agent</div>
+                        <h3>Meet Athena</h3>
+                        <p>Not sure where to start with AI? Athena runs a structured 15-minute business assessment and delivers a personalised AI Readiness Report — covering your top inefficiencies, quick wins, ROI estimate, and a clear implementation roadmap.</p>
+                        <div class="athena-features">
+                            <span>Business Efficiency Score</span>
+                            <span>Quick Wins Plan</span>
+                            <span>Effort vs Impact Matrix</span>
+                            <span>ROI Estimate</span>
+                            <span>Implementation Roadmap</span>
+                        </div>
+                    </div>
+                    <div class="athena-card-right">
+                        <div class="athena-avatar" id="athena-avatar-btn" title="Click to speak with Athena">
+                            <div class="athena-avatar-ring"></div>
+                            <div class="athena-avatar-ring athena-avatar-ring-2"></div>
+                            <div class="athena-avatar-core">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 2a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z"/>
+                                    <path d="M19 10v1a7 7 0 0 1-14 0v-1"/>
+                                    <line x1="12" y1="19" x2="12" y2="23"/>
+                                    <line x1="8" y1="23" x2="16" y2="23"/>
+                                </svg>
+                            </div>
+                            <div class="athena-avatar-name">Athena</div>
+                        </div>
+                        <button class="btn-primary athena-cta-btn magnetic-target" id="athena-start-btn">Start Your Free Assessment</button>
+                        <p class="athena-sub-note">15 minutes &nbsp;&middot;&nbsp; Personalised report &nbsp;&middot;&nbsp; No commitment</p>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -1308,6 +1547,10 @@
 
     </div>
 
+    <!-- ATHENA — ELEVENLABS AI AGENT -->
+    <elevenlabs-convai agent-id="agent_8901kpzxg3kneyzbzht3zwy506d9"></elevenlabs-convai>
+    <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
+
     <script>
     // ============================================
     // GSAP INIT + FALLBACK
@@ -1322,7 +1565,7 @@
 
     // Fallback: if GSAP loaded but animations haven't fired after 3s, force-show
     setTimeout(function() {
-        document.querySelectorAll('.hero-badge, .hero h1, .hero-sub, .hero-cta-group, .hero-scroll').forEach(function(el) {
+        document.querySelectorAll('.hero-badge, .hero h1, .hero-sub, .hero-cta-group, .hero-athena-hint, .hero-scroll').forEach(function(el) {
             if (getComputedStyle(el).opacity === '0') el.style.opacity = '1';
         });
     }, 3000);
@@ -1440,7 +1683,9 @@
           .from('.hero-cta-group', { y: 25, opacity: 0, duration: 0.8 }, '-=0.4')
           .to('.hero-cta-group', { opacity: 1, duration: 0 }, '<')
           .from('.hero-scroll', { opacity: 0, duration: 1 }, '-=0.2')
-          .to('.hero-scroll', { opacity: 1, duration: 0 }, '<');
+          .to('.hero-scroll', { opacity: 1, duration: 0 }, '<')
+          .from('.hero-athena-hint', { y: 12, opacity: 0, duration: 0.7 }, '-=0.6')
+          .to('.hero-athena-hint', { opacity: 1, duration: 0 }, '<');
     })();
 
     // ============================================
@@ -1569,21 +1814,16 @@
 
         function positionNodes() {
             const r = orbitRadius();
-const cx = container.offsetWidth / 2;
-const cy = container.offsetHeight / 2;
+            const cx = container.offsetWidth / 2;
+            const cy = container.offsetHeight / 2;
+            nodePositions = [];
 
-// Ellipse radii
-const rx = r * 1.12;
-const ry = r * 0.78;
-
-nodePositions = [];
-
-nodes.forEach((node, i) => {
-    const baseAngle = parseFloat(node.dataset.angle);
-    const angle = (baseAngle + orbitAngleOffset) % 360;
-    const rad = angle * (Math.PI / 180);
-    const x = cx + rx * Math.cos(rad);
-    const y = cy + ry * Math.sin(rad);
+            nodes.forEach((node, i) => {
+                const baseAngle = parseFloat(node.dataset.angle);
+                const angle = (baseAngle + orbitAngleOffset) % 360;
+                const rad = angle * (Math.PI / 180);
+                const x = cx + r * Math.cos(rad);
+                const y = cy + r * Math.sin(rad);
 
                 nodePositions.push({ x, y, angle, baseAngle, rad });
 
@@ -1846,6 +2086,34 @@ nodes.forEach((node, i) => {
     })();
 
     } // end GSAP guard
+
+    // ============================================
+    // ATHENA WIDGET TRIGGERS
+    // ============================================
+    (function() {
+        function openAthenaWidget() {
+            var widget = document.querySelector('elevenlabs-convai');
+            if (!widget) return;
+            try {
+                var shadow = widget.shadowRoot;
+                if (shadow) {
+                    var btn = shadow.querySelector('button');
+                    if (btn) { btn.click(); return; }
+                }
+            } catch(e) {}
+            // Fallback: scroll Athena card into view
+            var card = document.getElementById('athena');
+            if (card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        ['athena-avatar-btn', 'athena-start-btn', 'hero-athena-trigger'].forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) el.addEventListener('click', function(e) {
+                e.preventDefault();
+                openAthenaWidget();
+            });
+        });
+    })();
 
     </script>
 </body>
