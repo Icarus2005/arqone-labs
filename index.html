@@ -2128,25 +2128,26 @@
 
         function openAthenaWidget() {
             if (!widget || isActive) return;
+            // Always slide the widget into view first
+            widget.classList.add('athena-active');
             var triggered = false;
-            // Try shadow DOM — multiple selectors for robustness
+            // Try shadow DOM (works if ElevenLabs uses open shadow root)
             try {
                 if (widget.shadowRoot) {
-                    var selectors = ['button', '[role="button"]', 'button[part]', '.call-button', '.start-call', '[class*="call"]', '[class*="start"]', '[class*="trigger"]'];
+                    var selectors = ['button', '[role="button"]', 'button[part]', '.call-button', '.start-call', '[class*="call"]', '[class*="start"]', '[class*="trigger"]', '[class*="mic"]'];
                     for (var i = 0; i < selectors.length; i++) {
                         var btn = widget.shadowRoot.querySelector(selectors[i]);
                         if (btn) { btn.click(); triggered = true; break; }
                     }
                 }
             } catch(e) {}
-            // Fallback: try widget public method
+            // Try public API method
             if (!triggered && typeof widget.startSession === 'function') {
-                widget.startSession(); triggered = true;
+                try { widget.startSession(); triggered = true; } catch(e) {}
             }
-            // Last fallback: scroll to card
+            // Direct click on widget element — browser routes to inner rendered button
             if (!triggered) {
-                var card = document.getElementById('athena');
-                if (card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                try { widget.click(); } catch(e) {}
             }
         }
 
