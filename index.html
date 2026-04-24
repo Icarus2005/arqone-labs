@@ -1588,6 +1588,15 @@
 
     <!-- ATHENA — ELEVENLABS AI AGENT -->
     <elevenlabs-convai agent-id="agent_8901kpzxg3kneyzbzht3zwy506d9"></elevenlabs-convai>
+    <!-- Force open shadow DOM before widget loads so we can programmatically click its call button -->
+    <script>
+    (function() {
+        var orig = Element.prototype.attachShadow;
+        Element.prototype.attachShadow = function(init) {
+            return orig.call(this, Object.assign({}, init, { mode: 'open' }));
+        };
+    })();
+    </script>
     <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
 
     <script>
@@ -2128,27 +2137,29 @@
 
         function openAthenaWidget() {
             if (!widget || isActive) return;
-            // Always slide the widget into view first
             widget.classList.add('athena-active');
-            var triggered = false;
-            // Try shadow DOM (works if ElevenLabs uses open shadow root)
-            try {
-                if (widget.shadowRoot) {
-                    var selectors = ['button', '[role="button"]', 'button[part]', '.call-button', '.start-call', '[class*="call"]', '[class*="start"]', '[class*="trigger"]', '[class*="mic"]'];
-                    for (var i = 0; i < selectors.length; i++) {
-                        var btn = widget.shadowRoot.querySelector(selectors[i]);
-                        if (btn) { btn.click(); triggered = true; break; }
+
+            // Retry loop — shadow DOM may not render instantly after widget loads
+            function tryTrigger(attempt) {
+                if (attempt > 10) return;
+                var triggered = false;
+                try {
+                    if (widget.shadowRoot) {
+                        var selectors = ['button', '[role="button"]', '[class*="call"]', '[class*="start"]', '[class*="mic"]', '[part]'];
+                        for (var i = 0; i < selectors.length; i++) {
+                            var btn = widget.shadowRoot.querySelector(selectors[i]);
+                            if (btn) { btn.click(); triggered = true; break; }
+                        }
                     }
+                } catch(e) {}
+                if (!triggered && typeof widget.startSession === 'function') {
+                    try { widget.startSession(); triggered = true; } catch(e) {}
                 }
-            } catch(e) {}
-            // Try public API method
-            if (!triggered && typeof widget.startSession === 'function') {
-                try { widget.startSession(); triggered = true; } catch(e) {}
+                if (!triggered) {
+                    setTimeout(function() { tryTrigger(attempt + 1); }, 150);
+                }
             }
-            // Direct click on widget element — browser routes to inner rendered button
-            if (!triggered) {
-                try { widget.click(); } catch(e) {}
-            }
+            tryTrigger(0);
         }
 
         // Show/hide the ElevenLabs UI based on call state
