@@ -27,7 +27,7 @@ This folder holds all cross-portfolio marketing assets, brand guidelines, campai
 ### Naming Rules
 - **ArqOne** — always one word, capital A and capital O. Never: Arqone, ARQONE, arq-one, Arq One
 - **ArqOne Labs** — the full entity name, used on websites, legal, investor materials
-- **Platform names** — each platform keeps its own brand identity (Synqra, ShieldPilot, SalesX, Plymio, AI Navigator)
+- **Platform names** — each platform keeps its own brand identity (BrandSprk, ShieldPilot, SalesX, Plymio, AI Navigator)
 - **"A product of ArqOne Labs"** — standard footer attribution on platform websites
 
 ---
