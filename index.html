@@ -1239,6 +1239,45 @@
             text-align: center;
         }
 
+        .athena-calendly-cta {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        .athena-calendly-cta.visible { display: flex; }
+
+        .athena-book-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 22px;
+            border: 1px solid rgba(0, 220, 205, 0.4);
+            border-radius: 8px;
+            background: rgba(0, 220, 205, 0.06);
+            color: var(--teal);
+            font-size: 0.82rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background 0.3s, border-color 0.3s;
+            white-space: nowrap;
+        }
+
+        .athena-book-btn:hover {
+            background: rgba(0, 220, 205, 0.12);
+            border-color: rgba(0, 220, 205, 0.7);
+        }
+
+        .athena-book-note {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            color: var(--gray-300);
+            letter-spacing: 0.04em;
+        }
+
         @media (max-width: 768px) {
             .athena-card {
                 grid-template-columns: 1fr;
@@ -1559,6 +1598,13 @@
                         </div>
                         <button class="btn-primary athena-cta-btn magnetic-target" id="athena-start-btn">Start Your Free Assessment</button>
                         <p class="athena-sub-note">15 minutes &nbsp;&middot;&nbsp; Personalised report &nbsp;&middot;&nbsp; No commitment</p>
+                        <div class="athena-calendly-cta" id="athena-calendly-cta">
+                            <a href="https://calendly.com/piero-ainavigator" target="_blank" class="athena-book-btn">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                Book Your 30-Min Walkthrough Call
+                            </a>
+                            <span class="athena-book-note">Free &nbsp;&middot;&nbsp; With Piero from ArqOne Labs</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2173,6 +2219,8 @@
                 widget.classList.remove('athena-active');
                 var av = document.querySelector('.athena-avatar');
                 if (av) av.classList.remove('athena-call-active');
+                var cta = document.getElementById('athena-calendly-cta');
+                if (cta) cta.classList.add('visible');
             });
         }
 
