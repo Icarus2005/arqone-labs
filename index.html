@@ -1267,6 +1267,30 @@
             letter-spacing: 0.04em;
         }
 
+        .athena-end-btn {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 28px;
+            border: 1px solid rgba(220, 60, 60, 0.5);
+            border-radius: 8px;
+            background: rgba(220, 60, 60, 0.08);
+            color: #e05555;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s, border-color 0.3s;
+            white-space: nowrap;
+        }
+
+        .athena-end-btn:hover {
+            background: rgba(220, 60, 60, 0.16);
+            border-color: rgba(220, 60, 60, 0.8);
+        }
+
+        .athena-end-btn.visible { display: flex; }
+
         @media (max-width: 768px) {
             .athena-card {
                 grid-template-columns: 1fr;
@@ -1586,6 +1610,10 @@
                             <div class="athena-avatar-name">Athena</div>
                         </div>
                         <button class="btn-primary athena-cta-btn magnetic-target" id="athena-start-btn">Start Your Free Assessment</button>
+                        <button class="athena-end-btn" id="athena-end-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7 2 2 0 0 1 1.72 2v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.42 19.42 0 0 1 4.43 9.88a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.34 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.31 8.91"/><line x1="23" y1="1" x2="1" y2="23"/></svg>
+                            End Conversation
+                        </button>
                         <p class="athena-sub-note">15 minutes &nbsp;&middot;&nbsp; Personalised report &nbsp;&middot;&nbsp; No commitment</p>
                         <div class="athena-calendly-cta" id="athena-calendly-cta">
                             <a href="https://calendly.com/piero-ainavigator" target="_blank" class="athena-book-btn">
@@ -2159,34 +2187,48 @@
     let conversation = null;
     let isActive = false;
 
+    const av       = document.querySelector('.athena-avatar');
+    const startBtn = document.getElementById('athena-start-btn');
+    const endBtn   = document.getElementById('athena-end-btn');
+
+    function setCallActive(active) {
+        isActive = active;
+        if (av) av.classList.toggle('athena-call-active', active);
+        if (startBtn) startBtn.style.display = active ? 'none' : '';
+        if (endBtn)   endBtn.classList.toggle('visible', active);
+    }
+
+    function onCallEnded() {
+        setCallActive(false);
+        const cta = document.getElementById('athena-calendly-cta');
+        if (cta) cta.classList.add('visible');
+    }
+
     async function startAthena() {
         if (isActive) return;
-        const av = document.querySelector('.athena-avatar');
-        if (av) av.classList.add('athena-call-active');
-
+        setCallActive(true);
         try {
             conversation = await Conversation.startSession({
                 agentId: AGENT_ID,
-                onConnect: () => {
-                    isActive = true;
-                },
-                onDisconnect: () => {
-                    isActive = false;
-                    if (av) av.classList.remove('athena-call-active');
-                    const cta = document.getElementById('athena-calendly-cta');
-                    if (cta) cta.classList.add('visible');
-                },
+                onConnect: () => { isActive = true; },
+                onDisconnect: onCallEnded,
                 onError: (err) => {
                     console.error('Athena error:', err);
-                    isActive = false;
-                    if (av) av.classList.remove('athena-call-active');
+                    setCallActive(false);
                 }
             });
         } catch(e) {
             console.error('Failed to start Athena session:', e);
-            isActive = false;
-            if (av) av.classList.remove('athena-call-active');
+            setCallActive(false);
         }
+    }
+
+    async function stopAthena() {
+        if (conversation) {
+            try { await conversation.endSession(); } catch(e) {}
+            conversation = null;
+        }
+        onCallEnded();
     }
 
     ['athena-avatar-btn', 'athena-start-btn', 'hero-athena-trigger'].forEach(function(id) {
@@ -2196,6 +2238,8 @@
             startAthena();
         });
     });
+
+    if (endBtn) endBtn.addEventListener('click', stopAthena);
     </script>
 </body>
 </html>
