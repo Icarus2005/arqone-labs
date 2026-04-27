@@ -101,20 +101,67 @@ export default {
         </div>
       `;
 
-      const resendRes = await fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${env.RESEND_API_KEY}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          from: 'ArqOne Labs <contact@ainavigator.info>',
-          to: ['arqonelabs@ainavigator.info'],
-          reply_to: email,
-          subject: `[ArqOne Labs] ${interest} — ${name}`,
-          html,
+      const autoReplyHtml = `
+        <div style="font-family: Inter, sans-serif; max-width: 600px; margin: 0 auto; padding: 32px; background: #08080C; color: #C8C8D0; border-radius: 12px;">
+          <div style="border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 20px; margin-bottom: 28px;">
+            <span style="font-family: monospace; font-size: 11px; color: #00DCD0; letter-spacing: 0.15em; text-transform: uppercase;">ArqOne Labs</span>
+            <h2 style="color: #F0F0F4; font-size: 22px; font-weight: 700; margin: 8px 0 0; letter-spacing: -0.02em;">We received your message</h2>
+          </div>
+
+          <p style="color: #C8C8D0; line-height: 1.7; margin: 0 0 20px;">Hi ${escapeHtml(name)},</p>
+
+          <p style="color: #C8C8D0; line-height: 1.7; margin: 0 0 20px;">
+            Thanks for reaching out. I've received your enquiry about
+            <span style="color: #00DCD0; font-weight: 500;">${escapeHtml(interest)}</span>
+            and will get back to you within 1–2 business days.
+          </p>
+
+          <div style="margin: 28px 0; padding: 20px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px;">
+            <span style="font-family: monospace; font-size: 11px; color: #68687A; letter-spacing: 0.1em; text-transform: uppercase;">Your message</span>
+            <div style="margin-top: 12px; color: #C8C8D0; line-height: 1.7; white-space: pre-wrap;">${escapeHtml(message)}</div>
+          </div>
+
+          <p style="color: #C8C8D0; line-height: 1.7; margin: 0 0 8px;">In the meantime, feel free to explore what we've built at <a href="https://arqonelabs.com" style="color: #00DCD0; text-decoration: none;">arqonelabs.com</a>.</p>
+
+          <p style="color: #C8C8D0; line-height: 1.7; margin: 28px 0 4px;">Piero Saleme</p>
+          <p style="font-family: monospace; font-size: 12px; color: #68687A; margin: 0;">Founder, ArqOne Labs</p>
+
+          <div style="margin-top: 32px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.08);">
+            <p style="font-family: monospace; font-size: 11px; color: #68687A; margin: 0;">You're receiving this because you submitted the contact form at arqonelabs.com.</p>
+          </div>
+        </div>
+      `;
+
+      // Send notification to Piero and auto-reply to sender in parallel
+      const [resendRes, autoReplyRes] = await Promise.all([
+        fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            from: 'ArqOne Labs <contact@ainavigator.info>',
+            to: ['arqonelabs@ainavigator.info'],
+            reply_to: email,
+            subject: `[ArqOne Labs] ${interest} — ${name}`,
+            html,
+          }),
         }),
-      });
+        fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            from: 'Piero Saleme — ArqOne Labs <contact@ainavigator.info>',
+            to: [email],
+            subject: `We received your message — ArqOne Labs`,
+            html: autoReplyHtml,
+          }),
+        }),
+      ]);
 
       if (resendRes.ok) {
         return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
