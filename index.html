@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ArqOne Labs - Enterprise-grade capability for growing businesses</title>
     <meta name="description" content="ArqOne Labs builds AI platforms that give small and mid-size businesses access to capabilities that used to require entire departments.">
+    <!-- Open Graph -->
+    <meta property="og:title" content="ArqOne Labs — AI Platforms for the Modern Business">
+    <meta property="og:description" content="ArqOne Labs builds AI platforms that give growing businesses access to specialist capability through clear, intelligent systems.">
+    <meta property="og:image" content="https://arqonelabs.com/Meet%20Athena_ArqOne%20Labs.png">
+    <meta property="og:url" content="https://arqonelabs.com/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="ArqOne Labs">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ArqOne Labs — AI Platforms for the Modern Business">
+    <meta name="twitter:description" content="ArqOne Labs builds AI platforms that give growing businesses access to specialist capability through clear, intelligent systems.">
+    <meta name="twitter:image" content="https://arqonelabs.com/Meet%20Athena_ArqOne%20Labs.png">
     <link rel="icon" type="image/gif" href="favicon.gif">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -138,6 +150,25 @@
             border-color: var(--teal) !important;
             color: var(--teal) !important;
             box-shadow: 0 0 20px rgba(0, 220, 205, 0.1) !important;
+        }
+
+        .nav-cta-book {
+            background: rgba(0, 220, 205, 0.08) !important;
+            border: 1px solid rgba(0, 220, 205, 0.45) !important;
+            color: var(--teal) !important;
+            padding: 8px 20px !important;
+            border-radius: 6px;
+            font-size: 0.85rem !important;
+            font-weight: 500 !important;
+            transition: all 0.3s !important;
+            text-decoration: none;
+        }
+
+        .nav-cta-book:hover {
+            background: rgba(0, 220, 205, 0.16) !important;
+            border-color: var(--teal) !important;
+            box-shadow: 0 0 24px rgba(0, 220, 205, 0.18) !important;
+            transform: translateY(-1px);
         }
 
         /* ---- HERO ---- */
@@ -983,11 +1014,67 @@
             transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
+        /* ---- HAMBURGER ---- */
+        .nav-hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            z-index: 110;
+        }
+
+        .nav-hamburger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--gray-100);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            transform-origin: center;
+        }
+
+        .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
         /* ---- RESPONSIVE ---- */
         @media (max-width: 768px) {
             nav { padding: 16px 20px; }
             nav.scrolled { padding: 12px 20px; }
-            .nav-links { display: none; }
+            .nav-hamburger { display: flex; }
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 0; left: 0; right: 0;
+                padding: 80px 24px 32px;
+                background: rgba(8, 8, 12, 0.97);
+                backdrop-filter: blur(24px);
+                -webkit-backdrop-filter: blur(24px);
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0;
+                border-bottom: 1px solid var(--border);
+                z-index: 105;
+            }
+            .nav-links.open { display: flex; }
+            .nav-links a {
+                font-size: 1.1rem;
+                padding: 14px 0;
+                width: 100%;
+                border-bottom: 1px solid var(--border);
+            }
+            .nav-links a:last-child { border-bottom: none; }
+            .nav-cta, .nav-cta-book {
+                margin-top: 8px;
+                width: 100% !important;
+                text-align: center !important;
+                padding: 12px 20px !important;
+                justify-content: center;
+            }
             section { padding: 80px 20px; }
             .hero { padding: 100px 20px 60px; }
             .about-layout { grid-template-columns: 1fr; gap: 32px; }
@@ -1316,12 +1403,16 @@
         <!-- NAV -->
         <nav>
             <a href="#" class="nav-logo"><img src="ArqOne%20Labs%20Logo.gif" alt="ArqOne Labs"></a>
-            <div class="nav-links">
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav-links" id="nav-links">
                 <a href="#ecosystem">Ecosystem</a>
                 <a href="#portfolio">Portfolio</a>
                 <a href="#about">About</a>
                 <a href="#services">Services</a>
                 <a href="#athena" class="nav-athena-link">Athena</a>
+                <a href="https://calendly.com/piero-ainavigator" target="_blank" class="nav-cta-book magnetic-target">Book a Call</a>
                 <a href="contact.html" class="nav-cta magnetic-target">Get in Touch</a>
             </div>
         </nav>
@@ -1386,7 +1477,7 @@
                     </div>
                 </a>
 
-                <a href="https://getsalesx.com" target="_blank" class="orbit-node" data-angle="55">
+                <a href="https://getsalesx.com" target="_blank" class="orbit-node" data-angle="66">
                     <div class="orbit-node-dot"><span class="node-initial">SX</span></div>
                     <div class="orbit-node-info">
                         <div class="orbit-node-name">SalesX</div>
@@ -1395,7 +1486,7 @@
                     </div>
                 </a>
 
-                <a href="https://aitwiin.com" target="_blank" class="orbit-node" data-angle="90">
+                <a href="https://aitwiin.com" target="_blank" class="orbit-node" data-angle="117">
                     <div class="orbit-node-dot"><span class="node-initial">TW</span></div>
                     <div class="orbit-node-info">
                         <div class="orbit-node-name">TWIIN</div>
@@ -1404,7 +1495,7 @@
                     </div>
                 </a>
 
-                <a href="https://brandsprk.io" target="_blank" class="orbit-node" data-angle="150">
+                <a href="https://brandsprk.io" target="_blank" class="orbit-node" data-angle="168">
                     <div class="orbit-node-dot"><span class="node-initial">Bs</span></div>
                     <div class="orbit-node-info">
                         <div class="orbit-node-name">BrandSprk</div>
@@ -1413,7 +1504,7 @@
                     </div>
                 </a>
 
-                <a href="https://ainavigator.info" target="_blank" class="orbit-node" data-angle="225">
+                <a href="https://ainavigator.info" target="_blank" class="orbit-node" data-angle="220">
                     <div class="orbit-node-dot"><span class="node-initial">AI</span></div>
                     <div class="orbit-node-info">
                         <div class="orbit-node-name">AI Navigator</div>
@@ -1422,7 +1513,7 @@
                     </div>
                 </a>
 
-                <a href="#" class="orbit-node" data-angle="300">
+                <a href="#" class="orbit-node" data-angle="271">
                     <div class="orbit-node-dot"><span class="node-initial">UC</span></div>
                     <div class="orbit-node-info">
                         <div class="orbit-node-name">UniClarity</div>
@@ -1431,7 +1522,7 @@
                     </div>
                 </a>
 
-                <a href="https://plymio.com" target="_blank" class="orbit-node" data-angle="335">
+                <a href="https://plymio.com" target="_blank" class="orbit-node" data-angle="322">
                     <div class="orbit-node-dot"><span class="node-initial">Pl</span></div>
                     <div class="orbit-node-info">
                         <div class="orbit-node-name">Plymio</div>
@@ -1584,7 +1675,7 @@
                     <div class="athena-card-left">
                         <div class="athena-badge">AI Assessment Agent</div>
                         <h3>Meet Athena</h3>
-                        <p>Not sure where to start with AI? Athena runs a structured 15-minute business assessment and delivers a personalised AI Readiness Report — covering your top inefficiencies, quick wins, ROI estimate, and a clear implementation roadmap.</p>
+                        <p>Athena runs a structured 15-minute business assessment and delivers a personalised AI Readiness Report - covering your top inefficiencies, quick wins, ROI estimate, and a clear implementation roadmap.</p>
                         <div class="athena-features">
                             <span>Business Efficiency Score</span>
                             <span>Quick Wins Plan</span>
@@ -1634,8 +1725,9 @@
             <div class="section-label gs-reveal">Let's Talk</div>
             <h2 class="section-title gs-reveal">Ready to work smarter?</h2>
             <p class="section-sub gs-reveal">Whether you're exploring one of our platforms or need custom AI automation for your business, we'd like to hear from you.</p>
-            <div class="gs-reveal">
-                <a href="contact.html" class="btn-primary magnetic-target">Get in Touch</a>
+            <div class="gs-reveal" style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+                <a href="https://calendly.com/piero-ainavigator" target="_blank" class="btn-primary magnetic-target">Book a 30-Min Call</a>
+                <a href="contact.html" class="btn-secondary magnetic-target">Get in Touch</a>
             </div>
         </section>
 
@@ -1671,99 +1763,143 @@
     }, 3000);
 
     // ============================================
-    // HERO PARTICLE NETWORK ANIMATION
+    // HERO 3D PERSPECTIVE SPIKE FIELD
     // ============================================
     (function() {
         const canvas = document.getElementById('hero-canvas');
+        if (!canvas) return;
         const ctx = canvas.getContext('2d');
-        let particles = [];
-        let mouse = { x: null, y: null };
+
+        let W, H, WORLD_W;
+        const FOCAL       = 500;
+        const WORLD_DEPTH = 1800;
+        const Z_NEAR      = 200;
+        const SPEED       = 52;
+        const COL_SPACING = 40;
+        const LANE_REPEAT = 260;
+
+        let bars = [];
+        let camZ = 0;
+
+        function buildBars() {
+            bars = [];
+            const halfW       = WORLD_W / 2;
+            const laneCount   = Math.floor(WORLD_W / COL_SPACING) + 1;
+            const repsPerLane = Math.ceil(WORLD_DEPTH / LANE_REPEAT) + 2;
+            for (let li = 0; li < laneCount; li++) {
+                const wx     = -halfW + li * COL_SPACING;
+                const xRatio = (wx + halfW) / WORLD_W;
+                for (let ri = 0; ri < repsPerLane; ri++) {
+                    // 60% teal, 25% blue, 15% violet
+                    const r = Math.random();
+                    const colorType = r < 0.60 ? 0 : r < 0.85 ? 1 : 2;
+                    bars.push({
+                        wx,
+                        wz:       Z_NEAR + ri * LANE_REPEAT + Math.random() * LANE_REPEAT * 0.55,
+                        maxH:     48 + Math.random() * 195,
+                        wid:      4  + Math.random() * 7,
+                        phase:    (li * 1.618 + ri * 0.927) % (Math.PI * 2),
+                        freq:     0.05 + Math.random() * 0.11,
+                        xRatio,
+                        colorType // 0=teal, 1=blue, 2=violet
+                    });
+                }
+            }
+        }
 
         function resize() {
-            const hero = canvas.parentElement;
-            canvas.width = hero.offsetWidth;
-            canvas.height = hero.offsetHeight;
+            W = canvas.width  = window.innerWidth;
+            H = canvas.height = canvas.parentElement.offsetHeight;
+            WORLD_W = W * 1.35; // always wider than viewport for full edge coverage
         }
 
-        class Particle {
-            constructor() { this.reset(); }
-            reset() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 0.5;
-                this.speedX = (Math.random() - 0.5) * 0.4;
-                this.speedY = (Math.random() - 0.5) * 0.4;
-                this.opacity = Math.random() * 0.5 + 0.1;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
-                if (mouse.x !== null) {
-                    const dx = mouse.x - this.x, dy = mouse.y - this.y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 150) {
-                        const force = (150 - dist) / 150;
-                        this.x -= dx * force * 0.01;
-                        this.y -= dy * force * 0.01;
-                    }
+        function draw(time, delta) {
+            camZ += SPEED * delta;
+            ctx.clearRect(0, 0, W, H);
+
+            bars.forEach(b => {
+                if (b.wz - camZ < Z_NEAR - 30) {
+                    b.wz   += WORLD_DEPTH;
+                    b.maxH  = 48 + Math.random() * 195;
+                    b.phase = Math.random() * Math.PI * 2;
                 }
-            }
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(0, 220, 205, ${this.opacity})`;
-                ctx.fill();
-            }
-        }
+            });
 
-        function init() {
-            resize();
-            particles = [];
-            const count = Math.min(Math.floor((canvas.width * canvas.height) / 12000), 80);
-            for (let i = 0; i < count; i++) particles.push(new Particle());
-        }
+            const sorted = bars
+                .map(b => ({ ...b, rz: b.wz - camZ }))
+                .filter(b => b.rz > 10)
+                .sort((a, b) => b.rz - a.rz);
 
-        function connectParticles() {
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 160) {
-                        ctx.beginPath();
-                        ctx.strokeStyle = `rgba(0, 220, 205, ${(1 - dist / 160) * 0.15})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
-                    }
+            sorted.forEach(b => {
+                const scale = Math.min(1.9, FOCAL / b.rz);
+                const sx    = b.wx * scale + W * 0.5;
+                const sw    = Math.min(20, Math.max(0.5, b.wid * scale));
+                if (sx < -sw * 2 || sx > W + sw * 2) return;
+
+                const hFactor = 0.12 + 0.88 * (0.5 + 0.5 * Math.sin(time * b.freq + b.phase));
+                const sh      = Math.min(H * 0.50, Math.max(2, b.maxH * hFactor * scale));
+                const topY    = H - sh;
+
+                // Steeper depth curve — far bars much dimmer, perspective more obvious
+                const depth = Math.pow(Math.max(0, 1 - b.rz / WORLD_DEPTH), 0.38);
+                const alpha = 0.02 + depth * 0.54;
+
+                // Color by type — teal dominant, blue/indigo as subtle accents
+                let rC, gC, bC, alphaScale;
+                if (b.colorType === 1) {
+                    // Electric blue — slightly dimmer than teal
+                    rC = 0; gC = Math.round(100 + depth * 35); bC = Math.round(215 + depth * 12);
+                    alphaScale = 0.75;
+                } else if (b.colorType === 2) {
+                    // Deep indigo — present but subdued, not competing
+                    rC = Math.round(55 + depth * 20); gC = 0; bC = Math.round(135 + depth * 25);
+                    alphaScale = 0.45;
+                } else {
+                    const edge = Math.abs(b.xRatio - 0.5) * 2;
+                    rC = 0; gC = Math.round(188 + depth * 22 - edge * 20); bC = Math.round(196 + edge * 38);
+                    alphaScale = 1.0;
                 }
-            }
+                const a = alpha * alphaScale;
+
+                const grad = ctx.createLinearGradient(sx, topY, sx, H);
+                grad.addColorStop(0,    `rgba(${rC},${gC},${bC},0)`);
+                grad.addColorStop(0.08, `rgba(${rC},${gC},${bC},${a.toFixed(3)})`);
+                grad.addColorStop(0.78, `rgba(${rC},${gC},${bC},${(a * 0.16).toFixed(3)})`);
+                grad.addColorStop(1,    `rgba(${rC},${gC},${bC},0.01)`);
+                ctx.fillStyle = grad;
+                ctx.fillRect(sx - sw * 0.5, topY, sw, H - topY);
+
+                // Soft glow tip — teal only, reduced intensity
+                if (b.colorType === 0 && depth > 0.62 && sh > 25) {
+                    const gr = ctx.createRadialGradient(sx, topY, 0, sx, topY, sw * 2.5);
+                    gr.addColorStop(0, `rgba(${rC},${gC},${bC},${(a * 0.20).toFixed(3)})`);
+                    gr.addColorStop(1, `rgba(${rC},${gC},${bC},0)`);
+                    ctx.fillStyle = gr;
+                    ctx.fillRect(sx - sw * 2.5, topY - sw * 2.5, sw * 5, sw * 5);
+                }
+            });
+
+            // Top fade
+            const topFade = ctx.createLinearGradient(0, 0, 0, H * 0.60);
+            topFade.addColorStop(0,    'rgba(8,8,12,0.95)');
+            topFade.addColorStop(0.28, 'rgba(8,8,12,0.52)');
+            topFade.addColorStop(1,    'rgba(8,8,12,0)');
+            ctx.fillStyle = topFade;
+            ctx.fillRect(0, 0, W, H * 0.60);
+
+            // Central vignette
+            const vig = ctx.createRadialGradient(W * 0.5, H * 0.37, H * 0.04, W * 0.5, H * 0.37, H * 0.80);
+            vig.addColorStop(0,    'rgba(8,8,12,0.68)');
+            vig.addColorStop(0.38, 'rgba(8,8,12,0.14)');
+            vig.addColorStop(1,    'rgba(8,8,12,0)');
+            ctx.fillStyle = vig;
+            ctx.fillRect(0, 0, W, H);
         }
 
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => { p.update(); p.draw(); });
-            connectParticles();
-            requestAnimationFrame(animate);
-        }
-
-        canvas.parentElement.addEventListener('mousemove', e => {
-            const rect = canvas.getBoundingClientRect();
-            mouse.x = e.clientX - rect.left;
-            mouse.y = e.clientY - rect.top;
-        });
-        canvas.parentElement.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
-        window.addEventListener('resize', () => {
-            resize();
-            const needed = Math.min(Math.floor((canvas.width * canvas.height) / 12000), 80);
-            if (Math.abs(particles.length - needed) > 10) init();
-        });
-
-        init();
-        animate();
+        resize();
+        buildBars();
+        window.addEventListener('resize', () => { resize(); buildBars(); });
+        gsap.ticker.add((time, delta) => draw(time, delta / 1000));
     })();
 
     // ============================================
@@ -1915,7 +2051,7 @@
                 const isRight = angle < 90 || angle > 270;
                 node.style.position = 'absolute';
                 node.style.left = x + 'px';
-                node.style.top = y + 'px';
+                node.style.top  = y + 'px';
                 node.style.transform = 'translate(-28px, -28px)';
                 node.style.flexDirection = isRight ? 'row' : 'row-reverse';
 
@@ -2026,7 +2162,6 @@
             // Slow rotation (0.5 deg per second)
             orbitAngleOffset += 0.008;
             positionNodes();
-            resizeOrbitCanvas();
             updatePulses();
             drawConnections();
 
@@ -2055,7 +2190,8 @@
             scrollTrigger: {
                 trigger: '.ecosystem',
                 start: 'top 70%',
-                toggleActions: 'play none none none'
+                toggleActions: 'play none none none',
+                onEnter: () => { orbitAngleOffset = 0; positionNodes(); }
             }
         });
 
@@ -2085,12 +2221,13 @@
             transformOrigin: 'center center'
         });
 
-        // Node floating
+        // Node dot pulse (opacity only — avoids transform conflict with positionNodes)
         nodes.forEach((node, i) => {
-            gsap.to(node, {
-                y: '+=6', x: '+=' + (Math.random() > 0.5 ? '3' : '-3'),
-                duration: 2.5 + i * 0.2, repeat: -1, yoyo: true,
-                ease: 'sine.inOut', delay: i * 0.15
+            const dot = node.querySelector('.orbit-node-dot');
+            if (dot) gsap.to(dot, {
+                boxShadow: '0 0 18px rgba(0,220,205,0.22), 0 4px 24px rgba(0,0,0,0.3)',
+                duration: 2.2 + i * 0.15, repeat: -1, yoyo: true,
+                ease: 'sine.inOut', delay: i * 0.2
             });
         });
     })();
@@ -2105,6 +2242,29 @@
             onUpdate: (self) => {
                 nav.classList.toggle('scrolled', self.scroll() > 60);
             }
+        });
+    })();
+
+    // ============================================
+    // MOBILE NAV HAMBURGER
+    // ============================================
+    (function() {
+        const btn = document.getElementById('nav-hamburger');
+        const links = document.getElementById('nav-links');
+        if (!btn || !links) return;
+
+        btn.addEventListener('click', () => {
+            const open = links.classList.toggle('open');
+            btn.classList.toggle('open', open);
+            document.body.style.overflow = open ? 'hidden' : '';
+        });
+
+        links.querySelectorAll('a').forEach(a => {
+            a.addEventListener('click', () => {
+                links.classList.remove('open');
+                btn.classList.remove('open');
+                document.body.style.overflow = '';
+            });
         });
     })();
 
