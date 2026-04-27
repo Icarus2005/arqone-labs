@@ -1203,17 +1203,6 @@
             box-shadow: 0 0 50px rgba(0, 220, 205, 0.4);
         }
 
-        /* ElevenLabs widget — hidden off-screen by default, slides up during active call */
-        elevenlabs-convai {
-            position: fixed !important;
-            bottom: -300px !important;
-            right: 24px !important;
-            transition: bottom 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
-            z-index: 9999 !important;
-        }
-        elevenlabs-convai.athena-active {
-            bottom: 24px !important;
-        }
 
         .athena-avatar-name {
             font-family: var(--font-mono);
@@ -1630,18 +1619,6 @@
 
     </div>
 
-    <!-- ATHENA — ELEVENLABS AI AGENT -->
-    <elevenlabs-convai agent-id="agent_8901kpzxg3kneyzbzht3zwy506d9"></elevenlabs-convai>
-    <!-- Force open shadow DOM before widget loads so we can programmatically click its call button -->
-    <script>
-    (function() {
-        var orig = Element.prototype.attachShadow;
-        Element.prototype.attachShadow = function(init) {
-            return orig.call(this, Object.assign({}, init, { mode: 'open' }));
-        };
-    })();
-    </script>
-    <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
 
     <script>
     // ============================================
@@ -2172,68 +2149,53 @@
 
     } // end GSAP guard
 
-    // ============================================
-    // ATHENA WIDGET TRIGGERS
-    // ============================================
-    (function() {
-        var widget = document.querySelector('elevenlabs-convai');
-        var isActive = false;
+    </script>
 
-        function openAthenaWidget() {
-            if (!widget || isActive) return;
-            widget.classList.add('athena-active');
+    <!-- ATHENA — ElevenLabs JS SDK (true single-click) -->
+    <script type="module">
+    import { Conversation } from 'https://esm.sh/@11labs/client';
 
-            // Retry loop — shadow DOM may not render instantly after widget loads
-            function tryTrigger(attempt) {
-                if (attempt > 10) return;
-                var triggered = false;
-                try {
-                    if (widget.shadowRoot) {
-                        var selectors = ['button', '[role="button"]', '[class*="call"]', '[class*="start"]', '[class*="mic"]', '[part]'];
-                        for (var i = 0; i < selectors.length; i++) {
-                            var btn = widget.shadowRoot.querySelector(selectors[i]);
-                            if (btn) { btn.click(); triggered = true; break; }
-                        }
-                    }
-                } catch(e) {}
-                if (!triggered && typeof widget.startSession === 'function') {
-                    try { widget.startSession(); triggered = true; } catch(e) {}
+    const AGENT_ID = 'agent_8901kpzxg3kneyzbzht3zwy506d9';
+    let conversation = null;
+    let isActive = false;
+
+    async function startAthena() {
+        if (isActive) return;
+        const av = document.querySelector('.athena-avatar');
+        if (av) av.classList.add('athena-call-active');
+
+        try {
+            conversation = await Conversation.startSession({
+                agentId: AGENT_ID,
+                onConnect: () => {
+                    isActive = true;
+                },
+                onDisconnect: () => {
+                    isActive = false;
+                    if (av) av.classList.remove('athena-call-active');
+                    const cta = document.getElementById('athena-calendly-cta');
+                    if (cta) cta.classList.add('visible');
+                },
+                onError: (err) => {
+                    console.error('Athena error:', err);
+                    isActive = false;
+                    if (av) av.classList.remove('athena-call-active');
                 }
-                if (!triggered) {
-                    setTimeout(function() { tryTrigger(attempt + 1); }, 150);
-                }
-            }
-            tryTrigger(0);
+            });
+        } catch(e) {
+            console.error('Failed to start Athena session:', e);
+            isActive = false;
+            if (av) av.classList.remove('athena-call-active');
         }
+    }
 
-        // Show/hide the ElevenLabs UI based on call state
-        if (widget) {
-            widget.addEventListener('elevenlabs-convai:call_started', function() {
-                isActive = true;
-                widget.classList.add('athena-active');
-                var av = document.querySelector('.athena-avatar');
-                if (av) av.classList.add('athena-call-active');
-            });
-            widget.addEventListener('elevenlabs-convai:call_ended', function() {
-                isActive = false;
-                widget.classList.remove('athena-active');
-                var av = document.querySelector('.athena-avatar');
-                if (av) av.classList.remove('athena-call-active');
-                var cta = document.getElementById('athena-calendly-cta');
-                if (cta) cta.classList.add('visible');
-            });
-        }
-
-        // Wire up all trigger elements
-        ['athena-avatar-btn', 'athena-start-btn', 'hero-athena-trigger'].forEach(function(id) {
-            var el = document.getElementById(id);
-            if (el) el.addEventListener('click', function(e) {
-                e.preventDefault();
-                openAthenaWidget();
-            });
+    ['athena-avatar-btn', 'athena-start-btn', 'hero-athena-trigger'].forEach(function(id) {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('click', function(e) {
+            e.preventDefault();
+            startAthena();
         });
-    })();
-
+    });
     </script>
 </body>
 </html>
