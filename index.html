@@ -831,13 +831,25 @@
         /* ---- SERVICES ---- */
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 24px;
         }
 
         @media (max-width: 1024px) {
             .services-grid { grid-template-columns: repeat(2, 1fr); }
         }
+
+        .service-card-link {
+            display: inline-block;
+            margin-top: 20px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--teal);
+            text-decoration: none;
+            letter-spacing: 0.02em;
+            transition: opacity 0.2s;
+        }
+        .service-card-link:hover { opacity: 0.7; }
 
         .service-card {
             background: var(--bg-card);
@@ -1540,7 +1552,7 @@
                 <a href="#ecosystem">Ecosystem</a>
                 <a href="#portfolio">Portfolio</a>
                 <a href="#about">About</a>
-                <a href="#services">Services</a>
+                <a href="services.html">Services</a>
                 <a href="#athena" class="nav-athena-link">Athena</a>
                 <a href="https://calendly.com/piero-ainavigator" target="_blank" class="nav-cta-book magnetic-target">Book a Call</a>
                 <a href="contact.html" class="nav-cta magnetic-target">Get in Touch</a>
@@ -1807,28 +1819,24 @@
                         <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v3l2 2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </div>
                     <h3>AI Readiness Assessment</h3>
-                    <p>A structured diagnostic of your business operations. We identify where AI creates measurable value, model the ROI, and deliver a prioritised implementation roadmap. The starting point for everything that follows.</p>
+                    <p>A structured diagnostic of your operations. We identify where AI creates measurable value, model the ROI, and deliver a prioritised implementation roadmap. The starting point for everything that follows.</p>
+                    <a href="services.html#readiness" class="service-card-link">Learn more &rarr;</a>
                 </div>
                 <div class="service-card gs-reveal">
                     <div class="service-icon-wrap">
                         <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </div>
-                    <h3>Agentic Workflow Automation</h3>
-                    <p>We design and deploy AI-powered workflows that eliminate your most time-consuming manual operations. Lead routing, client onboarding, document processing, internal reporting. Built to run without supervision.</p>
-                </div>
-                <div class="service-card gs-reveal">
-                    <div class="service-icon-wrap">
-                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke-linecap="round"/></svg>
-                    </div>
-                    <h3>Custom AI Agent Development</h3>
-                    <p>Bespoke AI agents built for your specific business context. Sales qualification, support triage, internal knowledge retrieval, data analysis. Deployed on your infrastructure, trained on your data.</p>
+                    <h3>Custom Agentic Automation</h3>
+                    <p>AI-powered workflows and custom agents built for your business. From eliminating manual operations to deploying intelligent agents for sales, support, and data — on your infrastructure, trained on your data.</p>
+                    <a href="services.html#automation" class="service-card-link">Learn more &rarr;</a>
                 </div>
                 <div class="service-card gs-reveal">
                     <div class="service-icon-wrap">
                         <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </div>
-                    <h3>AI Transformation Advisory</h3>
-                    <p>Strategic advisory for businesses navigating broader AI transformation. We help leadership teams build internal capability, define governance, and create a roadmap to compete in an AI-native market. Available as a retained engagement.</p>
+                    <h3>Executive AI Training</h3>
+                    <p>Structured workshops and retained advisory for leadership teams navigating AI adoption. Build internal capability, define governance, and lead the transformation rather than react to it.</p>
+                    <a href="services.html#training" class="service-card-link">Learn more &rarr;</a>
                 </div>
 
                 <!-- ATHENA FEATURED CARD -->
@@ -1894,8 +1902,15 @@
 
         <!-- FOOTER -->
         <footer>
-            <div class="footer-left" style="display:flex;align-items:center;gap:10px;"><img src="ArqOne%20Labs%20Logo.gif" alt="ArqOne Labs" style="height:24px;width:auto;"> — Enterprise-grade capability for growing businesses</div>
-            <div class="footer-right">&copy; 2026</div>
+            <div class="footer-left" style="display:flex;align-items:center;gap:10px;">
+                <img src="ArqOne%20Labs%20Logo.gif" alt="ArqOne Labs" style="height:31px;width:auto;">
+                <span style="color:var(--gray-400);">—</span> Enterprise-grade capability for growing businesses
+            </div>
+            <div class="footer-right" style="display:flex;align-items:center;gap:20px;">
+                <a href="privacy.html" style="font-family:var(--font-mono);font-size:0.7rem;color:var(--gray-400);text-decoration:none;letter-spacing:0.05em;transition:color 0.2s;" onmouseover="this.style.color='var(--teal)'" onmouseout="this.style.color='var(--gray-400)'">Privacy Policy</a>
+                <a href="terms.html" style="font-family:var(--font-mono);font-size:0.7rem;color:var(--gray-400);text-decoration:none;letter-spacing:0.05em;transition:color 0.2s;" onmouseover="this.style.color='var(--teal)'" onmouseout="this.style.color='var(--gray-400)'">Terms &amp; Conditions</a>
+                <span style="font-family:var(--font-mono);font-size:0.7rem;color:var(--gray-400);letter-spacing:0.05em;">&copy; 2026 ArqOne Labs</span>
+            </div>
         </footer>
 
     </div>

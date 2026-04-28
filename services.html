@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Consulting Services — ArqOne Labs</title>
+    <meta name="description" content="Senior-level AI strategy and hands-on implementation. AI Readiness Assessment, Custom Agentic Automation, and Executive AI Training from ArqOne Labs.">
+    <meta property="og:title" content="AI Consulting Services — ArqOne Labs">
+    <meta property="og:description" content="Strategy to deployment, without the consulting markup. AI Readiness, Automation, and Executive Training.">
+    <meta property="og:url" content="https://arqonelabs.com/services.html">
+    <meta property="og:type" content="website">
+    <link rel="icon" type="image/gif" href="favicon.gif">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #08080C;
+            --bg-elevated: #0E0E14;
+            --bg-card: #12121A;
+            --teal: #00DCD0;
+            --teal-dim: #00A89E;
+            --white: #F0F0F4;
+            --gray-100: #C8C8D0;
+            --gray-200: #9898A4;
+            --gray-300: #68687A;
+            --gray-400: #3A3A4A;
+            --border: rgba(255,255,255,0.06);
+            --font-sans: 'Inter', -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg);
+            color: var(--gray-100);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Grid background */
+        .grid-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 100;
+            transition: all 0.4s;
+        }
+        nav.scrolled {
+            background: rgba(8,8,12,0.92);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 40px;
+        }
+        .nav-logo img { height: 38px; width: auto; display: block; }
+        .nav-links { display: flex; align-items: center; gap: 32px; }
+        .nav-links a {
+            font-size: 0.875rem;
+            color: var(--gray-200);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--white); }
+        .nav-links a.nav-athena { color: var(--teal); font-weight: 500; }
+        .nav-cta-book {
+            padding: 8px 18px;
+            border: 1.5px solid var(--teal);
+            border-radius: 8px;
+            color: var(--teal) !important;
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+        .nav-cta-book:hover { background: rgba(0,220,205,0.08); }
+        .nav-cta {
+            padding: 8px 18px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
+            color: var(--white) !important;
+            font-weight: 500;
+            font-size: 0.875rem;
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+        .nav-cta:hover { border-color: rgba(255,255,255,0.3); }
+
+        /* PAGE WRAPPER */
+        .page { position: relative; z-index: 1; }
+
+        /* HERO */
+        .services-hero {
+            min-height: 72vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 140px 40px 100px;
+            position: relative;
+            overflow: hidden;
+        }
+        .services-hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0,220,205,0.10) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 30% at 20% 80%, rgba(59,158,255,0.06) 0%, transparent 50%),
+                radial-gradient(ellipse 40% 30% at 80% 70%, rgba(167,139,250,0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .hero-label {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: 20px;
+        }
+        .services-hero h1 {
+            font-size: clamp(2.4rem, 5vw, 4rem);
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            max-width: 760px;
+            margin-bottom: 24px;
+        }
+        .services-hero h1 .accent { color: var(--teal); }
+        .services-hero p {
+            font-size: 1.05rem;
+            color: var(--gray-200);
+            max-width: 540px;
+            line-height: 1.75;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+        .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+        .btn-primary {
+            padding: 14px 28px;
+            background: var(--teal);
+            color: #08080C;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+        .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+        .btn-secondary {
+            padding: 14px 28px;
+            background: transparent;
+            color: var(--white);
+            font-weight: 500;
+            font-size: 0.9rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.15);
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+        .btn-secondary:hover { border-color: rgba(255,255,255,0.35); transform: translateY(-1px); }
+
+        /* SERVICE NAV ANCHORS */
+        .service-nav {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 0 40px 60px;
+            flex-wrap: wrap;
+        }
+        .service-nav a {
+            padding: 8px 20px;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.82rem;
+            color: var(--gray-200);
+            text-decoration: none;
+            transition: all 0.25s;
+            font-weight: 500;
+        }
+        .service-nav a:hover {
+            border-color: rgba(0,220,205,0.3);
+            color: var(--teal);
+            background: rgba(0,220,205,0.04);
+        }
+
+        /* DIVIDER */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* SERVICE SECTION */
+        .service-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 40px;
+        }
+        .service-section + .service-section { border-top: 1px solid var(--border); }
+
+        .service-section-inner {
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        /* Left column */
+        .service-aside { position: sticky; top: 100px; }
+        .service-num {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            color: var(--teal);
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        .service-aside h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -0.025em;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        .service-aside p {
+            font-size: 0.9rem;
+            color: var(--gray-200);
+            line-height: 1.75;
+            font-weight: 300;
+            margin-bottom: 28px;
+        }
+        .service-aside-cta {
+            display: inline-block;
+            padding: 12px 24px;
+            background: var(--teal);
+            color: #08080C;
+            font-weight: 700;
+            font-size: 0.85rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .service-aside-cta:hover { opacity: 0.85; }
+        .service-aside-cta-outline {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 11px 24px;
+            border: 1px solid rgba(0,220,205,0.3);
+            color: var(--teal);
+            font-weight: 600;
+            font-size: 0.85rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .service-aside-cta-outline:hover { background: rgba(0,220,205,0.06); }
+
+        /* Right column */
+        .service-body {}
+
+        .service-block { margin-bottom: 52px; }
+        .service-block:last-child { margin-bottom: 0; }
+
+        .service-block-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gray-300);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .service-block-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* Deliverables grid */
+        .deliverables-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        .deliverable-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 18px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: border-color 0.25s;
+        }
+        .deliverable-item:hover { border-color: rgba(0,220,205,0.15); }
+        .deliverable-icon {
+            width: 32px; height: 32px;
+            border-radius: 8px;
+            background: rgba(0,220,205,0.08);
+            border: 1px solid rgba(0,220,205,0.15);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .deliverable-icon svg {
+            width: 15px; height: 15px;
+            stroke: var(--teal);
+            fill: none;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .deliverable-text strong {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 3px;
+        }
+        .deliverable-text span {
+            font-size: 0.78rem;
+            color: var(--gray-200);
+            line-height: 1.5;
+        }
+
+        /* Process steps */
+        .process-list { display: flex; flex-direction: column; gap: 0; }
+        .process-item {
+            display: flex;
+            gap: 20px;
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+        }
+        .process-item:last-child { border-bottom: none; }
+        .process-item-num {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid rgba(0,220,205,0.2);
+            display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--teal);
+            flex-shrink: 0;
+        }
+        .process-item-content strong {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 4px;
+        }
+        .process-item-content p {
+            font-size: 0.85rem;
+            color: var(--gray-200);
+            line-height: 1.65;
+        }
+
+        /* Use case cards */
+        .use-cases-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        .use-case-card {
+            padding: 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .use-case-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 3px; height: 100%;
+            background: var(--teal);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .use-case-card:hover { border-color: rgba(0,220,205,0.12); transform: translateY(-2px); }
+        .use-case-card:hover::before { opacity: 1; }
+        .use-case-card h4 {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+        .use-case-card p {
+            font-size: 0.82rem;
+            color: var(--gray-200);
+            line-height: 1.6;
+        }
+        .use-case-card .use-case-tag {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 3px 10px;
+            background: rgba(0,220,205,0.06);
+            border: 1px solid rgba(0,220,205,0.15);
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--teal);
+            letter-spacing: 0.08em;
+        }
+
+        /* Who it's for */
+        .audience-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .audience-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.88rem;
+            color: var(--gray-100);
+        }
+        .audience-item::before {
+            content: '';
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--teal);
+            flex-shrink: 0;
+        }
+
+        /* Programme format cards */
+        .formats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .format-card {
+            padding: 32px 28px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            transition: all 0.35s;
+            position: relative;
+        }
+        .format-card.featured {
+            border-color: rgba(0,220,205,0.25);
+            background: linear-gradient(135deg, rgba(0,220,205,0.05) 0%, var(--bg-card) 60%);
+        }
+        .format-card.featured::after {
+            content: 'Most Popular';
+            position: absolute;
+            top: -1px; right: 20px;
+            padding: 4px 12px;
+            background: var(--teal);
+            color: #08080C;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            border-radius: 0 0 6px 6px;
+            text-transform: uppercase;
+        }
+        .format-card:hover { border-color: rgba(0,220,205,0.2); transform: translateY(-3px); }
+        .format-card h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 6px;
+        }
+        .format-duration {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--teal);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        .format-card p {
+            font-size: 0.85rem;
+            color: var(--gray-200);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        .format-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .format-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 0.8rem;
+            color: var(--gray-200);
+            line-height: 1.5;
+        }
+        .format-list li::before {
+            content: '→';
+            color: var(--teal);
+            flex-shrink: 0;
+            font-size: 0.75rem;
+            margin-top: 2px;
+        }
+
+        /* CTA SECTION */
+        .cta-section {
+            text-align: center;
+            padding: 120px 40px;
+            position: relative;
+            border-top: 1px solid var(--border);
+        }
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 50%; transform: translateX(-50%);
+            width: 600px; height: 300px;
+            background: radial-gradient(ellipse at center top, rgba(0,220,205,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: 16px;
+        }
+        .cta-section h2 {
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -0.025em;
+            margin-bottom: 16px;
+        }
+        .cta-section p {
+            font-size: 1rem;
+            color: var(--gray-200);
+            max-width: 500px;
+            margin: 0 auto 36px;
+            line-height: 1.7;
+        }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer-left {
+            font-size: 0.8rem;
+            color: var(--gray-300);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .footer-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .footer-right a {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--gray-400);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            transition: color 0.2s;
+        }
+        .footer-right a:hover { color: var(--teal); }
+        .footer-copy {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--gray-400);
+            letter-spacing: 0.05em;
+        }
+
+        /* REVEAL ANIMATION */
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .reveal.visible { opacity: 1; transform: none; }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .service-section-inner { grid-template-columns: 1fr; gap: 48px; }
+            .service-aside { position: static; }
+            .formats-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            nav { padding: 16px 20px; }
+            .nav-links { display: none; }
+            .services-hero { padding: 120px 20px 80px; }
+            .service-section { padding: 60px 20px; }
+            .deliverables-grid { grid-template-columns: 1fr; }
+            .use-cases-grid { grid-template-columns: 1fr; }
+            footer { flex-direction: column; gap: 16px; text-align: center; padding: 32px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-bg"></div>
+
+    <nav id="main-nav">
+        <div class="nav-logo">
+            <a href="index.html"><img src="ArqOne%20Labs%20Logo.gif" alt="ArqOne Labs"></a>
+        </div>
+        <div class="nav-links">
+            <a href="index.html#ecosystem">Ecosystem</a>
+            <a href="index.html#portfolio">Portfolio</a>
+            <a href="index.html#about">About</a>
+            <a href="services.html" class="active">Services</a>
+            <a href="index.html#athena" class="nav-athena">Athena</a>
+            <a href="https://calendly.com/piero-ainavigator" target="_blank" class="nav-cta-book">Book a Call</a>
+            <a href="contact.html" class="nav-cta">Get in Touch</a>
+        </div>
+    </nav>
+
+    <div class="page">
+
+        <!-- HERO -->
+        <section class="services-hero">
+            <div class="hero-label">AI Consulting</div>
+            <h1>Expert-led AI that<br><span class="accent">actually ships</span></h1>
+            <p>Senior-level strategy and hands-on implementation from a practitioner who deploys in the real world. We identify where AI creates measurable value — then we build it.</p>
+            <div class="hero-ctas">
+                <a href="https://calendly.com/piero-ainavigator" target="_blank" class="btn-primary">Book a Strategy Call</a>
+                <a href="index.html#athena" class="btn-secondary">Start with Athena (Free)</a>
+            </div>
+        </section>
+
+        <!-- ANCHOR NAV -->
+        <div class="service-nav">
+            <a href="#readiness">AI Readiness Assessment</a>
+            <a href="#automation">Custom Agentic Automation</a>
+            <a href="#training">Executive AI Training</a>
+        </div>
+
+        <!-- ─────────────────────────────────────────── -->
+        <!-- SERVICE 1: AI READINESS ASSESSMENT          -->
+        <!-- ─────────────────────────────────────────── -->
+        <section class="service-section" id="readiness">
+            <div class="service-section-inner">
+
+                <!-- Left: overview + CTA -->
+                <div class="service-aside reveal">
+                    <div class="service-num">01 / AI Readiness</div>
+                    <h2>Know exactly where AI fits before you invest</h2>
+                    <p>A structured diagnostic of your business operations. We surface the high-impact opportunities, model the ROI, and hand you a prioritised roadmap — so every AI investment is deliberate, not experimental.</p>
+                    <a href="index.html#athena" class="service-aside-cta">Start with Athena — Free</a><br>
+                    <a href="https://calendly.com/piero-ainavigator" target="_blank" class="service-aside-cta-outline">Book a Discovery Call</a>
+                </div>
+
+                <!-- Right: detail -->
+                <div class="service-body">
+
+                    <div class="service-block reveal">
+                        <div class="service-block-label">What you receive</div>
+                        <div class="deliverables-grid">
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>Business Efficiency Score</strong>
+                                    <span>Benchmarked across 6 operational dimensions with clear gaps identified</span>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>Opportunity Matrix</strong>
+                                    <span>Every identified opportunity mapped by effort, cost, and expected ROI</span>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>Quick Wins Plan</strong>
+                                    <span>3–5 automations or AI tools you can deploy within 30 days</span>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>90-Day Roadmap</strong>
+                                    <span>Sequenced implementation plan with owners, tooling, and milestones</span>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>ROI Model</strong>
+                                    <span>Financial estimate for the top 3 opportunities including time-to-value</span>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>Strategy Walkthrough</strong>
+                                    <span>30-minute call with Piero to review findings and agree on priorities</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-block reveal">
+                        <div class="service-block-label">How it works</div>
+                        <div class="process-list">
+                            <div class="process-item">
+                                <div class="process-item-num">01</div>
+                                <div class="process-item-content">
+                                    <strong>Athena Assessment (Free, 15 min)</strong>
+                                    <p>Start with Athena, our AI assessment agent. She runs a structured business diagnostic — covering your operations, team, revenue model, and current tech stack. You receive a preliminary AI Readiness Report immediately after.</p>
+                                </div>
+                            </div>
+                            <div class="process-item">
+                                <div class="process-item-num">02</div>
+                                <div class="process-item-content">
+                                    <strong>Extended Discovery Call</strong>
+                                    <p>A 30-minute call with Piero to go deeper on your highest-priority areas. We review the Athena report together and identify where the biggest gains are hiding.</p>
+                                </div>
+                            </div>
+                            <div class="process-item">
+                                <div class="process-item-num">03</div>
+                                <div class="process-item-content">
+                                    <strong>Full Readiness Report</strong>
+                                    <p>A comprehensive document covering the full opportunity matrix, ROI models, quick wins, and your 90-day roadmap. Delivered within 5 business days of the discovery call.</p>
+                                </div>
+                            </div>
+                            <div class="process-item">
+                                <div class="process-item-num">04</div>
+                                <div class="process-item-content">
+                                    <strong>Strategy Walkthrough & Next Steps</strong>
+                                    <p>We walk through the report together, answer questions, and agree on which opportunities to pursue first — and whether we're the right partner to build them with you.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-block reveal">
+                        <div class="service-block-label">Who this is for</div>
+                        <div class="audience-list">
+                            <div class="audience-item">SME founders and operations leaders who know AI is important but don't know where to start</div>
+                            <div class="audience-item">Businesses generating £500K–£20M revenue considering their first serious AI investment</div>
+                            <div class="audience-item">Leadership teams that have tried individual AI tools but need a coherent strategy</div>
+                            <div class="audience-item">Heads of operations or strategy benchmarking AI readiness before a board presentation</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ─────────────────────────────────────────── -->
+        <!-- SERVICE 2: CUSTOM AGENTIC AUTOMATION        -->
+        <!-- ─────────────────────────────────────────── -->
+        <section class="service-section" id="automation">
+            <div class="service-section-inner">
+
+                <div class="service-aside reveal">
+                    <div class="service-num">02 / Agentic Automation</div>
+                    <h2>AI that does the work, not just the talking</h2>
+                    <p>We design and deploy intelligent workflows and custom AI agents that handle your most repetitive, high-volume operations — from lead qualification to document processing to customer support triage. Built to run without supervision.</p>
+                    <a href="https://calendly.com/piero-ainavigator" target="_blank" class="service-aside-cta">Book a Discovery Call</a>
+                </div>
+
+                <div class="service-body">
+
+                    <div class="service-block reveal">
+                        <div class="service-block-label">What we build</div>
+                        <div class="deliverables-grid">
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>Multi-Step Agentic Workflows</strong>
+                                    <span>Complex automation sequences with conditional logic, approvals, and error handling</span>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>Custom AI Agents</strong>
+                                    <span>Intelligent agents trained on your data for sales, support, analysis, and operations</span>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.43 9.88 19.79 19.79 0 0 1 1.37 1.18 2 2 0 0 1 3.34 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6.29 6.29l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>Voice AI Agents</strong>
+                                    <span>Inbound and outbound voice automation for sales qualification and customer service</span>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>Internal Knowledge Systems</strong>
+                                    <span>RAG-powered document intelligence, company knowledge bases, and AI search</span>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><polyline points="8 21 12 17 16 21"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>CRM & Platform Integrations</strong>
+                                    <span>Seamless connections with HubSpot, Salesforce, Notion, Slack, and 200+ tools</span>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>Monitoring & Handover</strong>
+                                    <span>Full documentation, alerting, and team training so you own what we build</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-block reveal">
+                        <div class="service-block-label">Common deployments</div>
+                        <div class="use-cases-grid">
+                            <div class="use-case-card">
+                                <h4>Sales Automation</h4>
+                                <p>Lead capture from any channel → AI qualification → personalised follow-up sequence → CRM logging and handoff to sales. Runs 24/7 without headcount.</p>
+                                <span class="use-case-tag">Sales &amp; Revenue</span>
+                            </div>
+                            <div class="use-case-card">
+                                <h4>Customer Support Triage</h4>
+                                <p>Inbound tickets classified and resolved by AI for common queries, escalated to humans only when needed. Resolution rate typically 60–80% without agent involvement.</p>
+                                <span class="use-case-tag">Operations</span>
+                            </div>
+                            <div class="use-case-card">
+                                <h4>Document Processing</h4>
+                                <p>Contracts, invoices, applications, and reports processed, extracted, routed, and filed automatically. Eliminates hours of manual data entry daily.</p>
+                                <span class="use-case-tag">Back Office</span>
+                            </div>
+                            <div class="use-case-card">
+                                <h4>Internal Intelligence Agent</h4>
+                                <p>AI agent connected to your SOPs, policies, and knowledge base. Your team gets instant answers without bothering senior staff or searching through Notion.</p>
+                                <span class="use-case-tag">Team Productivity</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-block reveal">
+                        <div class="service-block-label">Typical engagement timeline</div>
+                        <div class="process-list">
+                            <div class="process-item">
+                                <div class="process-item-num">W1</div>
+                                <div class="process-item-content">
+                                    <strong>Discovery & Process Mapping</strong>
+                                    <p>We document the current process in detail — inputs, outputs, exceptions, handoffs, and pain points. This is the foundation everything else builds on.</p>
+                                </div>
+                            </div>
+                            <div class="process-item">
+                                <div class="process-item-num">W2</div>
+                                <div class="process-item-content">
+                                    <strong>Architecture & Tooling</strong>
+                                    <p>We design the technical solution — which AI models, automation platforms, APIs, and infrastructure. You approve the approach before any build begins.</p>
+                                </div>
+                            </div>
+                            <div class="process-item">
+                                <div class="process-item-num">W3–5</div>
+                                <div class="process-item-content">
+                                    <strong>Build, Test & Iterate</strong>
+                                    <p>The automation is built, tested against real data, refined based on edge cases, and validated with your team before going anywhere near production.</p>
+                                </div>
+                            </div>
+                            <div class="process-item">
+                                <div class="process-item-num">W6</div>
+                                <div class="process-item-content">
+                                    <strong>Deploy, Train & Hand Over</strong>
+                                    <p>Live deployment, monitoring setup, team walkthrough, and full documentation. You own it completely — no vendor dependency, no black box.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-block reveal">
+                        <div class="service-block-label">Who this is for</div>
+                        <div class="audience-list">
+                            <div class="audience-item">Teams spending 20+ hours per week on manual, repeatable tasks that have clear rules</div>
+                            <div class="audience-item">Businesses scaling customer interactions faster than headcount can keep up</div>
+                            <div class="audience-item">Founders who've tried DIY automation tools and hit the ceiling of what's possible without a developer</div>
+                            <div class="audience-item">Operations managers with a backlog of process improvement ideas and no bandwidth to execute them</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ─────────────────────────────────────────── -->
+        <!-- SERVICE 3: EXECUTIVE AI TRAINING            -->
+        <!-- ─────────────────────────────────────────── -->
+        <section class="service-section" id="training">
+            <div class="service-section-inner">
+
+                <div class="service-aside reveal">
+                    <div class="service-num">03 / Executive Training</div>
+                    <h2>Lead the AI shift — don't just react to it</h2>
+                    <p>Structured programmes for leadership teams navigating AI adoption. We build the literacy, frameworks, and roadmap your organisation needs to make confident decisions — not just follow trends.</p>
+                    <a href="https://calendly.com/piero-ainavigator" target="_blank" class="service-aside-cta">Book a Programme Call</a>
+                </div>
+
+                <div class="service-body">
+
+                    <div class="service-block reveal">
+                        <div class="service-block-label">What we cover</div>
+                        <div class="deliverables-grid">
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>AI Landscape & What Matters</strong>
+                                    <span>Cutting through the noise — what's real, what's hype, and what's relevant to your business</span>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>Opportunity Identification</strong>
+                                    <span>Structured frameworks for spotting AI opportunities specific to your operations</span>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>Vendor & Tool Evaluation</strong>
+                                    <span>How to assess AI vendors, build vs buy decisions, and avoid expensive mistakes</span>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>AI Roadmap Development</strong>
+                                    <span>A prioritised, executable roadmap tied to business outcomes — not a technology wish list</span>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>Governance & Risk</strong>
+                                    <span>Responsible AI deployment, data privacy, compliance considerations, and ethical guardrails</span>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>Change Management</strong>
+                                    <span>How to bring your team along — communication, adoption strategies, and capability building</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-block reveal">
+                        <div class="service-block-label">Programme formats</div>
+                        <div class="formats-grid">
+                            <div class="format-card">
+                                <h4>Team AI Workshop</h4>
+                                <div class="format-duration">Half Day — In Person or Remote</div>
+                                <p>AI literacy and opportunity identification for your full leadership team. Hands-on, practical, and tailored to your industry.</p>
+                                <ul class="format-list">
+                                    <li>AI foundations and relevance to your sector</li>
+                                    <li>Live opportunity mapping exercise</li>
+                                    <li>Tool demonstrations with real use cases</li>
+                                    <li>Team Q&A with Piero</li>
+                                </ul>
+                            </div>
+                            <div class="format-card featured">
+                                <h4>AI Strategy Day</h4>
+                                <div class="format-duration">Full Day — Senior Leadership Only</div>
+                                <p>Deep-dive session with your senior team. You leave with a concrete AI roadmap, prioritised by ROI, ready to present to the board.</p>
+                                <ul class="format-list">
+                                    <li>Full business diagnostic and AI audit</li>
+                                    <li>Vendor and tooling evaluation framework</li>
+                                    <li>Roadmap development workshop</li>
+                                    <li>Governance and risk framework</li>
+                                    <li>Documented output delivered post-session</li>
+                                </ul>
+                            </div>
+                            <div class="format-card">
+                                <h4>Retained AI Advisor</h4>
+                                <div class="format-duration">Monthly — Ongoing Partnership</div>
+                                <p>Piero as your ongoing AI strategic partner. Monthly sessions, on-call advice, and continuous roadmap refinement as the landscape evolves.</p>
+                                <ul class="format-list">
+                                    <li>Monthly strategy and review session</li>
+                                    <li>Priority access for ad hoc questions</li>
+                                    <li>Vendor and procurement guidance</li>
+                                    <li>Quarterly roadmap review and update</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-block reveal">
+                        <div class="service-block-label">Who this is for</div>
+                        <div class="audience-list">
+                            <div class="audience-item">C-suite and senior leadership teams at SMEs navigating their first major AI decisions</div>
+                            <div class="audience-item">Consulting and professional services firms that need to build AI capability for client work</div>
+                            <div class="audience-item">Heads of strategy or operations preparing an AI business case for board approval</div>
+                            <div class="audience-item">Leadership teams that want an independent perspective — not a software vendor's pitch</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta-section">
+            <div class="section-label">Let's Talk</div>
+            <h2>Ready to get started?</h2>
+            <p>Start with a free Athena assessment to see where AI fits in your business, or book a direct call with Piero.</p>
+            <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+                <a href="https://calendly.com/piero-ainavigator" target="_blank" class="btn-primary">Book a 30-Min Call</a>
+                <a href="index.html#athena" class="btn-secondary">Start with Athena — Free</a>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer>
+            <div class="footer-left">
+                <img src="ArqOne%20Labs%20Logo.gif" alt="ArqOne Labs" style="height:31px;width:auto;">
+                <span style="color:var(--gray-400);">—</span> Enterprise-grade capability for growing businesses
+            </div>
+            <div class="footer-right">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms &amp; Conditions</a>
+                <span class="footer-copy">&copy; 2026 ArqOne Labs</span>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        // Nav scroll effect
+        const nav = document.getElementById('main-nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 60);
+        });
+
+        // Reveal on scroll
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    observer.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+        reveals.forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
