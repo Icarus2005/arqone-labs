@@ -901,6 +901,89 @@
             font-weight: 300;
         }
 
+        /* ---- SERVICE PROCESS FLOW ---- */
+        .service-process {
+            display: flex;
+            align-items: flex-start;
+            gap: 0;
+            margin: 48px 0 56px;
+            position: relative;
+        }
+
+        .service-process::before {
+            content: '';
+            position: absolute;
+            top: 22px;
+            left: calc(12.5% + 11px);
+            right: calc(12.5% + 11px);
+            height: 1px;
+            background: linear-gradient(90deg, rgba(0,220,205,0.3), rgba(0,220,205,0.1) 50%, rgba(0,220,205,0.3));
+        }
+
+        .process-step {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .process-step-num {
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid rgba(0,220,205,0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--teal);
+            letter-spacing: 0.05em;
+            margin-bottom: 14px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .process-step-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--white);
+            letter-spacing: 0.02em;
+            margin-bottom: 4px;
+        }
+
+        .process-step-desc {
+            font-size: 0.72rem;
+            color: var(--gray-300);
+            line-height: 1.5;
+            max-width: 110px;
+        }
+
+        /* ---- SERVICE TIER LABEL ---- */
+        .service-tier {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            margin-top: 8px;
+        }
+
+        .service-tier-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gray-300);
+        }
+
+        .service-tier-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
         /* ---- CTA SECTION ---- */
         .cta-section {
             text-align: center;
@@ -1080,6 +1163,9 @@
             .about-layout { grid-template-columns: 1fr; gap: 32px; }
             .portfolio-grid { grid-template-columns: 1fr; }
             .services-grid { grid-template-columns: 1fr; }
+            .service-process { flex-wrap: wrap; gap: 20px; }
+            .service-process::before { display: none; }
+            .process-step { flex: 1 1 calc(50% - 10px); }
             footer { flex-direction: column; gap: 16px; text-align: center; }
 
             /* Orbital responsive */
@@ -1643,31 +1729,62 @@
         <!-- SERVICES -->
         <div class="divider"></div>
         <section id="services">
-            <div class="section-label gs-reveal">Services</div>
-            <h2 class="section-title gs-reveal">Agentic Automation</h2>
-            <p class="section-sub gs-reveal">Beyond our platforms, we help businesses design and deploy intelligent automation systems using AI tools. Hands-on work, real deployments.</p>
+            <div class="section-label gs-reveal">AI Consulting</div>
+            <h2 class="section-title gs-reveal">Strategy to deployment,<br>without the consulting markup</h2>
+            <p class="section-sub gs-reveal">Senior-level AI strategy and hands-on implementation from a practitioner who has deployed across real businesses. We identify where AI creates measurable value, then we build it.</p>
+
+            <!-- Process flow -->
+            <div class="service-process gs-reveal">
+                <div class="process-step">
+                    <div class="process-step-num">01</div>
+                    <div class="process-step-label">Assess</div>
+                    <div class="process-step-desc">Diagnose operations, identify AI opportunities</div>
+                </div>
+                <div class="process-step">
+                    <div class="process-step-num">02</div>
+                    <div class="process-step-label">Strategise</div>
+                    <div class="process-step-desc">Prioritise by ROI, build the roadmap</div>
+                </div>
+                <div class="process-step">
+                    <div class="process-step-num">03</div>
+                    <div class="process-step-label">Build</div>
+                    <div class="process-step-desc">Deploy automations, agents, integrations</div>
+                </div>
+                <div class="process-step">
+                    <div class="process-step-num">04</div>
+                    <div class="process-step-label">Scale</div>
+                    <div class="process-step-desc">Optimise, expand, build internal capability</div>
+                </div>
+            </div>
 
             <div class="services-grid">
                 <div class="service-card gs-reveal">
                     <div class="service-icon-wrap">
+                        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v3l2 2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <h3>AI Readiness Assessment</h3>
+                    <p>A structured diagnostic of your business operations. We identify where AI creates measurable value, model the ROI, and deliver a prioritised implementation roadmap. The starting point for everything that follows.</p>
+                </div>
+                <div class="service-card gs-reveal">
+                    <div class="service-icon-wrap">
                         <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </div>
-                    <h3>Workflow Automation</h3>
-                    <p>We audit your operations and build AI-powered workflows that replace manual, repetitive tasks. Lead routing, customer onboarding, internal reporting. Built to run without you babysitting them.</p>
+                    <h3>Agentic Workflow Automation</h3>
+                    <p>We design and deploy AI-powered workflows that eliminate your most time-consuming manual operations. Lead routing, client onboarding, document processing, internal reporting. Built to run without supervision.</p>
                 </div>
                 <div class="service-card gs-reveal">
                     <div class="service-icon-wrap">
                         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke-linecap="round"/></svg>
                     </div>
-                    <h3>AI Agent Development</h3>
-                    <p>Custom AI agents that handle real business functions. Sales qualification, support triage, content generation, data analysis. Deployed on your infrastructure, trained on your context.</p>
+                    <h3>Custom AI Agent Development</h3>
+                    <p>Bespoke AI agents built for your specific business context. Sales qualification, support triage, internal knowledge retrieval, data analysis. Deployed on your infrastructure, trained on your data.</p>
                 </div>
                 <div class="service-card gs-reveal">
                     <div class="service-icon-wrap">
-                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" stroke-linejoin="round"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </div>
-                    <h3>AI Strategy & Implementation</h3>
-                    <p>We identify high-impact opportunities, build the solution, and get it running. First conversation to live deployment in weeks.</p>
+                    <h3>AI Transformation Advisory</h3>
+                    <p>Strategic advisory for businesses navigating broader AI transformation. We help leadership teams build internal capability, define governance, and create a roadmap to compete in an AI-native market. Available as a retained engagement.</p>
                 </div>
 
                 <!-- ATHENA FEATURED CARD -->
