@@ -831,8 +831,12 @@
         /* ---- SERVICES ---- */
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 24px;
+        }
+
+        @media (max-width: 1024px) {
+            .services-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
         .service-card {
@@ -944,7 +948,47 @@
             margin-bottom: 14px;
             position: relative;
             z-index: 1;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: default;
         }
+
+        /* Step-specific glow colors on hover */
+        .process-step:nth-child(1):hover .process-step-num {
+            border-color: #00DCD0;
+            color: #00DCD0;
+            box-shadow: 0 0 20px rgba(0,220,208,0.45), 0 0 40px rgba(0,220,208,0.15);
+            background: rgba(0,220,208,0.08);
+            transform: scale(1.12);
+        }
+        .process-step:nth-child(2):hover .process-step-num {
+            border-color: #3B9EFF;
+            color: #3B9EFF;
+            box-shadow: 0 0 20px rgba(59,158,255,0.45), 0 0 40px rgba(59,158,255,0.15);
+            background: rgba(59,158,255,0.08);
+            transform: scale(1.12);
+        }
+        .process-step:nth-child(3):hover .process-step-num {
+            border-color: #A78BFA;
+            color: #A78BFA;
+            box-shadow: 0 0 20px rgba(167,139,250,0.45), 0 0 40px rgba(167,139,250,0.15);
+            background: rgba(167,139,250,0.08);
+            transform: scale(1.12);
+        }
+        .process-step:nth-child(4):hover .process-step-num {
+            border-color: #34D399;
+            color: #34D399;
+            box-shadow: 0 0 20px rgba(52,211,153,0.45), 0 0 40px rgba(52,211,153,0.15);
+            background: rgba(52,211,153,0.08);
+            transform: scale(1.12);
+        }
+
+        /* Step label follows hover color */
+        .process-step:nth-child(1):hover .process-step-label { color: #00DCD0; }
+        .process-step:nth-child(2):hover .process-step-label { color: #3B9EFF; }
+        .process-step:nth-child(3):hover .process-step-label { color: #A78BFA; }
+        .process-step:nth-child(4):hover .process-step-label { color: #34D399; }
+
+        .process-step-label { transition: color 0.35s; }
 
         .process-step-label {
             font-size: 0.78rem;
