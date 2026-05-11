@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The 90-Day AI Leadership Action Plan - ArqOne Labs</title>
+    <meta name="description" content="A week-by-week roadmap for executives moving from AI awareness to AI action - without disrupting operations or requiring massive upfront investment.">
+    <meta property="og:title" content="The 90-Day AI Leadership Action Plan">
+    <meta property="og:description" content="Knowing that AI matters is one thing. Knowing what to do on Monday morning is another. Here's your 90-day roadmap.">
+    <meta property="og:url" content="https://arqonelabs.com/blog/90-day-ai-leadership-action-plan.html">
+    <meta property="og:type" content="article">
+    <link rel="icon" type="image/gif" href="../favicon.gif">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #08080C;
+            --bg-elevated: #0E0E14;
+            --bg-card: #12121A;
+            --teal: #00DCD0;
+            --teal-dim: #00A89E;
+            --white: #F0F0F4;
+            --gray-100: #C8C8D0;
+            --gray-200: #9898A4;
+            --gray-300: #68687A;
+            --gray-400: #3A3A4A;
+            --border: rgba(255,255,255,0.06);
+            --font-sans: 'Inter', -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg);
+            color: var(--gray-100);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .grid-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 100;
+            transition: all 0.4s;
+        }
+        nav.scrolled {
+            background: rgba(8,8,12,0.92);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 40px;
+        }
+        .nav-logo img { height: 38px; width: auto; display: block; }
+        .nav-links { display: flex; align-items: center; gap: 32px; }
+        .nav-links a {
+            font-size: 0.875rem;
+            color: var(--gray-200);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--white); }
+        .nav-links a.nav-athena { color: var(--teal); font-weight: 500; }
+        .nav-cta-book {
+            padding: 8px 18px;
+            border: 1.5px solid var(--teal);
+            border-radius: 8px;
+            color: var(--teal) !important;
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+        .nav-cta-book:hover { background: rgba(0,220,205,0.08); }
+        .nav-cta {
+            padding: 8px 18px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
+            color: var(--white) !important;
+            font-weight: 500;
+            font-size: 0.875rem;
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+        .nav-cta:hover { border-color: rgba(255,255,255,0.3); }
+
+        .page { position: relative; z-index: 1; }
+
+        .article-header {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 160px 40px 60px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            color: var(--gray-300);
+            text-decoration: none;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--teal); }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+        .article-category {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--teal);
+            background: rgba(0,220,205,0.08);
+            border: 1px solid rgba(0,220,205,0.15);
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+        .article-meta-detail {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--gray-300);
+            letter-spacing: 0.06em;
+        }
+        .article-meta-sep { color: var(--gray-400); }
+
+        .article-header h1 {
+            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -0.03em;
+            line-height: 1.18;
+            margin-bottom: 28px;
+        }
+
+        .article-author-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-top: 28px;
+            border-top: 1px solid var(--border);
+        }
+        .author-avatar {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(0,220,205,0.25), rgba(0,220,205,0.05));
+            border: 1px solid rgba(0,220,205,0.2);
+            display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--teal);
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        .author-info strong {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--white);
+        }
+        .author-info span {
+            font-size: 0.78rem;
+            color: var(--gray-200);
+        }
+
+        .article-divider {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 0 40px;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .article-body {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 56px 40px 80px;
+        }
+
+        .article-body p {
+            font-size: 1.05rem;
+            color: var(--gray-100);
+            line-height: 1.85;
+            margin-bottom: 24px;
+            font-weight: 300;
+        }
+
+        .article-body p.lead {
+            font-size: 1.15rem;
+            color: var(--white);
+            font-weight: 400;
+            line-height: 1.8;
+        }
+
+        .article-body h2 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: -0.02em;
+            margin-top: 52px;
+            margin-bottom: 20px;
+            line-height: 1.3;
+            padding-left: 16px;
+            border-left: 3px solid rgba(0,220,205,0.4);
+        }
+
+        .phase-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--teal);
+            display: block;
+            margin-bottom: 8px;
+            margin-top: 52px;
+            padding-left: 16px;
+        }
+        .article-body h2.phase-heading {
+            margin-top: 8px;
+        }
+
+        /* 3-phase day range cards */
+        .day-phases {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin: 40px 0;
+        }
+        .day-phase-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 28px 24px;
+            text-align: center;
+            transition: border-color 0.25s;
+        }
+        .day-phase-card:hover { border-color: rgba(0,220,205,0.15); }
+        .day-phase-range {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: 10px;
+        }
+        .day-phase-card h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0;
+        }
+
+        /* Week-by-week list */
+        .week-list {
+            list-style: none;
+            margin: 24px 0 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .week-list li {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            font-size: 1rem;
+            color: var(--gray-100);
+            line-height: 1.75;
+            font-weight: 300;
+        }
+        .week-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--teal);
+            background: rgba(0,220,205,0.08);
+            border: 1px solid rgba(0,220,205,0.15);
+            padding: 3px 8px;
+            border-radius: 4px;
+            white-space: nowrap;
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+
+        .article-pullquote {
+            margin: 44px 0;
+            padding: 28px 32px;
+            border-left: 3px solid var(--teal);
+            background: rgba(0,220,205,0.04);
+            border-radius: 0 12px 12px 0;
+        }
+        .article-pullquote p {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--white);
+            line-height: 1.6;
+            margin-bottom: 0;
+            font-style: italic;
+        }
+
+        .article-cta {
+            margin-top: 72px;
+            padding: 44px;
+            background: var(--bg-card);
+            border: 1px solid rgba(0,220,205,0.15);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .article-cta::before {
+            content: '';
+            position: absolute;
+            top: -60px; right: -60px;
+            width: 200px; height: 200px;
+            background: radial-gradient(circle, rgba(0,220,205,0.07) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .article-cta .cta-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: 14px;
+        }
+        .article-cta h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+        }
+        .article-cta p {
+            font-size: 0.9rem;
+            color: var(--gray-200);
+            line-height: 1.7;
+            margin-bottom: 28px;
+            font-weight: 300;
+        }
+        .cta-buttons { display: flex; gap: 14px; flex-wrap: wrap; }
+        .btn-primary {
+            padding: 12px 24px;
+            background: var(--teal);
+            color: #08080C;
+            font-weight: 700;
+            font-size: 0.875rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.25s;
+            display: inline-block;
+        }
+        .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+        .btn-secondary {
+            padding: 12px 24px;
+            background: transparent;
+            color: var(--white);
+            font-weight: 500;
+            font-size: 0.875rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.15);
+            text-decoration: none;
+            transition: all 0.25s;
+            display: inline-block;
+        }
+        .btn-secondary:hover { border-color: rgba(255,255,255,0.35); transform: translateY(-1px); }
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer-left {
+            font-size: 0.8rem;
+            color: var(--gray-300);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .footer-right { display: flex; align-items: center; gap: 20px; }
+        .footer-right a {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--gray-400);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            transition: color 0.2s;
+        }
+        .footer-right a:hover { color: var(--teal); }
+        .footer-copy {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--gray-400);
+            letter-spacing: 0.05em;
+        }
+
+        .reading-progress {
+            position: fixed;
+            top: 0; left: 0;
+            height: 2px;
+            background: var(--teal);
+            z-index: 200;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 16px 20px; }
+            .nav-links { display: none; }
+            .article-header { padding: 120px 20px 48px; }
+            .article-body { padding: 40px 20px 60px; }
+            .article-divider { padding: 0 20px; }
+            .day-phases { grid-template-columns: 1fr; }
+            .article-cta { padding: 28px 24px; }
+            footer { flex-direction: column; gap: 16px; text-align: center; padding: 32px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="reading-progress" id="reading-progress"></div>
+    <div class="grid-bg"></div>
+
+    <nav id="main-nav">
+        <div class="nav-logo">
+            <a href="../index.html"><img src="../ArqOne%20Labs%20Logo.gif" alt="ArqOne Labs"></a>
+        </div>
+        <div class="nav-links">
+            <a href="../index.html#ecosystem">Ecosystem</a>
+            <a href="../index.html#portfolio">Portfolio</a>
+            <a href="../index.html#about">About</a>
+            <a href="../services.html">Services</a>
+            <a href="index.html" class="active">Blog</a>
+            <a href="../index.html#athena" class="nav-athena">Athena</a>
+            <a href="https://calendly.com/piero-ainavigator" target="_blank" class="nav-cta-book">Book a Call</a>
+            <a href="../contact.html" class="nav-cta">Get in Touch</a>
+        </div>
+    </nav>
+
+    <div class="page">
+
+        <div class="article-header">
+            <a href="index.html" class="back-link">&larr; All articles</a>
+            <div class="article-meta">
+                <span class="article-category">Strategy</span>
+                <span class="article-meta-detail">March 22, 2026</span>
+                <span class="article-meta-sep">-</span>
+                <span class="article-meta-detail">7 min read</span>
+            </div>
+            <h1>The 90-Day AI Leadership Action Plan</h1>
+            <div class="article-author-row">
+                <div class="author-avatar">PS</div>
+                <div class="author-info">
+                    <strong>Piero Saleme</strong>
+                    <span>Founder, ArqOne Labs</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="article-divider"></div>
+
+        <article class="article-body">
+
+            <p class="lead">Knowing that AI matters is one thing. Knowing what to do on Monday morning is another.</p>
+
+            <p>This 90-day action plan gives executives a week-by-week roadmap for moving from AI awareness to AI action - without disrupting current operations or requiring a massive upfront investment.</p>
+
+            <div class="day-phases">
+                <div class="day-phase-card">
+                    <div class="day-phase-range">Days 1-30</div>
+                    <h3>Foundation &amp; Assessment</h3>
+                </div>
+                <div class="day-phase-card">
+                    <div class="day-phase-range">Days 31-60</div>
+                    <h3>Pilot &amp; Learn</h3>
+                </div>
+                <div class="day-phase-card">
+                    <div class="day-phase-range">Days 61-90</div>
+                    <h3>Evaluate &amp; Plan</h3>
+                </div>
+            </div>
+
+            <span class="phase-label">Days 1-30</span>
+            <h2 class="phase-heading">Foundation and Assessment</h2>
+
+            <p>The first month is about building your AI literacy and assessing your organization's readiness.</p>
+
+            <ul class="week-list">
+                <li>
+                    <span class="week-label">Week 1</span>
+                    Complete an AI fluency program to build your baseline knowledge. You need a working understanding of what AI can and cannot do before you make decisions about it.
+                </li>
+                <li>
+                    <span class="week-label">Week 2</span>
+                    Audit your organization's data assets. Where is your data, who owns it, how clean is it? Data quality determines whether AI creates value or amplifies problems.
+                </li>
+                <li>
+                    <span class="week-label">Week 3</span>
+                    Identify 5-10 potential AI use cases by interviewing department leaders about their biggest pain points. The best use cases almost always come from operations, not technology.
+                </li>
+                <li>
+                    <span class="week-label">Week 4</span>
+                    Evaluate your technology infrastructure and talent gaps. What do you have, what is missing, and what would an AI deployment actually require from your team?
+                </li>
+            </ul>
+
+            <p>By the end of month one, you should have a clear picture of where you are and where the highest-value opportunities lie.</p>
+
+            <span class="phase-label">Days 31-60</span>
+            <h2 class="phase-heading">Pilot and Learn</h2>
+
+            <p>Month two is about controlled experimentation.</p>
+
+            <p>Select your top 2-3 use cases based on potential impact and feasibility. For each, define success metrics, assign a cross-functional team, and set a 30-day experiment timeline.</p>
+
+            <p>Use existing AI tools and platforms. Custom solutions come after you have validated the use case - building before validating is one of the most common and costly mistakes in enterprise AI.</p>
+
+            <p>Document everything: what works, what doesn't, what surprised you. Hold weekly check-ins with your pilot teams.</p>
+
+            <div class="article-pullquote">
+                <p>The goal is validated learning. Most organizations need 3-5 experiments before they find a use case worth scaling. That's intelligent iteration, not failure.</p>
+            </div>
+
+            <span class="phase-label">Days 61-90</span>
+            <h2 class="phase-heading">Evaluate and Plan</h2>
+
+            <p>The final month is about synthesizing learnings and building your forward plan.</p>
+
+            <p>Evaluate pilot results against your success metrics. Identify which use cases are worth scaling and what infrastructure investments they require.</p>
+
+            <p>Draft your 12-month AI roadmap with clear milestones, budget requirements, and resource needs. Present your findings and plan to the executive team.</p>
+
+            <p>Create an AI steering committee to provide ongoing governance and strategic direction. AI isn't a project with an end date - it's a capability that compounds over time, and it needs ownership that reflects that.</p>
+
+            <h2>What ninety days actually gives you</h2>
+
+            <p>Ninety days won't transform your organization.</p>
+
+            <p>But ninety days of focused, disciplined action will give you the foundation, the evidence, and the momentum to lead an AI transformation with confidence.</p>
+
+            <p>The difference between organizations that succeed with AI and those that stall isn't access to better tools. It's the discipline to move in the right order - assess before experimenting, experiment before scaling, and always let evidence drive the next step.</p>
+
+            <div class="article-cta">
+                <div class="cta-label">Start your 90 days</div>
+                <h3>Know where you stand before Day 1</h3>
+                <p>Athena runs a structured 15-minute diagnostic that maps your organization's AI readiness - data, infrastructure, use cases, and talent. Start there to make your first 30 days sharper and faster. Or speak with Piero directly if you want a guided approach to your specific context.</p>
+                <div class="cta-buttons">
+                    <a href="../index.html#athena" class="btn-primary">Try Athena - Free</a>
+                    <a href="https://calendly.com/piero-ainavigator" target="_blank" class="btn-secondary">Book a Call with Piero</a>
+                </div>
+            </div>
+
+        </article>
+
+        <footer>
+            <div class="footer-left">
+                <img src="../ArqOne%20Labs%20Logo.gif" alt="ArqOne Labs" style="height:31px;width:auto;">
+                <span style="color:var(--gray-400);">-</span> Enterprise-grade capability for growing businesses
+            </div>
+            <div class="footer-right">
+                <a href="../privacy.html">Privacy Policy</a>
+                <a href="../terms.html">Terms &amp; Conditions</a>
+                <span class="footer-copy">&copy; 2026 ArqOne Labs</span>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        const nav = document.getElementById('main-nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 60);
+        });
+
+        const progress = document.getElementById('reading-progress');
+        window.addEventListener('scroll', () => {
+            const article = document.querySelector('.article-body');
+            if (!article) return;
+            const articleTop = article.offsetTop;
+            const articleHeight = article.offsetHeight;
+            const scrolled = window.scrollY - articleTop;
+            const pct = Math.min(Math.max((scrolled / articleHeight) * 100, 0), 100);
+            progress.style.width = pct + '%';
+        });
+    </script>
+</body>
+</html>
