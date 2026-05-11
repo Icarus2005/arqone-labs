@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why AI Agents Are Becoming the New Microservices - ArqOne Labs</title>
+    <meta name="description" content="One AI agent feels like a breakthrough. Many agents create infrastructure complexity. The companies that prepare for that complexity before it arrives will hold a serious advantage.">
+    <meta property="og:title" content="Why AI Agents Are Becoming the New Microservices">
+    <meta property="og:description" content="The same complexity pattern that hit microservices is now emerging with AI agents. The next enterprise AI layer is observability, governance, and an agentic operating model.">
+    <meta property="og:url" content="https://arqonelabs.com/blog/ai-agents-new-microservices.html">
+    <meta property="og:type" content="article">
+    <link rel="icon" type="image/gif" href="../favicon.gif">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #08080C;
+            --bg-elevated: #0E0E14;
+            --bg-card: #12121A;
+            --teal: #00DCD0;
+            --teal-dim: #00A89E;
+            --white: #F0F0F4;
+            --gray-100: #C8C8D0;
+            --gray-200: #9898A4;
+            --gray-300: #68687A;
+            --gray-400: #3A3A4A;
+            --border: rgba(255,255,255,0.06);
+            --font-sans: 'Inter', -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg);
+            color: var(--gray-100);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .grid-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 100;
+            transition: all 0.4s;
+        }
+        nav.scrolled {
+            background: rgba(8,8,12,0.92);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 40px;
+        }
+        .nav-logo img { height: 38px; width: auto; display: block; }
+        .nav-links { display: flex; align-items: center; gap: 32px; }
+        .nav-links a {
+            font-size: 0.875rem;
+            color: var(--gray-200);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--white); }
+        .nav-links a.nav-athena { color: var(--teal); font-weight: 500; }
+        .nav-cta-book {
+            padding: 8px 18px;
+            border: 1.5px solid var(--teal);
+            border-radius: 8px;
+            color: var(--teal) !important;
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+        .nav-cta-book:hover { background: rgba(0,220,205,0.08); }
+        .nav-cta {
+            padding: 8px 18px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
+            color: var(--white) !important;
+            font-weight: 500;
+            font-size: 0.875rem;
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+        .nav-cta:hover { border-color: rgba(255,255,255,0.3); }
+
+        .page { position: relative; z-index: 1; }
+
+        /* ARTICLE HEADER */
+        .article-header {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 160px 40px 60px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            color: var(--gray-300);
+            text-decoration: none;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--teal); }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+        .article-category {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--teal);
+            background: rgba(0,220,205,0.08);
+            border: 1px solid rgba(0,220,205,0.15);
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+        .article-meta-detail {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--gray-300);
+            letter-spacing: 0.06em;
+        }
+        .article-meta-sep { color: var(--gray-400); }
+
+        .article-header h1 {
+            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -0.03em;
+            line-height: 1.18;
+            margin-bottom: 28px;
+        }
+
+        .article-author-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-top: 28px;
+            border-top: 1px solid var(--border);
+        }
+        .author-avatar {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(0,220,205,0.25), rgba(0,220,205,0.05));
+            border: 1px solid rgba(0,220,205,0.2);
+            display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--teal);
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        .author-info strong {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--white);
+        }
+        .author-info span {
+            font-size: 0.78rem;
+            color: var(--gray-200);
+        }
+
+        .article-divider {
+            max-width: 760px;
+            margin: 0 auto 0;
+            padding: 0 40px;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* ARTICLE BODY */
+        .article-body {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 56px 40px 80px;
+        }
+
+        .article-body p {
+            font-size: 1.05rem;
+            color: var(--gray-100);
+            line-height: 1.85;
+            margin-bottom: 24px;
+            font-weight: 300;
+        }
+
+        .article-body p.lead {
+            font-size: 1.15rem;
+            color: var(--white);
+            font-weight: 400;
+            line-height: 1.8;
+        }
+
+        .article-body h2 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: -0.02em;
+            margin-top: 52px;
+            margin-bottom: 20px;
+            line-height: 1.3;
+            padding-left: 16px;
+            border-left: 3px solid rgba(0,220,205,0.4);
+        }
+
+        .article-pullquote {
+            margin: 44px 0;
+            padding: 28px 32px;
+            border-left: 3px solid var(--teal);
+            background: rgba(0,220,205,0.04);
+            border-radius: 0 12px 12px 0;
+        }
+        .article-pullquote p {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--white);
+            line-height: 1.6;
+            margin-bottom: 0;
+            font-style: italic;
+        }
+
+        .article-body ul.question-list {
+            list-style: none;
+            margin: 20px 0 28px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .article-body ul.question-list li {
+            font-size: 0.95rem;
+            color: var(--gray-100);
+            line-height: 1.65;
+            font-weight: 300;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .article-body ul.question-list li::before {
+            content: '';
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            background: var(--teal);
+            flex-shrink: 0;
+            margin-top: 9px;
+        }
+
+        .article-body ul.compact-list {
+            list-style: none;
+            margin: 16px 0 28px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .article-body ul.compact-list li {
+            font-size: 0.95rem;
+            color: var(--gray-100);
+            line-height: 1.6;
+            font-weight: 300;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .article-body ul.compact-list li::before {
+            content: '';
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            background: rgba(0,220,205,0.5);
+            flex-shrink: 0;
+            margin-top: 8px;
+        }
+
+        /* Agent management checklist cards */
+        .governance-grid {
+            margin: 28px 0;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        .governance-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 18px 20px;
+            transition: border-color 0.25s;
+        }
+        .governance-item:hover { border-color: rgba(0,220,205,0.12); }
+        .governance-item strong {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--teal);
+            margin-bottom: 6px;
+        }
+        .governance-item p {
+            font-size: 0.82rem;
+            color: var(--gray-200);
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+
+        /* ARTICLE CTA */
+        .article-cta {
+            margin-top: 72px;
+            padding: 44px;
+            background: var(--bg-card);
+            border: 1px solid rgba(0,220,205,0.15);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .article-cta::before {
+            content: '';
+            position: absolute;
+            top: -60px; right: -60px;
+            width: 200px; height: 200px;
+            background: radial-gradient(circle, rgba(0,220,205,0.07) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .article-cta .cta-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: 14px;
+        }
+        .article-cta h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+        }
+        .article-cta p {
+            font-size: 0.9rem;
+            color: var(--gray-200);
+            line-height: 1.7;
+            margin-bottom: 28px;
+            font-weight: 300;
+        }
+        .cta-buttons {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+        .btn-primary {
+            padding: 12px 24px;
+            background: var(--teal);
+            color: #08080C;
+            font-weight: 700;
+            font-size: 0.875rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.25s;
+            display: inline-block;
+        }
+        .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+        .btn-secondary {
+            padding: 12px 24px;
+            background: transparent;
+            color: var(--white);
+            font-weight: 500;
+            font-size: 0.875rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.15);
+            text-decoration: none;
+            transition: all 0.25s;
+            display: inline-block;
+        }
+        .btn-secondary:hover { border-color: rgba(255,255,255,0.35); transform: translateY(-1px); }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer-left {
+            font-size: 0.8rem;
+            color: var(--gray-300);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .footer-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .footer-right a {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--gray-400);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            transition: color 0.2s;
+        }
+        .footer-right a:hover { color: var(--teal); }
+        .footer-copy {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--gray-400);
+            letter-spacing: 0.05em;
+        }
+
+        .reading-progress {
+            position: fixed;
+            top: 0; left: 0;
+            height: 2px;
+            background: var(--teal);
+            z-index: 200;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 16px 20px; }
+            .nav-links { display: none; }
+            .article-header { padding: 120px 20px 48px; }
+            .article-body { padding: 40px 20px 60px; }
+            .article-divider { padding: 0 20px; }
+            .governance-grid { grid-template-columns: 1fr; }
+            .article-cta { padding: 28px 24px; }
+            footer { flex-direction: column; gap: 16px; text-align: center; padding: 32px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="reading-progress" id="reading-progress"></div>
+    <div class="grid-bg"></div>
+
+    <nav id="main-nav">
+        <div class="nav-logo">
+            <a href="../index.html"><img src="../ArqOne%20Labs%20Logo.gif" alt="ArqOne Labs"></a>
+        </div>
+        <div class="nav-links">
+            <a href="../index.html#ecosystem">Ecosystem</a>
+            <a href="../index.html#portfolio">Portfolio</a>
+            <a href="../index.html#about">About</a>
+            <a href="../services.html">Services</a>
+            <a href="index.html" class="active">Blog</a>
+            <a href="../index.html#athena" class="nav-athena">Athena</a>
+            <a href="https://calendly.com/piero-ainavigator" target="_blank" class="nav-cta-book">Book a Call</a>
+            <a href="../contact.html" class="nav-cta">Get in Touch</a>
+        </div>
+    </nav>
+
+    <div class="page">
+
+        <div class="article-header">
+            <a href="index.html" class="back-link">&larr; All articles</a>
+            <div class="article-meta">
+                <span class="article-category">AI Systems</span>
+                <span class="article-meta-detail">May 2026</span>
+                <span class="article-meta-sep">-</span>
+                <span class="article-meta-detail">6 min read</span>
+            </div>
+            <h1>Why AI Agents Are Becoming the New Microservices</h1>
+            <div class="article-author-row">
+                <div class="author-avatar">PS</div>
+                <div class="author-info">
+                    <strong>Piero Saleme</strong>
+                    <span>Founder, ArqOne Labs</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="article-divider"></div>
+
+        <article class="article-body">
+
+            <p class="lead">A few years ago, many companies went through the microservices wave.</p>
+
+            <p>At first, there were only a few services. Then there were dozens. Then hundreds.</p>
+
+            <p>Eventually, large organizations found themselves managing complex webs of services, APIs, dependencies, monitoring tools, deployment pipelines, failures, permissions, alerts, logs, and performance issues.</p>
+
+            <p>That complexity created a new layer of enterprise software. Tools like Datadog, Splunk, New Relic, and other observability platforms became essential because teams could no longer manage distributed systems manually.</p>
+
+            <p>The same pattern is starting to appear in AI. Only this time, the complexity is not just software services. It is intelligent agents.</p>
+
+            <h2>The first agent feels exciting</h2>
+
+            <p>The first AI agent in a company often feels like a breakthrough. It can qualify leads, summarize documents, answer customer questions, generate reports, monitor inboxes, search internal knowledge, trigger workflows, and support operations.</p>
+
+            <p>One agent can create immediate value. It gives the organization a glimpse of what automated intelligence can do.</p>
+
+            <p>But the real challenge begins after the first few agents work.</p>
+
+            <h2>Ten agents create coordination problems</h2>
+
+            <p>Once one team builds an agent, others follow. Sales wants one. Marketing wants one. Finance wants one. Customer service wants one. Operations wants one. HR wants one. Leadership wants reporting agents. Data teams want analytics agents. IT wants support agents. Compliance wants monitoring agents.</p>
+
+            <p>Soon the organization is no longer running isolated AI experiments. It is running a distributed agentic environment. And that environment creates new questions:</p>
+
+            <ul class="question-list">
+                <li>Who owns each agent?</li>
+                <li>What data can each agent access?</li>
+                <li>Which tools can it call?</li>
+                <li>What happens when two agents produce conflicting outputs?</li>
+                <li>How are actions logged?</li>
+                <li>How do humans supervise decisions?</li>
+                <li>How are errors detected?</li>
+                <li>How are costs monitored?</li>
+                <li>How are agents updated?</li>
+                <li>How do we measure value?</li>
+                <li>How do we shut one down safely?</li>
+            </ul>
+
+            <p>This is where agentic AI becomes an operating model challenge.</p>
+
+            <div class="article-pullquote">
+                <p>One agent is a tool. Many agents become infrastructure.</p>
+            </div>
+
+            <h2>The difference between one agent and many</h2>
+
+            <p>The difference between one agent and many agents is not only quantity. It changes the nature of the problem. One agent can be managed manually. Many agents require structure.</p>
+
+            <p>At scale, companies need:</p>
+
+            <ul class="compact-list">
+                <li>Agent inventory and ownership records</li>
+                <li>Access control and data permissions</li>
+                <li>Workflow visibility across agents</li>
+                <li>Performance monitoring and cost tracking</li>
+                <li>Governance policies and evaluation frameworks</li>
+                <li>Incident handling and audit trails</li>
+                <li>Human escalation paths</li>
+                <li>Model routing and memory management</li>
+                <li>Agent-to-agent communication rules</li>
+            </ul>
+
+            <p>This is why AI agents may become the new microservices. Not because they are technically the same. Because they create similar complexity once they spread across the organization.</p>
+
+            <h2>The next enterprise AI layer is observability</h2>
+
+            <p>Most companies are still focused on building agents. The next challenge will be observing them.</p>
+
+            <p>If AI agents are making recommendations, generating outputs, calling tools, updating records, or influencing decisions, leadership needs visibility. They need to know:</p>
+
+            <ul class="question-list">
+                <li>What did the agent do?</li>
+                <li>Why did it do it?</li>
+                <li>Which data did it use?</li>
+                <li>Which tool did it call?</li>
+                <li>Was the output accurate?</li>
+                <li>Was a human involved?</li>
+                <li>Did the action create value?</li>
+                <li>Did it introduce risk?</li>
+                <li>Was the cost justified?</li>
+            </ul>
+
+            <p>This is the agentic version of observability. Without it, companies will not know whether AI is improving operations or quietly creating new forms of risk.</p>
+
+            <h2>Governance becomes practical, not theoretical</h2>
+
+            <p>AI governance is often discussed as policy. But in an agentic environment, governance becomes operational. It is no longer just a document that says what teams should or should not do. It becomes a system of controls.</p>
+
+            <p>For example:</p>
+
+            <ul class="compact-list">
+                <li>Which agents can access customer data</li>
+                <li>Which agents can send external messages</li>
+                <li>Which agents can approve actions</li>
+                <li>Which outputs require human review</li>
+                <li>Which models are approved for which use cases</li>
+                <li>Which workflows need audit logs</li>
+                <li>Which errors require escalation</li>
+                <li>Which agents should be paused if performance drops</li>
+            </ul>
+
+            <p>This is where governance stops being a compliance layer and becomes an execution layer. Good governance helps companies move faster because it creates clarity. Teams know what is allowed. Leaders know what is happening. Risk is visible. Value can be measured.</p>
+
+            <h2>The agentic workforce needs management</h2>
+
+            <p>The phrase "agentic workforce" is becoming more common. The operating challenge is very practical.</p>
+
+            <p>If digital agents are performing tasks across a business, they need management - in the operational sense. Companies will need to manage roles, responsibilities, permissions, goals, performance, failures, dependencies, handoffs, and escalation paths.</p>
+
+            <p>This is very similar to how companies learned to manage cloud infrastructure, software services, and automated workflows. At first, teams moved fast. Then complexity arrived. Then the management layer became essential. AI agents are heading in the same direction.</p>
+
+            <h2>Avoiding agent sprawl</h2>
+
+            <p>Agent sprawl will become a real problem. It will happen when teams create agents independently without shared structure. The symptoms will look familiar:</p>
+
+            <ul class="compact-list">
+                <li>Duplicated agents doing the same job</li>
+                <li>Inconsistent outputs across teams</li>
+                <li>Uncontrolled data access</li>
+                <li>Unclear ownership and accountability</li>
+                <li>Rising costs with no performance measurement</li>
+                <li>Weak governance and no central visibility</li>
+            </ul>
+
+            <p>This is the AI version of shadow IT. And just like shadow IT, it may begin with good intentions. Teams want speed. They want productivity. Without structure, speed becomes fragmentation.</p>
+
+            <h2>What companies should build now</h2>
+
+            <p>Companies do not need to overcomplicate this immediately. They can start with a simple agentic operating layer. At minimum, they should define:</p>
+
+            <div class="governance-grid">
+                <div class="governance-item">
+                    <strong>Agent Ownership</strong>
+                    <p>Every agent needs a business owner who is accountable for its behavior and performance.</p>
+                </div>
+                <div class="governance-item">
+                    <strong>Approved Use Cases</strong>
+                    <p>Teams need clarity on where agents can be used and what decisions they can influence.</p>
+                </div>
+                <div class="governance-item">
+                    <strong>Data Access Rules</strong>
+                    <p>Agents should only access data they are authorized to use. No exceptions.</p>
+                </div>
+                <div class="governance-item">
+                    <strong>Human Oversight Points</strong>
+                    <p>High-risk or high-impact actions should include a human review step before execution.</p>
+                </div>
+                <div class="governance-item">
+                    <strong>Monitoring and Evaluation</strong>
+                    <p>Agents should be tracked for quality, cost, risk, and business value on an ongoing basis.</p>
+                </div>
+                <div class="governance-item">
+                    <strong>Escalation Paths</strong>
+                    <p>When something goes wrong, the organization needs a clear response process and an owner.</p>
+                </div>
+            </div>
+
+            <p>This is the beginning of agentic governance. It does not require a large team or a sophisticated platform. It requires intentional design.</p>
+
+            <h2>Why this matters for business leaders</h2>
+
+            <p>For leaders, the important point is this: the real enterprise AI challenge starts after the first agent works.</p>
+
+            <p>The early win is valuable. But the long-term advantage comes from making agents reliable, governed, integrated, and aligned with business outcomes. That requires more than experimentation. It requires an operating model.</p>
+
+            <p>Before scaling agents, leaders should ask:</p>
+
+            <ul class="question-list">
+                <li>Where should agents create value first?</li>
+                <li>Which workflows are ready?</li>
+                <li>Which data sources are reliable?</li>
+                <li>Which systems should agents connect to?</li>
+                <li>What should agents never do?</li>
+                <li>Where must humans remain in control?</li>
+                <li>How will we monitor agent performance?</li>
+                <li>How will we measure ROI?</li>
+                <li>How will we prevent agent sprawl?</li>
+            </ul>
+
+            <p>These are leadership questions as much as technology questions.</p>
+
+            <h2>Final thought</h2>
+
+            <p>AI agents may become the new microservices. At first, they will look simple. Then they will spread. Then they will create complexity. And then companies will need a new operating layer to manage them.</p>
+
+            <p>The companies that get this right will have managed intelligence - agents connected to workflows, data structured correctly, governance practical and operational, teams that know how to supervise AI, and leaders who know what is creating value.</p>
+
+            <p>The next enterprise AI advantage will belong to organizations that prepare for that complexity before it arrives.</p>
+
+            <!-- CTA BLOCK -->
+            <div class="article-cta">
+                <div class="cta-label">Next step</div>
+                <h3>Assess your AI readiness before scaling agents</h3>
+                <p>Athena runs a structured 15-minute diagnostic of your operations and current AI maturity. You receive a preliminary AI Readiness Report identifying where agents could create practical value - and what needs to be in place first. Or speak directly with Piero about the right starting point for your business.</p>
+                <div class="cta-buttons">
+                    <a href="../index.html#athena" class="btn-primary">Try Athena - Free</a>
+                    <a href="https://calendly.com/piero-ainavigator" target="_blank" class="btn-secondary">Book a Call with Piero</a>
+                </div>
+            </div>
+
+        </article>
+
+        <footer>
+            <div class="footer-left">
+                <img src="../ArqOne%20Labs%20Logo.gif" alt="ArqOne Labs" style="height:31px;width:auto;">
+                <span style="color:var(--gray-400);">-</span> Enterprise-grade capability for growing businesses
+            </div>
+            <div class="footer-right">
+                <a href="../privacy.html">Privacy Policy</a>
+                <a href="../terms.html">Terms &amp; Conditions</a>
+                <span class="footer-copy">&copy; 2026 ArqOne Labs</span>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        const nav = document.getElementById('main-nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 60);
+        });
+
+        const progress = document.getElementById('reading-progress');
+        window.addEventListener('scroll', () => {
+            const article = document.querySelector('.article-body');
+            if (!article) return;
+            const articleTop = article.offsetTop;
+            const articleHeight = article.offsetHeight;
+            const scrolled = window.scrollY - articleTop;
+            const pct = Math.min(Math.max((scrolled / articleHeight) * 100, 0), 100);
+            progress.style.width = pct + '%';
+        });
+    </script>
+</body>
+</html>

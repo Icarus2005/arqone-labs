@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Model Is Becoming the Commodity. The System Is Becoming the Advantage. - ArqOne Labs</title>
+    <meta name="description" content="For most businesses, the model debate is no longer the most important question. The real advantage is shifting to the system built around the model.">
+    <meta property="og:title" content="The Model Is Becoming the Commodity. The System Is Becoming the Advantage.">
+    <meta property="og:description" content="The real AI advantage is shifting away from the model itself and toward the system built around it - the workflow, data layer, memory, tools, governance, and human oversight.">
+    <meta property="og:url" content="https://arqonelabs.com/blog/the-model-is-becoming-the-commodity.html">
+    <meta property="og:type" content="article">
+    <link rel="icon" type="image/gif" href="../favicon.gif">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #08080C;
+            --bg-elevated: #0E0E14;
+            --bg-card: #12121A;
+            --teal: #00DCD0;
+            --teal-dim: #00A89E;
+            --white: #F0F0F4;
+            --gray-100: #C8C8D0;
+            --gray-200: #9898A4;
+            --gray-300: #68687A;
+            --gray-400: #3A3A4A;
+            --border: rgba(255,255,255,0.06);
+            --font-sans: 'Inter', -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg);
+            color: var(--gray-100);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .grid-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 100;
+            transition: all 0.4s;
+        }
+        nav.scrolled {
+            background: rgba(8,8,12,0.92);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 40px;
+        }
+        .nav-logo img { height: 38px; width: auto; display: block; }
+        .nav-links { display: flex; align-items: center; gap: 32px; }
+        .nav-links a {
+            font-size: 0.875rem;
+            color: var(--gray-200);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--white); }
+        .nav-links a.nav-athena { color: var(--teal); font-weight: 500; }
+        .nav-cta-book {
+            padding: 8px 18px;
+            border: 1.5px solid var(--teal);
+            border-radius: 8px;
+            color: var(--teal) !important;
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+        .nav-cta-book:hover { background: rgba(0,220,205,0.08); }
+        .nav-cta {
+            padding: 8px 18px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
+            color: var(--white) !important;
+            font-weight: 500;
+            font-size: 0.875rem;
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+        .nav-cta:hover { border-color: rgba(255,255,255,0.3); }
+
+        .page { position: relative; z-index: 1; }
+
+        /* ARTICLE HEADER */
+        .article-header {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 160px 40px 60px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            color: var(--gray-300);
+            text-decoration: none;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--teal); }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+        .article-category {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--teal);
+            background: rgba(0,220,205,0.08);
+            border: 1px solid rgba(0,220,205,0.15);
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+        .article-meta-detail {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--gray-300);
+            letter-spacing: 0.06em;
+        }
+        .article-meta-sep { color: var(--gray-400); }
+
+        .article-header h1 {
+            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -0.03em;
+            line-height: 1.18;
+            margin-bottom: 28px;
+        }
+
+        .article-author-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-top: 28px;
+            border-top: 1px solid var(--border);
+        }
+        .author-avatar {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(0,220,205,0.25), rgba(0,220,205,0.05));
+            border: 1px solid rgba(0,220,205,0.2);
+            display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--teal);
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        .author-info strong {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--white);
+        }
+        .author-info span {
+            font-size: 0.78rem;
+            color: var(--gray-200);
+        }
+
+        /* DIVIDER */
+        .article-divider {
+            max-width: 760px;
+            margin: 0 auto 0;
+            padding: 0 40px;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* ARTICLE BODY */
+        .article-body {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 56px 40px 80px;
+        }
+
+        .article-body p {
+            font-size: 1.05rem;
+            color: var(--gray-100);
+            line-height: 1.85;
+            margin-bottom: 24px;
+            font-weight: 300;
+        }
+
+        .article-body p.lead {
+            font-size: 1.15rem;
+            color: var(--white);
+            font-weight: 400;
+            line-height: 1.8;
+        }
+
+        .article-body h2 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: -0.02em;
+            margin-top: 52px;
+            margin-bottom: 20px;
+            line-height: 1.3;
+            padding-left: 16px;
+            border-left: 3px solid rgba(0,220,205,0.4);
+        }
+
+        /* Pull quote */
+        .article-pullquote {
+            margin: 44px 0;
+            padding: 28px 32px;
+            border-left: 3px solid var(--teal);
+            background: rgba(0,220,205,0.04);
+            border-radius: 0 12px 12px 0;
+        }
+        .article-pullquote p {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--white);
+            line-height: 1.6;
+            margin-bottom: 0;
+            font-style: italic;
+        }
+
+        /* Styled question/checklist lists */
+        .article-body ul.question-list {
+            list-style: none;
+            margin: 20px 0 28px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .article-body ul.question-list li {
+            font-size: 0.95rem;
+            color: var(--gray-100);
+            line-height: 1.65;
+            font-weight: 300;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .article-body ul.question-list li::before {
+            content: '';
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            background: var(--teal);
+            flex-shrink: 0;
+            margin-top: 9px;
+        }
+
+        /* Inline list (compact) */
+        .article-body ul.compact-list {
+            list-style: none;
+            margin: 16px 0 28px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .article-body ul.compact-list li {
+            font-size: 0.95rem;
+            color: var(--gray-100);
+            line-height: 1.6;
+            font-weight: 300;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .article-body ul.compact-list li::before {
+            content: '';
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            background: rgba(0,220,205,0.5);
+            flex-shrink: 0;
+            margin-top: 8px;
+        }
+
+        /* Technical stack block */
+        .system-layers {
+            margin: 28px 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px 32px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+        .system-layer-item {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--gray-200);
+            letter-spacing: 0.04em;
+            padding: 8px 12px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+
+        /* ARTICLE CTA */
+        .article-cta {
+            margin-top: 72px;
+            padding: 44px;
+            background: var(--bg-card);
+            border: 1px solid rgba(0,220,205,0.15);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .article-cta::before {
+            content: '';
+            position: absolute;
+            top: -60px; right: -60px;
+            width: 200px; height: 200px;
+            background: radial-gradient(circle, rgba(0,220,205,0.07) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .article-cta .cta-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: 14px;
+        }
+        .article-cta h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+        }
+        .article-cta p {
+            font-size: 0.9rem;
+            color: var(--gray-200);
+            line-height: 1.7;
+            margin-bottom: 28px;
+            font-weight: 300;
+        }
+        .cta-buttons {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+        .btn-primary {
+            padding: 12px 24px;
+            background: var(--teal);
+            color: #08080C;
+            font-weight: 700;
+            font-size: 0.875rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.25s;
+            display: inline-block;
+        }
+        .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+        .btn-secondary {
+            padding: 12px 24px;
+            background: transparent;
+            color: var(--white);
+            font-weight: 500;
+            font-size: 0.875rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.15);
+            text-decoration: none;
+            transition: all 0.25s;
+            display: inline-block;
+        }
+        .btn-secondary:hover { border-color: rgba(255,255,255,0.35); transform: translateY(-1px); }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer-left {
+            font-size: 0.8rem;
+            color: var(--gray-300);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .footer-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .footer-right a {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--gray-400);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            transition: color 0.2s;
+        }
+        .footer-right a:hover { color: var(--teal); }
+        .footer-copy {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--gray-400);
+            letter-spacing: 0.05em;
+        }
+
+        /* PROGRESS BAR */
+        .reading-progress {
+            position: fixed;
+            top: 0; left: 0;
+            height: 2px;
+            background: var(--teal);
+            z-index: 200;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 16px 20px; }
+            .nav-links { display: none; }
+            .article-header { padding: 120px 20px 48px; }
+            .article-body { padding: 40px 20px 60px; }
+            .article-divider { padding: 0 20px; }
+            .system-layers { grid-template-columns: repeat(2, 1fr); }
+            .article-cta { padding: 28px 24px; }
+            footer { flex-direction: column; gap: 16px; text-align: center; padding: 32px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="reading-progress" id="reading-progress"></div>
+    <div class="grid-bg"></div>
+
+    <nav id="main-nav">
+        <div class="nav-logo">
+            <a href="../index.html"><img src="../ArqOne%20Labs%20Logo.gif" alt="ArqOne Labs"></a>
+        </div>
+        <div class="nav-links">
+            <a href="../index.html#ecosystem">Ecosystem</a>
+            <a href="../index.html#portfolio">Portfolio</a>
+            <a href="../index.html#about">About</a>
+            <a href="../services.html">Services</a>
+            <a href="index.html" class="active">Blog</a>
+            <a href="../index.html#athena" class="nav-athena">Athena</a>
+            <a href="https://calendly.com/piero-ainavigator" target="_blank" class="nav-cta-book">Book a Call</a>
+            <a href="../contact.html" class="nav-cta">Get in Touch</a>
+        </div>
+    </nav>
+
+    <div class="page">
+
+        <div class="article-header">
+            <a href="index.html" class="back-link">&larr; All articles</a>
+            <div class="article-meta">
+                <span class="article-category">AI Strategy</span>
+                <span class="article-meta-detail">May 2026</span>
+                <span class="article-meta-sep">-</span>
+                <span class="article-meta-detail">5 min read</span>
+            </div>
+            <h1>The Model Is Becoming the Commodity. The System Is Becoming the Advantage.</h1>
+            <div class="article-author-row">
+                <div class="author-avatar">PS</div>
+                <div class="author-info">
+                    <strong>Piero Saleme</strong>
+                    <span>Founder, ArqOne Labs</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="article-divider"></div>
+
+        <article class="article-body">
+
+            <p class="lead">For the last two years, most AI conversations have centered on one question:</p>
+
+            <p>Which model is best?</p>
+
+            <p>GPT, Claude, Gemini, Llama, DeepSeek, Qwen, Kimi, open-source, closed-source, frontier model, small model, hosted API, local deployment.</p>
+
+            <p>The debate matters. But for most businesses, it is no longer the most important question.</p>
+
+            <p>The real advantage is shifting away from the model itself and toward the system built around the model.</p>
+
+            <p>The workflow. The data layer. The memory. The tools. The governance. The monitoring. The human oversight. The way AI is embedded into actual business operations.</p>
+
+            <div class="article-pullquote">
+                <p>The model is becoming the ingredient. The system is becoming the recipe.</p>
+            </div>
+
+            <h2>Why the model debate is becoming less useful</h2>
+
+            <p>Open and closed models both have their place.</p>
+
+            <p>Closed models often provide strong performance, managed reliability, speed of access, and a polished developer experience.</p>
+
+            <p>Open or open-weight models can matter deeply when an organization needs privacy, sovereignty, cost control, air-gapped deployment, lower latency, or more control over infrastructure.</p>
+
+            <p>For defense, government, regulated industries, and high-volume workloads, model choice can be a serious strategic decision.</p>
+
+            <p>But for many businesses, the more practical question is different:</p>
+
+            <p><em>What business outcome are we trying to create with AI?</em></p>
+
+            <p>A model scoring slightly higher on a benchmark does not automatically mean it will work better inside your company. The real-world result depends on the full environment around it.</p>
+
+            <ul class="question-list">
+                <li>Can it access the right data?</li>
+                <li>Can it follow business rules?</li>
+                <li>Can it integrate with your systems?</li>
+                <li>Can it trigger workflows safely?</li>
+                <li>Can it be monitored?</li>
+                <li>Can humans intervene?</li>
+                <li>Can leadership measure value?</li>
+                <li>Can the system improve over time?</li>
+            </ul>
+
+            <p>That is where the harder work begins.</p>
+
+            <h2>AI value is moving into the implementation layer</h2>
+
+            <p>Most early AI adoption started with chat. A person opened a tool, asked a question, received an answer, and copied the output somewhere else. That was useful. But it was also limited.</p>
+
+            <p>The next stage is different. AI is now being embedded into workflows - connected to CRMs, knowledge bases, customer service tools, sales pipelines, internal documents, dashboards, finance systems, and operational processes.</p>
+
+            <p>This means the value is no longer only in generating text or answering questions. The value is in building systems that can:</p>
+
+            <ul class="compact-list">
+                <li>Retrieve the right context</li>
+                <li>Reason over business information</li>
+                <li>Recommend next steps</li>
+                <li>Trigger actions</li>
+                <li>Escalate risk</li>
+                <li>Generate briefs</li>
+                <li>Update workflows</li>
+                <li>Support decisions</li>
+                <li>Learn from repeated patterns</li>
+            </ul>
+
+            <p>This is where AI becomes operational. And once AI becomes operational, the quality of the surrounding system becomes more important than the model alone.</p>
+
+            <h2>The enterprise question is changing</h2>
+
+            <p>Many organizations still ask: which AI tool should we buy? That is an understandable starting point. But it is not enough.</p>
+
+            <p>The better question is: which workflows, decisions, and customer journeys should intelligence reshape first?</p>
+
+            <p>That question forces a different conversation. It moves AI away from novelty and toward business design. It makes leadership look at:</p>
+
+            <ul class="question-list">
+                <li>Where work slows down</li>
+                <li>Where knowledge is fragmented</li>
+                <li>Where teams repeat manual processes</li>
+                <li>Where decisions depend on scattered information</li>
+                <li>Where customer experience breaks down</li>
+                <li>Where risk is hidden</li>
+                <li>Where speed matters</li>
+                <li>Where human judgment should remain central</li>
+            </ul>
+
+            <p>This is the real AI transformation layer. Not model selection alone. Not prompting alone. Not tool adoption alone. It is the redesign of how work happens.</p>
+
+            <h2>The danger of building only on model capability</h2>
+
+            <p>There is another reason this matters.</p>
+
+            <p>If a company builds its product or internal capability around a model feature alone, it can become exposed. Model providers are moving fast. A capability that felt differentiated six months ago may become a native feature tomorrow.</p>
+
+            <p>Image generation, coding assistance, research, document analysis, voice, video, data extraction, design support, and automation are all being rapidly absorbed into larger platforms.</p>
+
+            <p>This does not mean startups and internal AI teams should stop building. It means they need to build around durable value.</p>
+
+            <p>Durable AI value usually comes from things like:</p>
+
+            <ul class="compact-list">
+                <li>Domain expertise and proprietary workflows</li>
+                <li>Business process integration</li>
+                <li>Trusted data and institutional knowledge</li>
+                <li>Distribution and customer relationships</li>
+                <li>Governance and operational reliability</li>
+                <li>User experience</li>
+                <li>Measurable business outcomes</li>
+            </ul>
+
+            <p>The model matters. But the moat is rarely the model alone.</p>
+
+            <h2>Why system design is the real advantage</h2>
+
+            <p>The strongest AI systems will combine multiple layers. A typical enterprise AI system may include:</p>
+
+            <div class="system-layers">
+                <span class="system-layer-item">Language model</span>
+                <span class="system-layer-item">RAG / retrieval</span>
+                <span class="system-layer-item">Knowledge bases</span>
+                <span class="system-layer-item">APIs &amp; integrations</span>
+                <span class="system-layer-item">Workflow automation</span>
+                <span class="system-layer-item">Memory layer</span>
+                <span class="system-layer-item">Permissions</span>
+                <span class="system-layer-item">Monitoring</span>
+                <span class="system-layer-item">Human review</span>
+                <span class="system-layer-item">Audit trails</span>
+                <span class="system-layer-item">Business rules</span>
+                <span class="system-layer-item">Reporting</span>
+            </div>
+
+            <p>That is not just "using AI." That is building an operating layer around intelligence.</p>
+
+            <p>This is where most businesses are still underprepared. They may have access to powerful tools. They may even have enthusiastic teams experimenting. But without system design, AI adoption becomes scattered.</p>
+
+            <p>Different teams test different tools. Data moves into uncontrolled environments. Outputs are trusted without review. Leadership struggles to understand what is creating value. The result is noise instead of transformation.</p>
+
+            <h2>From AI tools to AI operating systems</h2>
+
+            <p>The companies that win will think beyond tools. They will ask:</p>
+
+            <ul class="question-list">
+                <li>What is our AI operating model?</li>
+                <li>Who owns AI-enabled decisions?</li>
+                <li>What data can AI access?</li>
+                <li>Which use cases are approved?</li>
+                <li>Where must humans stay in the loop?</li>
+                <li>How do we monitor quality, cost, risk, and performance?</li>
+                <li>How do agents interact with systems?</li>
+                <li>How do we prevent duplicated efforts across teams?</li>
+                <li>How do we move from experiments to scalable capability?</li>
+            </ul>
+
+            <p>These are not purely technical questions. They are leadership questions. They require business transformation judgment, data awareness, governance, and operating model thinking.</p>
+
+            <h2>What this means for leaders</h2>
+
+            <p>For business leaders, the message is simple: do not obsess only over the model race. Watch it. Understand it. Use the best tools available.</p>
+
+            <p>But spend more strategic energy on the system you are building around AI. The future advantage will come from your ability to connect AI capability to business value - through better workflows, better decision systems, better customer journeys, better knowledge structures, and better governance.</p>
+
+            <p>AI will not create advantage simply because it is available. It creates advantage when it is directed into the right system.</p>
+
+            <h2>Final thought</h2>
+
+            <p>The model is becoming the commodity. The system is becoming the advantage.</p>
+
+            <p>For organizations, the next stage of AI maturity will not be defined by how many tools they test. It will be defined by how clearly they design the operating environment around intelligence.</p>
+
+            <p>That is where the real enterprise value will be built.</p>
+
+            <!-- CTA BLOCK -->
+            <div class="article-cta">
+                <div class="cta-label">Next step</div>
+                <h3>Explore where AI fits in your business</h3>
+                <p>Athena, our AI assessment agent, runs a structured 15-minute diagnostic of your operations, team, and tech stack. You receive a preliminary AI Readiness Report immediately. Or speak directly with Piero to discuss how this applies to your specific context.</p>
+                <div class="cta-buttons">
+                    <a href="../index.html#athena" class="btn-primary">Try Athena - Free</a>
+                    <a href="https://calendly.com/piero-ainavigator" target="_blank" class="btn-secondary">Book a Call with Piero</a>
+                </div>
+            </div>
+
+        </article>
+
+        <footer>
+            <div class="footer-left">
+                <img src="../ArqOne%20Labs%20Logo.gif" alt="ArqOne Labs" style="height:31px;width:auto;">
+                <span style="color:var(--gray-400);">-</span> Enterprise-grade capability for growing businesses
+            </div>
+            <div class="footer-right">
+                <a href="../privacy.html">Privacy Policy</a>
+                <a href="../terms.html">Terms &amp; Conditions</a>
+                <span class="footer-copy">&copy; 2026 ArqOne Labs</span>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        const nav = document.getElementById('main-nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 60);
+        });
+
+        const progress = document.getElementById('reading-progress');
+        window.addEventListener('scroll', () => {
+            const article = document.querySelector('.article-body');
+            if (!article) return;
+            const articleTop = article.offsetTop;
+            const articleHeight = article.offsetHeight;
+            const scrolled = window.scrollY - articleTop;
+            const pct = Math.min(Math.max((scrolled / articleHeight) * 100, 0), 100);
+            progress.style.width = pct + '%';
+        });
+    </script>
+</body>
+</html>

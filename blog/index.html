@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Perspectives on AI and Business - ArqOne Labs</title>
+    <meta name="description" content="Thought leadership on AI systems, agentic automation, and enterprise AI strategy from ArqOne Labs founder Piero Saleme.">
+    <meta property="og:title" content="Perspectives on AI and Business - ArqOne Labs">
+    <meta property="og:description" content="Practical thinking on AI systems, agentic automation, and what enterprise AI maturity actually looks like.">
+    <meta property="og:url" content="https://arqonelabs.com/blog/">
+    <meta property="og:type" content="website">
+    <link rel="icon" type="image/gif" href="../favicon.gif">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #08080C;
+            --bg-elevated: #0E0E14;
+            --bg-card: #12121A;
+            --teal: #00DCD0;
+            --teal-dim: #00A89E;
+            --white: #F0F0F4;
+            --gray-100: #C8C8D0;
+            --gray-200: #9898A4;
+            --gray-300: #68687A;
+            --gray-400: #3A3A4A;
+            --border: rgba(255,255,255,0.06);
+            --font-sans: 'Inter', -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg);
+            color: var(--gray-100);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .grid-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 100;
+            transition: all 0.4s;
+        }
+        nav.scrolled {
+            background: rgba(8,8,12,0.92);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 40px;
+        }
+        .nav-logo img { height: 38px; width: auto; display: block; }
+        .nav-links { display: flex; align-items: center; gap: 32px; }
+        .nav-links a {
+            font-size: 0.875rem;
+            color: var(--gray-200);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--white); }
+        .nav-links a.nav-athena { color: var(--teal); font-weight: 500; }
+        .nav-cta-book {
+            padding: 8px 18px;
+            border: 1.5px solid var(--teal);
+            border-radius: 8px;
+            color: var(--teal) !important;
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+        .nav-cta-book:hover { background: rgba(0,220,205,0.08); }
+        .nav-cta {
+            padding: 8px 18px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
+            color: var(--white) !important;
+            font-weight: 500;
+            font-size: 0.875rem;
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+        .nav-cta:hover { border-color: rgba(255,255,255,0.3); }
+
+        .page { position: relative; z-index: 1; }
+
+        /* HERO */
+        .blog-hero {
+            padding: 160px 40px 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .hero-label {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: 20px;
+        }
+        .blog-hero h1 {
+            font-size: clamp(2.2rem, 4vw, 3.2rem);
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            max-width: 640px;
+            margin-bottom: 20px;
+        }
+        .blog-hero p {
+            font-size: 1rem;
+            color: var(--gray-200);
+            max-width: 520px;
+            line-height: 1.75;
+            font-weight: 300;
+        }
+
+        /* ARTICLES GRID */
+        .articles-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px 120px;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 28px;
+        }
+
+        .article-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            transition: all 0.3s;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+        .article-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--teal), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .article-card:hover {
+            border-color: rgba(0,220,205,0.14);
+            transform: translateY(-3px);
+            background: #14141E;
+        }
+        .article-card:hover::before { opacity: 1; }
+
+        .article-card-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .article-category {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--teal);
+            background: rgba(0,220,205,0.08);
+            border: 1px solid rgba(0,220,205,0.15);
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+        .article-read-time {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--gray-300);
+            letter-spacing: 0.06em;
+        }
+        .article-date {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--gray-300);
+            letter-spacing: 0.06em;
+            margin-left: auto;
+        }
+
+        .article-card h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: -0.02em;
+            line-height: 1.3;
+        }
+
+        .article-card p {
+            font-size: 0.875rem;
+            color: var(--gray-200);
+            line-height: 1.75;
+            font-weight: 300;
+            flex: 1;
+        }
+
+        .article-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+        .article-author {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .article-author-dot {
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(0,220,205,0.3), rgba(0,220,205,0.05));
+            border: 1px solid rgba(0,220,205,0.2);
+            display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 9px;
+            color: var(--teal);
+            font-weight: 600;
+        }
+        .article-author-name {
+            font-size: 0.78rem;
+            color: var(--gray-200);
+        }
+        .article-read-link {
+            font-size: 0.82rem;
+            color: var(--teal);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: gap 0.2s;
+        }
+        .article-card:hover .article-read-link { gap: 10px; }
+
+        /* FEATURE CARD (first article, full width) */
+        .article-card.featured {
+            grid-column: 1 / -1;
+            flex-direction: row;
+            gap: 48px;
+            align-items: center;
+        }
+        .article-card.featured .article-card-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .article-card.featured h2 {
+            font-size: 1.6rem;
+        }
+        .article-card.featured .article-featured-accent {
+            width: 220px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+            justify-content: center;
+            height: 160px;
+            background: rgba(0,220,205,0.04);
+            border: 1px solid rgba(0,220,205,0.1);
+            border-radius: 16px;
+        }
+        .article-card.featured .article-featured-accent .accent-label {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--gray-300);
+        }
+        .article-card.featured .article-featured-accent .accent-quote {
+            font-size: 0.82rem;
+            color: var(--teal);
+            font-weight: 600;
+            text-align: center;
+            line-height: 1.5;
+            padding: 0 16px;
+        }
+
+        /* CTA STRIP */
+        .cta-strip {
+            background: var(--bg-elevated);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+        }
+        .cta-strip::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 50%; transform: translateX(-50%);
+            width: 500px; height: 200px;
+            background: radial-gradient(ellipse at center top, rgba(0,220,205,0.07) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .cta-strip p {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+        .cta-strip span {
+            font-size: 0.9rem;
+            color: var(--gray-200);
+            display: block;
+            margin-bottom: 28px;
+        }
+        .cta-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+        .btn-primary {
+            padding: 12px 24px;
+            background: var(--teal);
+            color: #08080C;
+            font-weight: 700;
+            font-size: 0.875rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+        .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+        .btn-secondary {
+            padding: 12px 24px;
+            background: transparent;
+            color: var(--white);
+            font-weight: 500;
+            font-size: 0.875rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.15);
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+        .btn-secondary:hover { border-color: rgba(255,255,255,0.35); transform: translateY(-1px); }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer-left {
+            font-size: 0.8rem;
+            color: var(--gray-300);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .footer-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .footer-right a {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--gray-400);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            transition: color 0.2s;
+        }
+        .footer-right a:hover { color: var(--teal); }
+        .footer-copy {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--gray-400);
+            letter-spacing: 0.05em;
+        }
+
+        .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .reveal.visible { opacity: 1; transform: none; }
+
+        @media (max-width: 900px) {
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { flex-direction: column; }
+            .article-card.featured .article-featured-accent { width: 100%; height: auto; padding: 20px; }
+        }
+        @media (max-width: 768px) {
+            nav { padding: 16px 20px; }
+            .nav-links { display: none; }
+            .blog-hero { padding: 120px 20px 60px; }
+            .articles-section { padding: 0 20px 80px; }
+            footer { flex-direction: column; gap: 16px; text-align: center; padding: 32px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-bg"></div>
+
+    <nav id="main-nav">
+        <div class="nav-logo">
+            <a href="../index.html"><img src="../ArqOne%20Labs%20Logo.gif" alt="ArqOne Labs"></a>
+        </div>
+        <div class="nav-links">
+            <a href="../index.html#ecosystem">Ecosystem</a>
+            <a href="../index.html#portfolio">Portfolio</a>
+            <a href="../index.html#about">About</a>
+            <a href="../services.html">Services</a>
+            <a href="index.html" class="active">Blog</a>
+            <a href="../index.html#athena" class="nav-athena">Athena</a>
+            <a href="https://calendly.com/piero-ainavigator" target="_blank" class="nav-cta-book">Book a Call</a>
+            <a href="../contact.html" class="nav-cta">Get in Touch</a>
+        </div>
+    </nav>
+
+    <div class="page">
+
+        <div class="blog-hero reveal">
+            <div class="hero-label">Perspectives</div>
+            <h1>Thinking on AI, business, and what comes next</h1>
+            <p>Practical analysis from the field. Strategy, systems, and what enterprise AI maturity actually looks like in practice.</p>
+        </div>
+
+        <section class="articles-section">
+            <div class="articles-grid">
+
+                <!-- Featured Article -->
+                <a href="the-model-is-becoming-the-commodity.html" class="article-card featured reveal">
+                    <div class="article-card-content">
+                        <div class="article-card-meta">
+                            <span class="article-category">AI Strategy</span>
+                            <span class="article-read-time">5 min read</span>
+                            <span class="article-date">May 2026</span>
+                        </div>
+                        <h2>The Model Is Becoming the Commodity. The System Is Becoming the Advantage.</h2>
+                        <p>For the last two years, most AI conversations have centered on one question: which model is best? That debate matters. But for most businesses, it is no longer the most important question. The real advantage is shifting away from the model itself and toward the system built around it.</p>
+                        <div class="article-card-footer">
+                            <div class="article-author">
+                                <div class="article-author-dot">PS</div>
+                                <span class="article-author-name">Piero Saleme</span>
+                            </div>
+                            <span class="article-read-link">Read article &rarr;</span>
+                        </div>
+                    </div>
+                    <div class="article-featured-accent">
+                        <span class="accent-label">Key insight</span>
+                        <span class="accent-quote">The model is the ingredient. The system is the recipe.</span>
+                    </div>
+                </a>
+
+                <!-- Article 2 -->
+                <a href="ai-agents-new-microservices.html" class="article-card reveal">
+                    <div class="article-card-meta">
+                        <span class="article-category">AI Systems</span>
+                        <span class="article-read-time">6 min read</span>
+                        <span class="article-date">May 2026</span>
+                    </div>
+                    <h2>Why AI Agents Are Becoming the New Microservices</h2>
+                    <p>A few years ago, many companies went through the microservices wave. One service became dozens, then hundreds. The same pattern is now emerging with AI agents - and the companies that prepare for that complexity before it arrives will hold a serious operational advantage.</p>
+                    <div class="article-card-footer">
+                        <div class="article-author">
+                            <div class="article-author-dot">PS</div>
+                            <span class="article-author-name">Piero Saleme</span>
+                        </div>
+                        <span class="article-read-link">Read article &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- Placeholder -->
+                <div class="article-card reveal" style="opacity:0.4;pointer-events:none;border-style:dashed;">
+                    <div class="article-card-meta">
+                        <span class="article-category" style="opacity:0.5;">Coming Soon</span>
+                    </div>
+                    <h2 style="color:var(--gray-300);">More perspectives coming</h2>
+                    <p>New articles on AI governance, agentic workflows, and enterprise AI strategy published regularly.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- CTA STRIP -->
+        <div class="cta-strip">
+            <p>Ready to apply these ideas in your business?</p>
+            <span>Start with a free AI readiness assessment, or speak directly with Piero.</span>
+            <div class="cta-buttons">
+                <a href="../index.html#athena" class="btn-primary">Try Athena - Free</a>
+                <a href="https://calendly.com/piero-ainavigator" target="_blank" class="btn-secondary">Book a Call</a>
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer-left">
+                <img src="../ArqOne%20Labs%20Logo.gif" alt="ArqOne Labs" style="height:31px;width:auto;">
+                <span style="color:var(--gray-400);">-</span> Enterprise-grade capability for growing businesses
+            </div>
+            <div class="footer-right">
+                <a href="../privacy.html">Privacy Policy</a>
+                <a href="../terms.html">Terms &amp; Conditions</a>
+                <span class="footer-copy">&copy; 2026 ArqOne Labs</span>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        const nav = document.getElementById('main-nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 60);
+        });
+
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    observer.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+        reveals.forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
