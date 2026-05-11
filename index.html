@@ -781,7 +781,6 @@
             border-radius: 16px;
             padding: 40px 36px;
             position: relative;
-            overflow: hidden;
         }
 
         .about-right::before {
@@ -1765,19 +1764,19 @@
                     <div class="about-name">Piero Saleme</div>
                     <div class="about-role">Founder & CEO, ArqOne Labs</div>
                     <div class="about-bio">
-                        <p>ArqOne Labs was born from a simple observation: small and mid-size businesses face the same complex challenges as enterprises. Cybersecurity threats, scaling sales, coordinating marketing, developing talent - all without the resources to hire specialist teams.</p>
-                        <p>I build AI platforms that close that gap. Each product in the ArqOne portfolio takes a domain that traditionally requires expensive specialists and makes it accessible through intelligent systems. Plain language, clear actions, real results.</p>
-                        <p>Operating at the intersection of AI, business strategy, and product design. Author of <em>AI Fluency For Leaders</em>.</p>
+                        <p>ArqOne Labs was born from a simple observation: small and mid-size businesses face the same complex challenges as enterprises - cybersecurity, sales scale, marketing execution, talent development - but without the resources to hire specialist teams for each.</p>
+                        <p>The Labs operates two engines. The Studio builds AI platforms that close the specialist gap across security, sales, video, and brand. The Advisory arm delivers AI readiness assessments, agentic automation builds, and executive training directly to clients.</p>
+                        <p>Operating at the intersection of AI strategy, business transformation, and product design. Author of <em>AI Fluency For Leaders</em>.</p>
                     </div>
                 </div>
                 <div class="about-right gs-reveal-right">
                     <h3>The ArqOne Approach</h3>
                     <ul class="credential-list">
-                        <li><span class="credential-icon">&#9654;</span> Every platform solves a real specialist gap, starting from the problem</li>
-                        <li><span class="credential-icon">&#9654;</span> Built for non-technical users first. Plain language, clear guidance, business outcomes</li>
-                        <li><span class="credential-icon">&#9654;</span> Portfolio thesis where each product reinforces the others</li>
-                        <li><span class="credential-icon">&#9654;</span> Ship fast, learn faster. We run like a lab</li>
-                        <li><span class="credential-icon">&#9654;</span> AI is the engine, business value is the product</li>
+                        <li><span class="credential-icon">&#9654;</span> Every platform starts from a real specialist gap - not a technology looking for a problem</li>
+                        <li><span class="credential-icon">&#9654;</span> Advisory and Studio feed each other: consulting insights shape products, products prove the consulting thesis</li>
+                        <li><span class="credential-icon">&#9654;</span> Built for non-technical leaders first. Plain language, clear actions, measurable outcomes</li>
+                        <li><span class="credential-icon">&#9654;</span> Observe, experiment, scale - the discipline that separates AI that sticks from AI that stalls</li>
+                        <li><span class="credential-icon">&#9654;</span> AI is the engine. Business value is the product</li>
                     </ul>
                 </div>
             </div>
@@ -1931,7 +1930,7 @@
 
     // Fallback: force-show any element that is still invisible after 3s
     setTimeout(function() {
-        document.querySelectorAll('.hero-badge, .hero h1, .hero-sub, .hero-cta-group, .hero-athena-hint, .hero-scroll, .gs-reveal, .platform-card, .service-card, .athena-card, .gs-reveal-left, .gs-reveal-right').forEach(function(el) {
+        document.querySelectorAll('.hero-badge, .hero h1, .hero-sub, .hero-cta-group, .hero-athena-hint, .hero-scroll, .gs-reveal, .platform-card, .service-card, .athena-card, .gs-reveal-left, .gs-reveal-right, .credential-list li').forEach(function(el) {
             if (parseFloat(getComputedStyle(el).opacity) < 0.1) {
                 el.style.opacity = '1';
                 el.style.transform = 'none';
@@ -2152,16 +2151,18 @@
         });
 
 
-        // Credential list stagger
+        // Credential list stagger - delayed to run after container reveal completes
         ScrollTrigger.create({
             trigger: '.credential-list',
-            start: 'top 85%',
+            start: 'top 78%',
+            once: true,
             onEnter: () => {
                 gsap.from('.credential-list li', {
-                    x: -30,
+                    x: -20,
                     opacity: 0,
-                    duration: 0.6,
-                    stagger: 0.08,
+                    duration: 0.5,
+                    stagger: 0.1,
+                    delay: 0.4,
                     ease: 'power3.out'
                 });
             }
