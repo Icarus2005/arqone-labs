@@ -802,6 +802,11 @@
 
         .credential-list { list-style: none; }
 
+        @keyframes credentialFadeIn {
+            from { opacity: 0; transform: translateX(-16px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+
         .credential-list li {
             font-size: 0.9rem;
             color: var(--gray-100);
@@ -811,8 +816,18 @@
             align-items: flex-start;
             gap: 14px;
             line-height: 1.55;
-            transition: all 0.3s;
+            transition: padding-left 0.3s, color 0.3s;
+            opacity: 0;
         }
+
+        .credential-list.in-view li {
+            animation: credentialFadeIn 0.5s ease forwards;
+        }
+        .credential-list.in-view li:nth-child(1) { animation-delay: 0.55s; }
+        .credential-list.in-view li:nth-child(2) { animation-delay: 0.7s; }
+        .credential-list.in-view li:nth-child(3) { animation-delay: 0.85s; }
+        .credential-list.in-view li:nth-child(4) { animation-delay: 1.0s; }
+        .credential-list.in-view li:nth-child(5) { animation-delay: 1.15s; }
 
         .credential-list li:hover { padding-left: 8px; color: var(--white); }
         .credential-list li:last-child { border-bottom: none; }
@@ -1911,7 +1926,7 @@
 
     // Fallback: force-show any element that is still invisible after 3s
     setTimeout(function() {
-        document.querySelectorAll('.hero-badge, .hero h1, .hero-sub, .hero-cta-group, .hero-athena-hint, .hero-scroll, .gs-reveal, .platform-card, .service-card, .athena-card, .gs-reveal-left, .gs-reveal-right, .credential-list li').forEach(function(el) {
+        document.querySelectorAll('.hero-badge, .hero h1, .hero-sub, .hero-cta-group, .hero-athena-hint, .hero-scroll, .gs-reveal, .platform-card, .service-card, .athena-card, .gs-reveal-left, .gs-reveal-right').forEach(function(el) {
             if (parseFloat(getComputedStyle(el).opacity) < 0.1) {
                 el.style.opacity = '1';
                 el.style.transform = 'none';
@@ -2132,22 +2147,7 @@
         });
 
 
-        // Credential list stagger - delayed to run after container reveal completes
-        ScrollTrigger.create({
-            trigger: '.credential-list',
-            start: 'top 78%',
-            once: true,
-            onEnter: () => {
-                gsap.from('.credential-list li', {
-                    x: -20,
-                    opacity: 0,
-                    duration: 0.5,
-                    stagger: 0.1,
-                    delay: 0.4,
-                    ease: 'power3.out'
-                });
-            }
-        });
+        // Credential list reveal handled by CSS animation + IntersectionObserver (below)
 
         // Divider animations - draw in on scroll
         gsap.utils.toArray('.divider').forEach(div => {
@@ -2559,6 +2559,19 @@
     });
 
     if (endBtn) endBtn.addEventListener('click', stopAthena);
+
+    // Credential list: add in-view class when list enters viewport (CSS animation takes over)
+    (function() {
+        var list = document.querySelector('.credential-list');
+        if (!list) return;
+        var obs = new IntersectionObserver(function(entries) {
+            if (entries[0].isIntersecting) {
+                list.classList.add('in-view');
+                obs.disconnect();
+            }
+        }, { threshold: 0.2 });
+        obs.observe(list);
+    })();
     </script>
 </body>
 </html>
