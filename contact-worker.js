@@ -6,7 +6,7 @@
 // 2. Settings → Variables → Add Secret: RESEND_API_KEY = your Resend API key
 // 3. Copy your Worker URL (e.g. https://arqone-contact.YOUR_SUBDOMAIN.workers.dev)
 // 4. Paste that URL into contact.html as WORKER_URL
-// Note: sends FROM contact@ainavigator.info (already verified in Resend) → TO arqonelabs@ainavigator.info
+// Note: sends FROM contact@ainavigator.info (already verified in Resend) → TO hello@arqonelabs.com
 
 export default {
   async fetch(request, env) {
@@ -142,7 +142,7 @@ export default {
           },
           body: JSON.stringify({
             from: 'ArqOne Labs <contact@ainavigator.info>',
-            to: ['arqonelabs@ainavigator.info'],
+            to: ['hello@arqonelabs.com'],
             reply_to: email,
             subject: `[ArqOne Labs] ${interest} — ${name}`,
             html,
