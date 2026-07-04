@@ -461,6 +461,7 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 20px;
         }
+        .formats-grid.two { grid-template-columns: repeat(2, 1fr); }
         .format-card {
             padding: 32px 28px;
             background: var(--bg-card);
@@ -613,7 +614,7 @@
         @media (max-width: 1024px) {
             .service-section-inner { grid-template-columns: 1fr; gap: 48px; }
             .service-aside { position: static; }
-            .formats-grid { grid-template-columns: 1fr; }
+            .formats-grid, .formats-grid.two { grid-template-columns: 1fr; }
         }
         @media (max-width: 768px) {
             nav { padding: 16px 20px; }
@@ -660,10 +661,68 @@
 
         <!-- ANCHOR NAV -->
         <div class="service-nav">
+            <a href="#efficiency">AI Efficiency Framework</a>
             <a href="#readiness">AI Readiness Assessment</a>
             <a href="#automation">Custom Agentic Automation</a>
             <a href="#training">Executive AI Training</a>
         </div>
+
+        <!-- ─────────────────────────────────────────── -->
+        <!-- SERVICE 0: AI EFFICIENCY FRAMEWORK          -->
+        <!-- ─────────────────────────────────────────── -->
+        <section class="service-section" id="efficiency">
+            <div class="service-section-inner">
+
+                <div class="service-aside reveal">
+                    <div class="service-num">00 / AI Efficiency Framework&trade;</div>
+                    <h2>Where is your AI spend actually going?</h2>
+                    <p>AI cost is the hook. Operating model maturity is the real problem. The AI Efficiency Framework&trade; is our practical advisory system for reducing AI waste, controlling tool sprawl, selecting the right models, governing usage, and connecting AI spend to measurable business value.</p>
+                    <a href="ai-efficiency.html" class="service-aside-cta">Explore the Framework</a><br>
+                    <a href="https://calendly.com/piero-ainavigator" target="_blank" class="service-aside-cta-outline">Book an AI Efficiency Briefing</a>
+                </div>
+
+                <div class="service-body">
+
+                    <div class="service-block reveal">
+                        <div class="service-block-label">Two ways to engage</div>
+                        <div class="formats-grid two">
+                            <div class="format-card">
+                                <h4>AI Efficiency Scan</h4>
+                                <div class="format-duration">Athena-Powered &middot; Days, Not Weeks</div>
+                                <p>For growing businesses and SMEs that want a fast view of where AI tools, spend and workflows may be leaking value - without a heavy consulting engagement.</p>
+                                <ul class="format-list">
+                                    <li>Guided questionnaire and AI tool inventory</li>
+                                    <li>Workflow maturity score and AI Efficiency Score</li>
+                                    <li>Automated report with a human debrief</li>
+                                    <li>Optional advisory review</li>
+                                </ul>
+                            </div>
+                            <div class="format-card">
+                                <h4>AI Efficiency Diagnostic</h4>
+                                <div class="format-duration">Human-Led &middot; 2 Weeks</div>
+                                <p>For leadership teams that need a deeper review of AI tools, workflows, governance, model selection and measurable business value.</p>
+                                <ul class="format-list">
+                                    <li>Full leakage map across teams and tools</li>
+                                    <li>Model selection rules and usage policy</li>
+                                    <li>Governance and permissions review</li>
+                                    <li>Quick wins and a 90-day roadmap</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-block reveal">
+                        <div class="service-block-label">Who this is for</div>
+                        <div class="audience-list">
+                            <div class="audience-item">Leadership teams whose AI subscriptions and API costs are rising faster than visible business value</div>
+                            <div class="audience-item">Growing businesses with overlapping AI tools and no clear usage rules or ownership</div>
+                            <div class="audience-item">CFOs and COOs who want AI spend connected to measurable outcomes, not activity metrics</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
 
         <!-- ─────────────────────────────────────────── -->
         <!-- SERVICE 1: AI READINESS ASSESSMENT          -->
