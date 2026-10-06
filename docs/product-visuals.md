@@ -15,3 +15,5 @@ Captured or retrieved on 6 October 2026. These assets support the ArqOne Labs ma
 Images are local, lazy-loaded assets. No external asset host is required at runtime. Product images are not evidence of customer deployments, performance or endorsement.
 
 The BrandSprk architecture reference and recent development context informed the copy, but no private brief, source material, deck or technical architecture is published.
+
+PlacePulse also includes `assets/products/placepulse-overview.webp`, the founder-supplied product overview showing evidence inputs, Meridien interpretation and decision outputs. It is explicitly an illustrative composite example, not client-grade analysis.

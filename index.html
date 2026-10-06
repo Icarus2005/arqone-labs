@@ -1582,8 +1582,10 @@
         .platform-card-featured { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); padding: 0; }
         .platform-card-featured .product-content { padding: 40px; }
         .platform-card-featured .card-name { font-size: 2rem; }
-        .placepulse-visual { aspect-ratio: auto; display: flex; align-items: center; justify-content: center; min-height: 320px; padding: 36px; border-bottom: 0; border-right: 1px solid var(--border); background: #101d36; }
+        .placepulse-visual { aspect-ratio: auto; display: flex; flex-direction: column; gap: 24px; align-items: center; justify-content: center; min-height: 320px; padding: 28px 24px 54px; border-bottom: 0; border-right: 1px solid var(--border); background: #101d36; }
         .placepulse-visual img { height: auto; width: 100%; }
+        .placepulse-visual .placepulse-logo { width: 80%; max-width: 360px; }
+        .placepulse-overview { border: 1px solid var(--border); border-radius: 8px; }
         .placepulse-visual figcaption { letter-spacing: .06em; }
         .product-visual-book { background: #10151d; }
         .product-visual-book img { padding: 16px; }
@@ -1681,8 +1683,9 @@
             <div class="portfolio-grid">
                 <article class="platform-card platform-card-featured">
                     <figure class="product-visual placepulse-visual">
-                        <img src="assets/products/placepulse-white.webp" width="1000" height="269" loading="lazy" decoding="async" alt="PlacePulse logo">
-                        <figcaption>PLACE DECISION INTELLIGENCE</figcaption>
+                        <img class="placepulse-logo" src="assets/products/placepulse-white.webp" width="1000" height="269" loading="lazy" decoding="async" alt="PlacePulse logo">
+                        <img class="placepulse-overview" src="assets/products/placepulse-overview.webp" width="1100" height="842" loading="lazy" decoding="async" alt="PlacePulse product overview: evidence inputs, Meridien interpretation and decisions; illustrative composite data">
+                        <figcaption>Illustrative product overview</figcaption>
                     </figure>
                     <div class="product-content">
                         <div class="card-header"><h3 class="card-name">PlacePulse</h3><span class="card-status status-prelaunch">Demo</span></div>
