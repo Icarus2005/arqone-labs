@@ -25,3 +25,13 @@ Represent the current product portfolio and advisory practice clearly. Help a pr
 - Leave Athena, booking, contact worker and existing blog routes intact.
 - This review branch is a first content/structure pass. It does not complete the full visual redesign or establish current product availability.
 - Keep production unchanged while the draft pull request is reviewed; actual hosting configuration is not present in this repository.
+
+## Second implementation: product showcase
+- Replace text-only portfolio cards with local product visuals and use-case-led descriptions.
+- Place the portfolio before the orbital ecosystem for faster discovery.
+- Order: PlacePulse, SalesX, Plymio, BrandSprk, AI Navigator, ShieldPilot, TWIIN.
+- Correct Plymio to Beta based on its public site, and SalesX to Private preview based on its public access gate.
+- Broaden BrandSprk messaging to creative intelligence, brand context and governed production. Keep new development qualified.
+- Connect homepage advisory process to OES, with three explicit stages.
+- Carry a validated product topic into the enquiry form, without submitting any enquiry or changing the contact worker.
+- See product-visuals.md for asset provenance.

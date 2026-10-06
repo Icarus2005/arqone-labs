@@ -1567,6 +1567,38 @@
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
         }
+        /* Product showcase: authentic public visuals and a consistent reading order. */
+        .portfolio-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+        .platform-card { padding: 0; display: flex; flex-direction: column; }
+        .product-visual { position: relative; margin: 0; overflow: hidden; background: #0b101a; aspect-ratio: 16 / 10; border-bottom: 1px solid var(--border); }
+        .product-visual img { display: block; width: 100%; height: 100%; object-fit: contain; }
+        .product-visual figcaption { position: absolute; bottom: 12px; left: 12px; max-width: calc(100% - 24px); padding: 5px 9px; border: 1px solid rgba(255,255,255,.15); background: rgba(8,8,12,.92); color: #d8dce5; font-size: .75rem; line-height: 1.4; border-radius: 4px; }
+        .product-content { display: flex; flex-direction: column; flex: 1; padding: 30px; position: relative; z-index: 1; }
+        .product-content .card-name { font-size: 1.5rem; margin: 0; }
+        .product-headline { font-size: 1.125rem; line-height: 1.5; color: var(--white); margin-bottom: 14px; font-weight: 500; }
+        .product-content .card-desc { font-size: 1rem; line-height: 1.75; font-weight: 400; }
+        .product-audience { margin-top: 24px; margin-bottom: 18px; color: #b9bcc8; font-size: .875rem; }
+        .product-content .service-card-link { margin-top: auto; font-size: .9375rem; }
+        .platform-card-featured { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); padding: 0; }
+        .platform-card-featured .product-content { padding: 40px; }
+        .platform-card-featured .card-name { font-size: 2rem; }
+        .placepulse-visual { aspect-ratio: auto; display: flex; align-items: center; justify-content: center; min-height: 320px; padding: 36px; border-bottom: 0; border-right: 1px solid var(--border); background: #101d36; }
+        .placepulse-visual img { height: auto; width: 100%; }
+        .placepulse-visual figcaption { letter-spacing: .06em; }
+        .product-visual-book { background: #fff; }
+        .portfolio-note { color: var(--gray-200); font-size: .875rem; line-height: 1.7; margin-top: 24px; max-width: 760px; }
+        .card-status { font-size: .75rem; }
+        .status-live::before { display: none; }
+        .service-process { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+        .service-process::before { left: calc(16.67% + 11px); right: calc(16.67% + 11px); }
+        html { overflow-x: clip; }
+        @media (max-width: 768px) {
+            .portfolio-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+            .platform-card-featured { display: flex; }
+            .placepulse-visual { min-height: 210px; border-right: 0; border-bottom: 1px solid var(--border); }
+            .product-content, .platform-card-featured .product-content { padding: 24px; }
+            .service-process { grid-template-columns: minmax(0, 1fr); }
+        }
     </style>
 </head>
 <body>
@@ -1602,7 +1634,7 @@
             <div class="hero-glow"></div>
             <div class="hero-badge">AI Venture Studio &amp; Advisory</div>
 <h1>From AI ambition to <span class="accent">business impact</span></h1>
-<p class="hero-sub">We build AI products and help organisations put AI to work. Our venture studio and advisory practice connect business strategy, specialist intelligence and hands-on implementation.</p>
+<p class="hero-sub">We build specialist AI products and help organisations turn AI into useful business capability. From place decisions and sales conversations to creative work and leadership, our studio and advisory practice connect strategy with execution.</p>
             <div class="hero-cta-group">
                 <a href="#portfolio" class="btn-primary magnetic-target">Explore Our Products</a>
                 <a href="#services" class="btn-secondary magnetic-target">Explore Advisory</a>
@@ -1619,21 +1651,124 @@
 
         <section class="engines" aria-labelledby="engines-title">
             <div class="section-label">How we work</div>
-            <h2 class="section-title" id="engines-title">We advise. We build. We learn from both.</h2>
+            <h2 class="section-title" id="engines-title">Business insight shapes the build.</h2>
             <div class="engine-grid">
                 <article class="engine-card">
                     <div class="engine-label">Studio</div>
                     <h3>Products built around specific business needs</h3>
-                    <p>Explore specialist platforms for location decisions, sales conversations, coaching and creative work. See what each product does and where it is in its development.</p>
+                    <p>Our studio develops focused products for the decisions and workflows that matter: where to invest, how to serve customers, how to prepare, and what to create.</p>
                     <a href="#portfolio" class="service-card-link">Explore the portfolio</a>
                 </article>
                 <article class="engine-card">
                     <div class="engine-label">Advisory</div>
                     <h3>A practical path from opportunity to implementation</h3>
-                    <p>Assess AI readiness, improve efficiency, develop leadership capability and build custom workflows. Observe, experiment and scale with clear ownership and measures of value.</p>
+                    <p>Our advisory helps leaders choose where AI belongs, run useful experiments and scale with confidence. We connect readiness, efficiency, governance and implementation through Observe → Experiment → Scale.</p>
                     <a href="services.html" class="service-card-link">Explore our advisory services</a>
                 </article>
             </div>
+        </section>
+
+        <!-- PRODUCT SHOWCASE -->
+        <div class="divider"></div>
+        <section id="portfolio">
+            <div class="section-label">The portfolio</div>
+            <h2 class="section-title">Built around the work that matters.</h2>
+            <p class="section-sub">Explore specialist products for better decisions, stronger conversations and more accessible expertise.</p>
+            <div class="portfolio-grid">
+                <article class="platform-card platform-card-featured">
+                    <figure class="product-visual placepulse-visual">
+                        <img src="assets/products/placepulse.png" width="858" height="302" loading="lazy" decoding="async" alt="PlacePulse logo">
+                        <figcaption>PLACE DECISION INTELLIGENCE</figcaption>
+                    </figure>
+                    <div class="product-content">
+                        <div class="card-header"><h3 class="card-name">PlacePulse</h3><span class="card-status status-prelaunch">Demo</span></div>
+                        <h4 class="product-headline">Understand a place. Decide what comes next.</h4>
+                        <p class="card-desc">Bring location context, performance signals and peer comparisons into one decision layer. See what the evidence supports, where confidence is limited and which actions deserve attention.</p>
+                        <div class="place-capabilities" aria-label="PlacePulse capabilities"><span>Location context</span><span>Evidence &amp; confidence</span><span>Peer comparison</span><span>Recommended actions</span></div>
+                        <p class="product-audience">For investors, operators and destination teams</p>
+                        <a href="contact.html?interest=PlacePulse" class="service-card-link">Request a PlacePulse walkthrough</a>
+                    </div>
+                </article>
+                <article class="platform-card">
+                    <figure class="product-visual">
+                        <img src="assets/products/salesx.jpg" loading="lazy" decoding="async" alt="SalesX brand artwork">
+                        <figcaption>Brand artwork</figcaption>
+                    </figure>
+                    <div class="product-content">
+                        <div class="card-header"><h3 class="card-name">SalesX</h3><span class="card-status status-prelaunch">Private preview</span></div>
+                        <h4 class="product-headline">Voice infrastructure for revenue operations</h4>
+                        <p class="card-desc">Turn customer conversations into a connected sales workflow. Voice agents support inbound enquiries, qualification and follow-up, with handovers and operational context designed around each business.</p>
+                        <p class="product-audience">For sales and service teams</p>
+                        <a href="contact.html?interest=SalesX" class="service-card-link">Discuss a SalesX pilot</a>
+                    </div>
+                </article>
+                <article class="platform-card">
+                    <figure class="product-visual">
+                        <img src="assets/products/plymio.jpg" loading="lazy" decoding="async" alt="Plymio public site: expertise, AI Presences and Guides">
+                        <figcaption>Public site preview</figcaption>
+                    </figure>
+                    <div class="product-content">
+                        <div class="card-header"><h3 class="card-name">Plymio</h3><span class="card-status status-prelaunch">Beta</span></div>
+                        <h4 class="product-headline">Professional expertise, within reach</h4>
+                        <p class="card-desc">Explore AI Presences grounded in real coaches and mentors, alongside structured Guides for practice and preparation. Professionals can extend their knowledge and voice while keeping control of their expertise.</p>
+                        <p class="product-audience">For individuals, coaches and mentors</p>
+                        <a href="contact.html?interest=Plymio" class="service-card-link">Explore Plymio with us</a>
+                    </div>
+                </article>
+                <article class="platform-card">
+                    <figure class="product-visual">
+                        <img src="assets/products/brandsprk.jpg" loading="lazy" decoding="async" alt="BrandSprk public site: creative intelligence and governed production">
+                        <figcaption>Public site preview</figcaption>
+                    </figure>
+                    <div class="product-content">
+                        <div class="card-header"><h3 class="card-name">BrandSprk</h3><span class="card-status status-prelaunch">Demo</span></div>
+                        <h4 class="product-headline">Creative decisions grounded in your brand</h4>
+                        <p class="card-desc">Find approved assets, develop campaign briefs and connect creative intelligence with governed production. Pitch Room and directional creative testing extend the work into preparation and challenge.</p>
+                        <p class="product-audience">For agencies and brand teams</p>
+                        <a href="contact.html?interest=BrandSprk" class="service-card-link">Request a BrandSprk walkthrough</a>
+                    </div>
+                </article>
+                <article class="platform-card">
+                    <figure class="product-visual product-visual-book">
+                        <img src="assets/products/ai-navigator-book.webp" loading="lazy" decoding="async" alt="AI Fluency for Leaders book by Piero Saleme">
+                        <figcaption>AI Fluency for Leaders</figcaption>
+                    </figure>
+                    <div class="product-content">
+                        <div class="card-header"><h3 class="card-name">AI Navigator</h3><span class="card-status status-live">Available</span></div>
+                        <h4 class="product-headline">Build the judgement to lead AI</h4>
+                        <p class="card-desc">An executive learning programme, the AI Fluency for Leaders book and practical leadership resources. Develop the judgement, ownership and governance needed to move from scattered tools to purposeful adoption.</p>
+                        <p class="product-audience">For leaders and transformation teams</p>
+                        <a href="contact.html?interest=AI%20Navigator" class="service-card-link">Discuss AI leadership training</a>
+                    </div>
+                </article>
+                <article class="platform-card">
+                    <figure class="product-visual">
+                        <img src="assets/products/shieldpilot.jpg" loading="lazy" decoding="async" alt="ShieldPilot public illustrative demo: fraud signals and recommended actions">
+                        <figcaption>Public illustrative demo</figcaption>
+                    </figure>
+                    <div class="product-content">
+                        <div class="card-header"><h3 class="card-name">ShieldPilot</h3><span class="card-status status-live">Available</span></div>
+                        <h4 class="product-headline">A clearer decision before you act</h4>
+                        <p class="card-desc">Assess suspicious emails, messages and payment requests. Understand the signals, review the risk and see practical next steps before clicking, replying or approving a payment.</p>
+                        <p class="product-audience">For finance, operations and small teams</p>
+                        <a href="contact.html?interest=ShieldPilot" class="service-card-link">Learn about ShieldPilot</a>
+                    </div>
+                </article>
+                <article class="platform-card">
+                    <figure class="product-visual">
+                        <img src="assets/products/twiin.jpg" loading="lazy" decoding="async" alt="TWIIN public site: AI video twins and branded video creation">
+                        <figcaption>Public site preview</figcaption>
+                    </figure>
+                    <div class="product-content">
+                        <div class="card-header"><h3 class="card-name">TWIIN</h3><span class="card-status status-live">Available</span></div>
+                        <h4 class="product-headline">Your expertise, on camera at scale</h4>
+                        <p class="card-desc">Create branded video content using a digital twin of your appearance and voice. Work from scripts and adapt your message across languages and formats without filming every version.</p>
+                        <p class="product-audience">For experts, educators and content teams</p>
+                        <a href="contact.html?interest=TWIIN" class="service-card-link">Discuss video creation</a>
+                    </div>
+                </article>
+            </div>
+            <p class="portfolio-note">Product stages are shown above. Preview images illustrate the offering; walkthroughs can explore the capabilities relevant to your business.</p>
         </section>
 
         <!-- ORBITAL ECOSYSTEM -->
@@ -1671,7 +1806,7 @@
                     <div class="orbit-node-info">
                         <div class="orbit-node-name">ShieldPilot</div>
                         <div class="orbit-node-tag">Cybersecurity</div>
-                        <div class="orbit-node-status live">Live</div>
+                        <div class="orbit-node-status live">Available</div>
                     </div>
                 </div>
 
@@ -1679,8 +1814,8 @@
                     <div class="orbit-node-dot"><span class="node-initial">SX</span></div>
                     <div class="orbit-node-info">
                         <div class="orbit-node-name">SalesX</div>
-                        <div class="orbit-node-tag">Sales Automation</div>
-                        <div class="orbit-node-status live">Live</div>
+                        <div class="orbit-node-tag">Voice Operations</div>
+                        <div class="orbit-node-status pre">Private preview</div>
                     </div>
                 </div>
 
@@ -1689,7 +1824,7 @@
                     <div class="orbit-node-info">
                         <div class="orbit-node-name">TWIIN</div>
                         <div class="orbit-node-tag">AI Video</div>
-                        <div class="orbit-node-status live">Live</div>
+                        <div class="orbit-node-status live">Available</div>
                     </div>
                 </div>
 
@@ -1697,8 +1832,8 @@
                     <div class="orbit-node-dot"><span class="node-initial">Bs</span></div>
                     <div class="orbit-node-info">
                         <div class="orbit-node-name">BrandSprk</div>
-                        <div class="orbit-node-tag">Brand &amp; Pitch Preparation</div>
-                        <div class="orbit-node-status live">Live</div>
+                        <div class="orbit-node-tag">Creative Intelligence</div>
+                        <div class="orbit-node-status pre">Demo</div>
                     </div>
                 </div>
 
@@ -1707,7 +1842,7 @@
                     <div class="orbit-node-info">
                         <div class="orbit-node-name">AI Navigator</div>
                         <div class="orbit-node-tag">Education</div>
-                        <div class="orbit-node-status live">Live</div>
+                        <div class="orbit-node-status live">Available</div>
                     </div>
                 </div>
 
@@ -1724,94 +1859,9 @@
                     <div class="orbit-node-dot"><span class="node-initial">Pl</span></div>
                     <div class="orbit-node-info">
                         <div class="orbit-node-name">Plymio</div>
-                        <div class="orbit-node-tag">Coaching</div>
-                        <div class="orbit-node-status pre">Pre-launch</div>
+                        <div class="orbit-node-tag">AI Presences &amp; Guides</div>
+                        <div class="orbit-node-status live">Beta</div>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- PORTFOLIO DETAIL -->
-        <div class="divider"></div>
-        <section id="portfolio">
-            <div class="section-label gs-reveal">Portfolio</div>
-            <h2 class="section-title gs-reveal">Specialist capability. Real business problems.</h2>
-            <p class="section-sub gs-reveal">Explore our work in place intelligence, voice automation, coaching, pitch preparation, security, video and AI education. Products are at different stages of development; demonstrations show capabilities, not client results.</p>
-
-            <div class="portfolio-grid">
-                <article class="platform-card platform-card-featured gs-reveal">
-                    <div class="card-header">
-                        <div class="card-name">PlacePulse</div>
-                        <div class="card-status status-prelaunch">Demo</div>
-                    </div>
-                    <div class="card-domain">Place decision intelligence</div>
-                    <p class="card-desc">A decision layer for places. Bring location context, directional scores, evidence quality and peer comparisons together to support investment, location and operating decisions.</p>
-                    <div class="place-capabilities" aria-label="PlacePulse capabilities">
-                        <span>Location context</span><span>Evidence &amp; confidence</span><span>Peer comparison</span><span>Recommended actions</span>
-                    </div>
-                    <p class="card-desc">Explore demonstration scenarios for retail, destinations and automotive locations.</p>
-                    <a href="contact.html" class="service-card-link">Request a PlacePulse walkthrough</a>
-                </article>
-
-
-                <div class="platform-card gs-reveal">
-                    <div class="card-header">
-                        <div class="card-name">ShieldPilot</div>
-                        <div class="card-status status-live">Live</div>
-                    </div>
-                    <div class="card-domain">shieldpilot.io</div>
-                    <p class="card-desc">AI-powered cyber triage that helps non-tech individuals and SMEs assess suspicious emails, links, and payment requests. It explains risk in plain business language with clear next steps.</p>
-                    <span class="card-tag">Powers your: Security Operations</span>
-                </div>
-
-                <div class="platform-card gs-reveal">
-                    <div class="card-header">
-                        <div class="card-name">SalesX</div>
-                        <div class="card-status status-live">Live</div>
-                    </div>
-                    <div class="card-domain">getsalesx.com</div>
-                    <p class="card-desc">AI-powered sales platform with intelligent voice agents and automated workflows. Handles inbound and outbound conversations, qualifies leads, and follows up consistently at scale.</p>
-                    <span class="card-tag">Powers your: Sales Operations</span>
-                </div>
-
-                <div class="platform-card gs-reveal">
-                    <div class="card-header">
-                        <div class="card-name">TWIIN</div>
-                        <div class="card-status status-live">Live</div>
-                    </div>
-                    <div class="card-domain">aitwiin.com</div>
-                    <p class="card-desc">AI video twin platform that clones your visual appearance, voice, and style to create branded videos at scale. Script to publish in minutes, across every platform, in multiple languages.</p>
-                    <span class="card-tag">Powers your: Video Production</span>
-                </div>
-
-                <div class="platform-card gs-reveal">
-                    <div class="card-header">
-                        <div class="card-name">BrandSprk</div>
-                        <div class="card-status status-live">Live</div>
-                    </div>
-                    <div class="card-domain">brandsprk.io</div>
-                    <p class="card-desc">An AI workspace for agencies and brand teams. Current development centres on Julian and the Pitch Room: preparing for challenging pitch conversations, with deck and brief ingestion and post-session review in development.</p>
-                    <span class="card-tag">Powers your: Marketing Strategy</span>
-                </div>
-
-                <div class="platform-card gs-reveal">
-                    <div class="card-header">
-                        <div class="card-name">AI Navigator</div>
-                        <div class="card-status status-live">Live</div>
-                    </div>
-                    <div class="card-domain">ainavigator.info</div>
-                    <p class="card-desc">Practical AI learning program for business leaders. Includes an online course, the book <em>AI Fluency For Leaders</em>, and executive briefings that cut through hype and deliver real business value.</p>
-                    <span class="card-tag">Powers your: AI Capability</span>
-                </div>
-
-                <div class="platform-card gs-reveal">
-                    <div class="card-header">
-                        <div class="card-name">Plymio</div>
-                        <div class="card-status status-prelaunch">Pre-launch</div>
-                    </div>
-                    <div class="card-domain">plymio.com</div>
-                    <p class="card-desc">AI-powered coaching platform enabling professionals to scale expertise through intelligent avatars. Coaches clone their voice and knowledge; users get personalized guidance, always available.</p>
-                    <span class="card-tag">Powers your: Coaching Practice</span>
                 </div>
             </div>
         </section>
@@ -1850,28 +1900,11 @@
             <h2 class="section-title gs-reveal">Better AI decisions.<br>Practical implementation.</h2>
             <p class="section-sub gs-reveal">Find the right opportunities, qualify experiments and build the capability to scale. Our advisory combines business judgement with product-building experience, clear governance and measurable outcomes.</p>
 
-            <!-- Process flow -->
+            <!-- OES connects advisory diagnosis, experiments and implementation. -->
             <div class="service-process gs-reveal">
-                <div class="process-step">
-                    <div class="process-step-num">01</div>
-                    <div class="process-step-label">Assess</div>
-                    <div class="process-step-desc">Diagnose operations, identify AI opportunities</div>
-                </div>
-                <div class="process-step">
-                    <div class="process-step-num">02</div>
-                    <div class="process-step-label">Strategise</div>
-                    <div class="process-step-desc">Prioritise by ROI, build the roadmap</div>
-                </div>
-                <div class="process-step">
-                    <div class="process-step-num">03</div>
-                    <div class="process-step-label">Build</div>
-                    <div class="process-step-desc">Deploy automations, agents, integrations</div>
-                </div>
-                <div class="process-step">
-                    <div class="process-step-num">04</div>
-                    <div class="process-step-label">Scale</div>
-                    <div class="process-step-desc">Optimise, expand, build internal capability</div>
-                </div>
+                <div class="process-step"><div class="process-step-num">01</div><div class="process-step-label">Observe</div><div class="process-step-desc">Understand the workflow, evidence and opportunity</div></div>
+                <div class="process-step"><div class="process-step-num">02</div><div class="process-step-label">Experiment</div><div class="process-step-desc">Test with clear ownership and success criteria</div></div>
+                <div class="process-step"><div class="process-step-num">03</div><div class="process-step-label">Scale</div><div class="process-step-desc">Embed what works, measure value and build capability</div></div>
             </div>
 
             <div class="services-grid">
@@ -1962,7 +1995,7 @@
             <div class="cta-glow"></div>
             <div class="section-label gs-reveal">Let's Talk</div>
             <h2 class="section-title gs-reveal">Ready to work smarter?</h2>
-            <p class="section-sub gs-reveal">Whether you're exploring one of our platforms or need custom AI automation for your business, we'd like to hear from you.</p>
+            <p class="section-sub gs-reveal">Tell us the decision or workflow you want to improve. We can explore a product, shape a focused pilot or start an advisory engagement.</p>
             <div class="gs-reveal" style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
                 <a href="https://calendly.com/piero-ainavigator" target="_blank" class="btn-primary magnetic-target">Book a 30-Min Call</a>
                 <a href="contact.html" class="btn-secondary magnetic-target">Get in Touch</a>
