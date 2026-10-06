@@ -1546,6 +1546,7 @@
             .athena-card-right { margin: 0 auto; }
         }
         /* October refresh: bring the two business engines and place intelligence forward. */
+        section[id] { scroll-margin-top: 90px; }
         .engine-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
         .engine-card { padding: 32px; border: 1px solid var(--border); border-radius: 16px; background: var(--bg-card); }
         .engine-label { color: var(--teal); font-family: var(--font-mono); font-size: .875rem; margin-bottom: 20px; }
@@ -2154,18 +2155,12 @@
     (function() {
         const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-        tl.from('.hero-badge', { y: 20, opacity: 0, duration: 0.8, delay: 0.2 })
-          .to('.hero-badge', { opacity: 1, duration: 0 }, '<')
-          .from('.hero h1', { y: 40, opacity: 0, duration: 1, filter: 'blur(8px)' }, '-=0.4')
-          .to('.hero h1', { opacity: 1, filter: 'blur(0px)', duration: 0 }, '<')
-          .from('.hero-sub', { y: 25, opacity: 0, duration: 0.8 }, '-=0.5')
-          .to('.hero-sub', { opacity: 1, duration: 0 }, '<')
-          .from('.hero-cta-group', { y: 25, opacity: 0, duration: 0.8 }, '-=0.4')
-          .to('.hero-cta-group', { opacity: 1, duration: 0 }, '<')
-          .from('.hero-scroll', { opacity: 0, duration: 1 }, '-=0.2')
-          .to('.hero-scroll', { opacity: 1, duration: 0 }, '<')
-          .from('.hero-athena-hint', { y: 12, opacity: 0, duration: 0.7 }, '-=0.6')
-          .to('.hero-athena-hint', { opacity: 1, duration: 0 }, '<');
+        tl.fromTo('.hero-badge', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, delay: 0.2 })
+          .fromTo('.hero h1', { y: 40, opacity: 0, filter: 'blur(8px)' }, { y: 0, opacity: 1, filter: 'blur(0px)', duration: 1 }, '-=0.4')
+          .fromTo('.hero-sub', { y: 25, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8 }, '-=0.5')
+          .fromTo('.hero-cta-group', { y: 25, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8 }, '-=0.4')
+          .fromTo('.hero-scroll', { opacity: 0 }, { opacity: 1, duration: 1 }, '-=0.2')
+          .fromTo('.hero-athena-hint', { y: 12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7 }, '-=0.6');
     })();
 
     // ============================================
@@ -2532,19 +2527,8 @@
     // ============================================
     // SMOOTH SCROLL FOR ANCHOR LINKS
     // ============================================
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                if (typeof gsap !== 'undefined' && gsap.plugins && gsap.plugins.scrollTo) {
-                    gsap.to(window, { scrollTo: { y: target, offsetY: 80 }, duration: 1, ease: 'power3.inOut' });
-                } else {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            }
-        });
-    });
+    // Native fragment navigation keeps deep links and keyboard behaviour intact.
+    // CSS scroll-behavior supplies smooth scrolling without a plugin dependency.
 
     // ============================================
     // PARALLAX FLOATING ORBS
