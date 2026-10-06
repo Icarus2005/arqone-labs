@@ -8,7 +8,7 @@ Represent the current product portfolio and advisory practice clearly. Help a pr
 - Portfolio: prominent PlacePulse demo card, evidence/confidence capabilities, and a walkthrough enquiry path. Add PlacePulse to the ecosystem and contact topic list.
 - BrandSprk: describe Julian / Pitch Room as current development; qualify ingestion and review work as in development.
 - Advisory: lead with expertise, implementation and Observe → Experiment → Scale. Preserve the AI Efficiency Framework as the flagship offer.
-- Correct founder display name to Piero Salemi. Align homepage metadata with the positioning.
+- Preserve founder display name Piero Saleme. Align homepage metadata with the positioning.
 - Replace unqualified unattended-operation and support-resolution claims with oversight and workload-specific validation.
 
 ## Next implementation slices
