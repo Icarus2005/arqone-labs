@@ -1587,6 +1587,8 @@
         .placepulse-visual { aspect-ratio: auto; display: flex; flex-direction: column; gap: 20px; align-items: center; justify-content: center; min-height: 320px; padding: 28px 24px 54px; border-bottom: 0; border-right: 1px solid var(--border); background: #101d36; }
         .placepulse-visual img { height: auto; width: 100%; }
         .placepulse-visual .placepulse-logo { width: 70%; max-width: 300px; }
+        .placepulse-video-frame { position: relative; width: 100%; overflow: hidden; border: 1px solid var(--border); border-radius: 8px; background: #080a0e; }
+        .placepulse-video-frame video { display: block; width: 100%; height: auto; aspect-ratio: 3818 / 2008; object-fit: contain; }
         .placepulse-overview { border: 1px solid var(--border); border-radius: 8px; }
         .placepulse-visual figcaption { letter-spacing: .06em; }
         .product-visual-book { background: #10151d; }
@@ -1720,9 +1722,18 @@
             <div class="portfolio-grid">
                 <article class="platform-card platform-card-featured">
                     <figure class="product-visual placepulse-visual">
-                        <img class="placepulse-logo" src="assets/products/placepulse-white.webp" width="1000" height="269" loading="lazy" decoding="async" alt="PlacePulse logo">
-                        <img class="placepulse-overview" src="assets/products/placepulse-overview.webp" width="1100" height="842" loading="lazy" decoding="async" alt="PlacePulse product overview: evidence inputs, Meridien interpretation and decisions; illustrative composite data">
-                        <figcaption>Illustrative product overview</figcaption>
+                        <img class="placepulse-logo" src="assets/products/placepulse-new-logo.webp" width="595" height="172" loading="lazy" decoding="async" alt="PlacePulse logo, blue pixel P and white wordmark">
+                        <div class="placepulse-video-frame">
+                            <video id="placepulse-demo-video" controls playsinline preload="none" poster="assets/products/placepulse-demo-poster.webp" aria-label="PlacePulse platform demo, thirty-three seconds">
+                                <source src="assets/products/placepulse-demo.mp4" type="video/mp4">
+                                Your browser does not support embedded video.
+                            </video>
+                            <button class="product-video-play" id="placepulse-video-play" type="button" aria-controls="placepulse-demo-video" aria-label="Play the PlacePulse platform demo">
+                                <span class="product-video-play-icon" aria-hidden="true"></span>
+                                <span>Watch demo (0:33)</span>
+                            </button>
+                        </div>
+                        <figcaption>PlacePulse platform demo</figcaption>
                     </figure>
                     <div class="product-content">
                         <div class="card-header"><h3 class="card-name">PlacePulse</h3><span class="card-status status-prelaunch">Demo</span></div>
@@ -1780,14 +1791,21 @@
                     </div>
                 </article>
                 <article class="platform-card">
-                    <figure class="product-visual product-visual-book">
-                        <img src="assets/products/ai-navigator-book-dark.webp" loading="lazy" decoding="async" alt="AI Fluency for Leaders book by Piero Saleme">
-                        <figcaption>AI Fluency for Leaders</figcaption>
+                    <figure class="product-visual product-visual-video">
+                        <video id="ai-fluency-promo-video" controls playsinline preload="none" poster="assets/products/ai-fluency-second-edition-poster.webp" aria-label="AI Fluency for Leaders, Second Edition promotional film, forty seconds">
+                            <source src="assets/products/ai-fluency-second-edition-promo.mp4" type="video/mp4">
+                            Your browser does not support embedded video.
+                        </video>
+                        <button class="product-video-play" id="ai-fluency-video-play" type="button" aria-controls="ai-fluency-promo-video" aria-label="Play the AI Fluency for Leaders Second Edition promotional film">
+                            <span class="product-video-play-icon" aria-hidden="true"></span>
+                            <span>Watch book film (0:40)</span>
+                        </button>
+                        <figcaption>AI Fluency for Leaders · Second Edition</figcaption>
                     </figure>
                     <div class="product-content">
                         <div class="card-header"><h3 class="card-name">AI Navigator</h3><span class="card-status status-live">Available</span></div>
                         <h4 class="product-headline">Build the judgement to lead AI</h4>
-                        <p class="card-desc">An executive learning programme, the AI Fluency for Leaders book and practical leadership resources. Develop the judgement, ownership and governance needed to move from scattered tools to purposeful adoption.</p>
+                        <p class="card-desc">An executive learning programme, AI Fluency for Leaders, Second Edition (2026), and practical leadership resources. Develop the judgement, ownership and governance needed to move from scattered tools to purposeful adoption.</p>
                         <p class="product-audience">For leaders and transformation teams</p>
                         <a href="contact.html?interest=AI%20Navigator" class="service-card-link">Discuss AI leadership training</a>
                     </div>
@@ -2640,20 +2658,26 @@
 
     <script>
     (function() {
-        const video = document.getElementById('brandsprk-launch-video');
-        const playButton = document.getElementById('brandsprk-video-play');
-        if (!video || !playButton) return;
+        [
+            ['brandsprk-launch-video', 'brandsprk-video-play'],
+            ['placepulse-demo-video', 'placepulse-video-play'],
+            ['ai-fluency-promo-video', 'ai-fluency-video-play']
+        ].forEach(function(ids) {
+            const video = document.getElementById(ids[0]);
+            const playButton = document.getElementById(ids[1]);
+            if (!video || !playButton) return;
 
-        playButton.addEventListener('click', function() {
-            if (video.ended) video.currentTime = 0;
-            playButton.hidden = true;
-            const playing = video.play();
-            if (playing && typeof playing.catch === 'function') {
-                playing.catch(function() { playButton.hidden = false; });
-            }
+            playButton.addEventListener('click', function() {
+                if (video.ended) video.currentTime = 0;
+                playButton.hidden = true;
+                const playing = video.play();
+                if (playing && typeof playing.catch === 'function') {
+                    playing.catch(function() { playButton.hidden = false; });
+                }
+            });
+            video.addEventListener('play', function() { playButton.hidden = true; });
+            video.addEventListener('ended', function() { playButton.hidden = false; });
         });
-        video.addEventListener('play', function() { playButton.hidden = true; });
-        video.addEventListener('ended', function() { playButton.hidden = false; });
     })();
     </script>
 
