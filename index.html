@@ -1594,6 +1594,14 @@
         .product-visual-logo { display: flex; align-items: center; justify-content: center; padding: 40px; background: #101d36; }
         .product-visual-logo img { height: auto; }
         .product-visual-twiin img { object-fit: cover; object-position: top; }
+        .product-visual-video { background: #080a0e; }
+        .product-visual-video video { display: block; width: 100%; height: 100%; object-fit: contain; background: #080a0e; }
+        .product-visual-video figcaption { top: 12px; bottom: auto; }
+        .product-video-play { position: absolute; z-index: 1; top: 72%; left: 50%; transform: translate(-50%, -50%); display: flex; align-items: center; gap: 12px; width: max-content; max-width: calc(100% - 32px); border: 1px solid rgba(255,255,255,.5); border-radius: 999px; background: rgba(8,8,12,.9); color: #fff; padding: 12px 20px; cursor: pointer; font: inherit; font-size: .875rem; font-weight: 600; line-height: 1.3; box-shadow: 0 8px 32px rgba(0,0,0,.35); transition: background .2s, border-color .2s; }
+        .product-video-play:hover { background: #18242b; border-color: var(--teal); }
+        .product-video-play:focus-visible { outline: 3px solid var(--teal); outline-offset: 4px; }
+        .product-video-play[hidden] { display: none; }
+        .product-video-play-icon { display: inline-block; width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 13px solid var(--teal); }
         .portfolio-note { color: var(--gray-200); font-size: .875rem; line-height: 1.7; margin-top: 24px; max-width: 760px; }
         .card-status { font-size: .75rem; }
         .status-live::before { display: none; }
@@ -1752,9 +1760,16 @@
                     </div>
                 </article>
                 <article class="platform-card">
-                    <figure class="product-visual">
-                        <img src="assets/products/brandsprk.jpg" loading="lazy" decoding="async" alt="BrandSprk public site: creative intelligence and governed production">
-                        <figcaption>Public site preview</figcaption>
+                    <figure class="product-visual product-visual-video">
+                        <video id="brandsprk-launch-video" controls playsinline preload="none" poster="assets/products/brandsprk-launch-poster.webp" aria-label="BrandSprk launch film, one minute and ten seconds">
+                            <source src="assets/products/brandsprk-launch-film.mp4" type="video/mp4">
+                            Your browser does not support embedded video.
+                        </video>
+                        <button class="product-video-play" id="brandsprk-video-play" type="button" aria-controls="brandsprk-launch-video" aria-label="Play the BrandSprk launch film">
+                            <span class="product-video-play-icon" aria-hidden="true"></span>
+                            <span>Watch launch film (1:10)</span>
+                        </button>
+                        <figcaption>BrandSprk launch film</figcaption>
                     </figure>
                     <div class="product-content">
                         <div class="card-header"><h3 class="card-name">BrandSprk</h3><span class="card-status status-prelaunch">Demo</span></div>
@@ -1804,7 +1819,7 @@
                     </div>
                 </article>
             </div>
-            <p class="portfolio-note">Product stages are shown above. Preview images illustrate the offering; walkthroughs can explore the capabilities relevant to your business.</p>
+            <p class="portfolio-note">Product stages are shown above. Preview visuals and the BrandSprk launch film illustrate the offerings; walkthroughs can explore the capabilities relevant to your business.</p>
         </section>
 
         <!-- ORBITAL ECOSYSTEM -->
@@ -2621,6 +2636,25 @@
 
     } // end GSAP guard
 
+    </script>
+
+    <script>
+    (function() {
+        const video = document.getElementById('brandsprk-launch-video');
+        const playButton = document.getElementById('brandsprk-video-play');
+        if (!video || !playButton) return;
+
+        playButton.addEventListener('click', function() {
+            if (video.ended) video.currentTime = 0;
+            playButton.hidden = true;
+            const playing = video.play();
+            if (playing && typeof playing.catch === 'function') {
+                playing.catch(function() { playButton.hidden = false; });
+            }
+        });
+        video.addEventListener('play', function() { playButton.hidden = true; });
+        video.addEventListener('ended', function() { playButton.hidden = false; });
+    })();
     </script>
 
     <!-- ATHENA - ElevenLabs JS SDK (true single-click) -->
