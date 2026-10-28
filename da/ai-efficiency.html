@@ -1,0 +1,929 @@
+<!-- Danish-language detailed AI efficiency content. -->
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Efficiency Framework | ArqOne Labs</title>
+    <meta name="description" content="Få overblik over AI-udgifter, vælg de rette modeller, og skab målbar værdi med ArqOne Labs AI Efficiency Framework.">
+    <link rel="canonical" href="https://arqonelabs.com/da/ai-efficiency.html">
+    <link rel="alternate" hreflang="da" href="https://arqonelabs.com/da/ai-efficiency.html">
+    <link rel="alternate" hreflang="en" href="https://arqonelabs.com/ai-efficiency">
+    <link rel="alternate" hreflang="x-default" href="https://arqonelabs.com/ai-efficiency">
+    <link rel="stylesheet" href="/locale.css">
+    <meta property="og:title" content="AI Efficiency Framework | ArqOne Labs">
+    <meta property="og:description" content="Få overblik over AI-udgifter, vælg de rette modeller, og skab målbar værdi med ArqOne Labs AI Efficiency Framework.">
+    <meta property="og:url" content="https://arqonelabs.com/da/ai-efficiency.html">
+    <meta property="og:locale" content="da_DK">
+    <meta property="og:type" content="website">
+    <link rel="icon" type="image/gif" href="/favicon.gif">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #08080C;
+            --bg-elevated: #0E0E14;
+            --bg-card: #12121A;
+            --teal: #00DCD0;
+            --teal-dim: #00A89E;
+            --white: #F0F0F4;
+            --gray-100: #C8C8D0;
+            --gray-200: #9898A4;
+            --gray-300: #68687A;
+            --gray-400: #3A3A4A;
+            --border: rgba(255,255,255,0.06);
+            --font-sans: 'Inter', -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg);
+            color: var(--gray-100);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Grid background */
+        .grid-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 100;
+            transition: all 0.4s;
+        }
+        nav.scrolled {
+            background: rgba(8,8,12,0.92);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 40px;
+        }
+        .nav-logo img { height: 38px; width: auto; display: block; }
+        .nav-links { display: flex; align-items: center; gap: 32px; }
+        .nav-links a {
+            font-size: 0.875rem;
+            color: var(--gray-200);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--white); }
+        .nav-links a.nav-athena { color: var(--teal); font-weight: 500; }
+        .nav-cta-book {
+            padding: 8px 18px;
+            border: 1.5px solid var(--teal);
+            border-radius: 8px;
+            color: var(--teal) !important;
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+        .nav-cta-book:hover { background: rgba(0,220,205,0.08); }
+        .nav-cta {
+            padding: 8px 18px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
+            color: var(--white) !important;
+            font-weight: 500;
+            font-size: 0.875rem;
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+        .nav-cta:hover { border-color: rgba(255,255,255,0.3); }
+
+        /* PAGE WRAPPER */
+        .page { position: relative; z-index: 1; }
+
+        /* HERO */
+        .services-hero {
+            min-height: 72vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 140px 40px 100px;
+            position: relative;
+            overflow: hidden;
+        }
+        .services-hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0,220,205,0.10) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 30% at 20% 80%, rgba(59,158,255,0.06) 0%, transparent 50%),
+                radial-gradient(ellipse 40% 30% at 80% 70%, rgba(167,139,250,0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .hero-label {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: 20px;
+        }
+        .services-hero h1 {
+            font-size: clamp(2.4rem, 5vw, 4rem);
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            max-width: 760px;
+            margin-bottom: 24px;
+        }
+        .services-hero h1 .accent { color: var(--teal); }
+        .services-hero p {
+            font-size: 1.05rem;
+            color: var(--gray-200);
+            max-width: 540px;
+            line-height: 1.75;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+        .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+        .btn-primary {
+            padding: 14px 28px;
+            background: var(--teal);
+            color: #08080C;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+        .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+        .btn-secondary {
+            padding: 14px 28px;
+            background: transparent;
+            color: var(--white);
+            font-weight: 500;
+            font-size: 0.9rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.15);
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+        .btn-secondary:hover { border-color: rgba(255,255,255,0.35); transform: translateY(-1px); }
+
+        /* SERVICE NAV ANCHORS */
+        .service-nav {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 0 40px 60px;
+            flex-wrap: wrap;
+        }
+        .service-nav a {
+            padding: 8px 20px;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.82rem;
+            color: var(--gray-200);
+            text-decoration: none;
+            transition: all 0.25s;
+            font-weight: 500;
+        }
+        .service-nav a:hover {
+            border-color: rgba(0,220,205,0.3);
+            color: var(--teal);
+            background: rgba(0,220,205,0.04);
+        }
+
+        /* DIVIDER */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* SERVICE SECTION */
+        .service-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 40px;
+        }
+        .service-section + .service-section { border-top: 1px solid var(--border); }
+
+        .service-section-inner {
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        /* Left column */
+        .service-aside { position: sticky; top: 100px; }
+        .service-num {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            color: var(--teal);
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        .service-aside h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -0.025em;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        .service-aside p {
+            font-size: 0.9rem;
+            color: var(--gray-200);
+            line-height: 1.75;
+            font-weight: 300;
+            margin-bottom: 28px;
+        }
+        .service-aside-cta {
+            display: inline-block;
+            padding: 12px 24px;
+            background: var(--teal);
+            color: #08080C;
+            font-weight: 700;
+            font-size: 0.85rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .service-aside-cta:hover { opacity: 0.85; }
+        .service-aside-cta-outline {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 11px 24px;
+            border: 1px solid rgba(0,220,205,0.3);
+            color: var(--teal);
+            font-weight: 600;
+            font-size: 0.85rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .service-aside-cta-outline:hover { background: rgba(0,220,205,0.06); }
+
+        /* Right column */
+        .service-body {}
+
+        .service-block { margin-bottom: 52px; }
+        .service-block:last-child { margin-bottom: 0; }
+
+        .service-block-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gray-300);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .service-block-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* Deliverables grid */
+        .deliverables-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        .deliverable-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 18px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: border-color 0.25s;
+        }
+        .deliverable-item:hover { border-color: rgba(0,220,205,0.15); }
+        .deliverable-icon {
+            width: 32px; height: 32px;
+            border-radius: 8px;
+            background: rgba(0,220,205,0.08);
+            border: 1px solid rgba(0,220,205,0.15);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .deliverable-icon svg {
+            width: 15px; height: 15px;
+            stroke: var(--teal);
+            fill: none;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .deliverable-text strong {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 3px;
+        }
+        .deliverable-text span {
+            font-size: 0.78rem;
+            color: var(--gray-200);
+            line-height: 1.5;
+        }
+
+        /* Process steps */
+        .process-list { display: flex; flex-direction: column; gap: 0; }
+        .process-item {
+            display: flex;
+            gap: 20px;
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+        }
+        .process-item:last-child { border-bottom: none; }
+        .process-item-num {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid rgba(0,220,205,0.2);
+            display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--teal);
+            flex-shrink: 0;
+        }
+        .process-item-content strong {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 4px;
+        }
+        .process-item-content p {
+            font-size: 0.85rem;
+            color: var(--gray-200);
+            line-height: 1.65;
+        }
+
+        /* Use case cards */
+        .use-cases-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        .use-case-card {
+            padding: 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .use-case-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 3px; height: 100%;
+            background: var(--teal);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .use-case-card:hover { border-color: rgba(0,220,205,0.12); transform: translateY(-2px); }
+        .use-case-card:hover::before { opacity: 1; }
+        .use-case-card h4 {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+        .use-case-card p {
+            font-size: 0.82rem;
+            color: var(--gray-200);
+            line-height: 1.6;
+        }
+        .use-case-card .use-case-tag {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 3px 10px;
+            background: rgba(0,220,205,0.06);
+            border: 1px solid rgba(0,220,205,0.15);
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--teal);
+            letter-spacing: 0.08em;
+        }
+
+        /* Who it's for */
+        .audience-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .audience-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.88rem;
+            color: var(--gray-100);
+        }
+        .audience-item::before {
+            content: '';
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--teal);
+            flex-shrink: 0;
+        }
+
+        /* Programme format cards */
+        .formats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .formats-grid.two { grid-template-columns: repeat(2, 1fr); }
+        .format-card {
+            padding: 32px 28px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            transition: all 0.35s;
+            position: relative;
+        }
+        .format-card.featured {
+            border-color: rgba(0,220,205,0.25);
+            background: linear-gradient(135deg, rgba(0,220,205,0.05) 0%, var(--bg-card) 60%);
+        }
+        .format-card.featured::after {
+            content: 'Most Popular';
+            position: absolute;
+            top: -1px; right: 20px;
+            padding: 4px 12px;
+            background: var(--teal);
+            color: #08080C;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            border-radius: 0 0 6px 6px;
+            text-transform: uppercase;
+        }
+        .format-card:hover { border-color: rgba(0,220,205,0.2); transform: translateY(-3px); }
+        .format-card h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 6px;
+        }
+        .format-duration {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--teal);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        .format-card p {
+            font-size: 0.85rem;
+            color: var(--gray-200);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        .format-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .format-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 0.8rem;
+            color: var(--gray-200);
+            line-height: 1.5;
+        }
+        .format-list li::before {
+            content: '→';
+            color: var(--teal);
+            flex-shrink: 0;
+            font-size: 0.75rem;
+            margin-top: 2px;
+        }
+
+        /* CTA SECTION */
+        .cta-section {
+            text-align: center;
+            padding: 120px 40px;
+            position: relative;
+            border-top: 1px solid var(--border);
+        }
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 50%; transform: translateX(-50%);
+            width: 600px; height: 300px;
+            background: radial-gradient(ellipse at center top, rgba(0,220,205,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: 16px;
+        }
+        .cta-section h2 {
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -0.025em;
+            margin-bottom: 16px;
+        }
+        .cta-section p {
+            font-size: 1rem;
+            color: var(--gray-200);
+            max-width: 500px;
+            margin: 0 auto 36px;
+            line-height: 1.7;
+        }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer-left {
+            font-size: 0.8rem;
+            color: var(--gray-300);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .footer-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .footer-right a {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--gray-400);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            transition: color 0.2s;
+        }
+        .footer-right a:hover { color: var(--teal); }
+        .footer-copy {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--gray-400);
+            letter-spacing: 0.05em;
+        }
+
+        /* REVEAL ANIMATION */
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .reveal.visible { opacity: 1; transform: none; }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .service-section-inner { grid-template-columns: 1fr; gap: 48px; }
+            .service-aside { position: static; }
+            .formats-grid, .formats-grid.two { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            nav { padding: 16px 20px; }
+            .nav-links { display: none; }
+            .services-hero { padding: 120px 20px 80px; }
+            .service-section { padding: 60px 20px; }
+            .deliverables-grid { grid-template-columns: 1fr; }
+            .use-cases-grid { grid-template-columns: 1fr; }
+            footer { flex-direction: column; gap: 16px; text-align: center; padding: 32px 20px; }
+        }
+    </style>
+    <style>
+      .language-choice{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;padding:5px 9px;border:1px solid rgba(255,255,255,.2);border-radius:7px;font-size:12px;letter-spacing:.07em;color:#d8dce8}
+      .language-choice a{color:#aaaebc;text-decoration:none}
+      .language-choice a[aria-current="page"]{color:#80e0d7;font-weight:700}
+      .language-choice a:hover{color:#fff}
+      .language-choice span{opacity:.45}
+      @media(max-width:900px){.mobile-language-choice{position:fixed;top:16px;right:76px;z-index:1100;background:#10131c}.nav-links .language-choice{position:static}}
+    </style>
+<style>.mobile-language-choice{display:none}@media(max-width:900px){.mobile-language-choice{display:inline-flex}}</style></head>
+<body>
+    <div class="grid-bg"></div>
+
+    <nav id="main-nav">
+        <div class="nav-logo">
+            <a href="/da/"><img src="/ArqOne%20Labs%20Logo.gif" alt="ArqOne Labs"></a>
+        </div>
+        
+        <span class="mobile-language-choice"><span class="language-choice" aria-label="Sprog"><a href="https://arqonelabs.com/ai-efficiency" lang="en" hreflang="en">EN</a><span aria-hidden="true">/</span><a href="https://arqonelabs.com/da/ai-efficiency.html" lang="da" hreflang="da" aria-current="page">DA</a></span></span><div class="nav-links">
+            <a href="/da/#ecosystem">Økosystem</a>
+            <a href="/da/#portfolio">Portefølje</a>
+            <a href="/da/#about">Om os</a>
+            <a href="/da/services.html" class="active">Ydelser</a>
+            <a href="/da/blog/">Artikler</a>
+            <a href="/da/#athena" class="nav-athena">Athena</a>
+            
+            <span class="language-choice" aria-label="Sprog"><a href="https://arqonelabs.com/ai-efficiency" lang="en" hreflang="en">EN</a><span aria-hidden="true">/</span><a href="https://arqonelabs.com/da/ai-efficiency.html" lang="da" hreflang="da" aria-current="page">DA</a></span>
+            <a href="https://calendly.com/piero-ainavigator" target="_blank" class="nav-cta-book">Book et møde</a>
+            <a href="/da/contact.html" class="nav-cta">Kontakt os</a>
+        </div>
+    </nav>
+
+        <div class="page">
+
+        <!-- HERO -->
+        <section class="services-hero">
+            <div class="hero-label">AI Efficiency Framework&trade;</div>
+            <h1>Få styr på AI-udgifterne. Vælg de rette modeller.<br><span class="accent">Skab arbejdsgange med målbar forretningsværdi.</span></h1>
+            <p>De fleste virksomheder bruger ikke for meget på AI, fordi modellerne er dyre. Udgifterne vokser, fordi anvendelse, arbejdsgange og governance ikke er tænkt ordentligt igennem.</p>
+            <div class="hero-ctas">
+                <a href="https://calendly.com/piero-ainavigator" target="_blank" class="btn-primary">Book en gennemgang af AI-effektivitet</a>
+                <a href="#framework" class="btn-secondary">Se modellen med syv lag</a>
+            </div>
+        </section>
+
+        <!-- WHY AI BUDGETS LEAK -->
+        <section class="service-section" id="leaks">
+            <div class="service-block reveal">
+                <div class="service-block-label">Hvorfor AI-budgetter løber løbsk</div>
+                <div class="use-cases-grid">
+                    <div class="use-case-card">
+                        <h4>For mange værktøjer</h4>
+                        <p>Flere teams køber overlappende AI-værktøjer uden samlet overblik eller tydeligt ansvar.</p>
+                    </div>
+                    <div class="use-case-card">
+                        <h4>Forkert modelvalg</h4>
+                        <p>Dyre modeller bruges til enkle opgaver, som billigere modeller kan løse lige så godt.</p>
+                    </div>
+                    <div class="use-case-card">
+                        <h4>Gentagen behandling af kontekst</h4>
+                        <p>De samme dokumenter og baggrundsoplysninger uploades igen og igen, så virksomheden betaler for at behandle identisk indhold flere gange.</p>
+                    </div>
+                    <div class="use-case-card">
+                        <h4>Manglende evaluering</h4>
+                        <p>Modeller vælges efter omdømme og vaner frem for dokumenterede resultater i virksomhedens egne arbejdsgange.</p>
+                    </div>
+                    <div class="use-case-card">
+                        <h4>Uklart forretningsudbytte</h4>
+                        <p>Ledelsen kan se abonnementsudgifterne, men ikke sammenhængen med forretningsresultater.</p>
+                    </div>
+                    <div class="use-case-card">
+                        <h4>Huller i governance</h4>
+                        <p>Teams eksperimenterer med følsomme data uden klare tilladelser og ansvarsfordeling.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- THE 7 LAYERS -->
+        <section class="service-section" id="framework">
+            <div class="service-section-inner">
+                <div class="service-aside reveal">
+                    <div class="service-num">Modellen</div>
+                    <h2>AI-effektivitet i syv lag</h2>
+                    <p>Få først overblik over anvendelsen. Skab derefter værdi. Modellen bygger på gennemprøvede principper for AI-økonomi, modelvalg, governance og FinOps, samlet i en praktisk rådgivningsmetode fra ArqOne Labs.</p>
+                    <a href="https://calendly.com/piero-ainavigator" target="_blank" class="service-aside-cta">Book en gennemgang</a>
+                </div>
+                <div class="service-body">
+                    <div class="service-block reveal">
+                        <div class="process-list">
+                            <div class="process-item">
+                                <div class="process-item-num">01</div>
+                                <div class="process-item-content">
+                                    <strong>Overblik over værktøjer</strong>
+                                    <p>Hvem bruger hvilke AI-værktøjer og hvorfor? Kortlægning af værktøjer, udgifter og ansvar.</p>
+                                </div>
+                            </div>
+                            <div class="process-item">
+                                <div class="process-item-num">02</div>
+                                <div class="process-item-content">
+                                    <strong>Modelvalg</strong>
+                                    <p>Den rette model til den rette opgave. Faste valgkriterier frem for mærkeloyalitet.</p>
+                                </div>
+                            </div>
+                            <div class="process-item">
+                                <div class="process-item-num">03</div>
+                                <div class="process-item-content">
+                                    <strong>Systematisk prompting</strong>
+                                    <p>Standarder og genbrugelige skabeloner, som mindsker omarbejde og uensartede resultater.</p>
+                                </div>
+                            </div>
+                            <div class="process-item">
+                                <div class="process-item-num">04</div>
+                                <div class="process-item-content">
+                                    <strong>Håndtering af kontekst</strong>
+                                    <p>Målrettet brug af kontekst med vidensbaser og genbrug frem for gentagne uploads.</p>
+                                </div>
+                            </div>
+                            <div class="process-item">
+                                <div class="process-item-num">05</div>
+                                <div class="process-item-content">
+                                    <strong>Design af arbejdsgange</strong>
+                                    <p>AI integreres i det daglige arbejde med tydelige roller for menneskelig kontrol.</p>
+                                </div>
+                            </div>
+                            <div class="process-item">
+                                <div class="process-item-num">06</div>
+                                <div class="process-item-content">
+                                    <strong>Governance og tilladelser</strong>
+                                    <p>Hvem må bruge hvilke data, værktøjer og modeller? Politikker, risikoniveauer og godkendelsesprocesser.</p>
+                                </div>
+                            </div>
+                            <div class="process-item">
+                                <div class="process-item-num">07</div>
+                                <div class="process-item-content">
+                                    <strong>Måling af værdi</strong>
+                                    <p>AI-forbrug kobles til forretningsværdi gennem løbende rapportering.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TWO ENTRY POINTS -->
+        <section class="service-section" id="engage">
+            <div class="service-block reveal">
+                <div class="service-block-label">To måder at komme i gang på</div>
+                <div class="formats-grid two">
+                    <div class="format-card">
+                        <h4>AI Efficiency Scan</h4>
+                        <div class="format-duration">Med Athena · Dage, ikke uger</div>
+                        <p>Til virksomheder og SMV’er, der hurtigt vil se, hvor AI-værktøjer, udgifter og arbejdsgange skaber spild.</p>
+                        <ul class="format-list">
+                            <li>Guidet spørgeskema og oversigt over AI-værktøjer</li>
+                            <li>Vurdering af arbejdsgange og AI Efficiency Score</li>
+                            <li>Automatiseret rapport med personlig gennemgang</li>
+                        </ul>
+                    </div>
+                    <div class="format-card">
+                        <h4>AI Efficiency Diagnostic</h4>
+                        <div class="format-duration">Ledet af rådgiver · To uger</div>
+                        <p>Til ledelsesteams, der ønsker en dybere gennemgang af AI-værktøjer, arbejdsgange, governance, modelvalg og målbar forretningsværdi.</p>
+                        <ul class="format-list">
+                            <li>Samlet kortlægning af spild på tværs af teams og værktøjer</li>
+                            <li>Regler for modelvalg, anvendelse og governance</li>
+                            <li>Hurtige forbedringer og en 90-dages handlingsplan</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WHAT WE ASSESS / WHAT YOU RECEIVE -->
+        <section class="service-section" id="assess">
+            <div class="service-section-inner">
+                <div class="service-aside reveal">
+                    <div class="service-num">Omfang</div>
+                    <h2>Det undersøger vi</h2>
+                    <div class="audience-list">
+                        <div class="audience-item">Værktøjer og abonnementer</div>
+                        <div class="audience-item">Brug og valg af modeller</div>
+                        <div class="audience-item">Prompts og håndtering af kontekst</div>
+                        <div class="audience-item">Design af arbejdsgange</div>
+                        <div class="audience-item">Governance og tilladelser</div>
+                        <div class="audience-item">Måling af forretningsværdi</div>
+                    </div>
+                </div>
+                <div class="service-body">
+                    <div class="service-block reveal">
+                        <div class="service-block-label">Det får I</div>
+                        <div class="deliverables-grid">
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>AI Efficiency Score</strong>
+                                    <span>En vurdering af jeres modenhed på alle syv områder</span>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>Kort over spild</strong>
+                                    <span>Hvor udgifter, værktøjer og arbejdsgange mister værdi og hvorfor</span>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>Hurtige forbedringer</strong>
+                                    <span>Konkrete forbedringer, der kan gennemføres med det samme</span>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>90-dages handlingsplan</strong>
+                                    <span>En prioriteret plan, der kobler AI-anvendelse til målbar forretningsværdi</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-block reveal">
+                        <div class="service-block-label">Athena som første trin</div>
+                        <div class="process-list">
+                            <div class="process-item">
+                                <div class="process-item-num">AI</div>
+                                <div class="process-item-content">
+                                    <strong>Athena understøtter AI Efficiency Scan</strong>
+                                    <p>Athena hjælper med at kortlægge anvendelsesmønstre, strukturere indsigter og omsætte gentagne arbejdsgange til en konkret effektivitetsplan. Det gør den indledende analyse hurtig og tilgængelig. <a href="/da/#athena" style="color:var(--teal);text-decoration:none;">Mød Athena &rarr;</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta-section">
+            <div class="section-label">Lad os tale sammen</div>
+            <h2>Se, hvor jeres AI-budget kan skabe større værdi</h2>
+            <p>Begynd med den Athena-baserede analyse, eller book en gennemgang med Piero.</p>
+            <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+                <a href="https://calendly.com/piero-ainavigator" target="_blank" class="btn-primary">Book en gennemgang af AI-effektivitet</a>
+                <a href="/da/#athena" class="btn-secondary">Start analysen med Athena</a>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer>
+            <div class="footer-left">
+                <img src="/ArqOne%20Labs%20Logo.gif" alt="ArqOne Labs" style="height:31px;width:auto;">
+                <span style="color:var(--gray-400);">-</span> Professionelle AI-løsninger til virksomheder i vækst
+            </div>
+            <div class="footer-right">
+                <a href="/privacy.html">Privatlivspolitik</a>
+                <a href="/terms.html">Vilkår og betingelser</a>
+                <span class="footer-copy">&copy; 2026 ArqOne Labs</span>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        // Nav scroll effect
+        const nav = document.getElementById('main-nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 60);
+        });
+
+        // Reveal on scroll
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    observer.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+        reveals.forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

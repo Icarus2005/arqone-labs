@@ -1,0 +1,2797 @@
+<!-- Danish market edition: practical automation positioning, with original portfolio preserved. -->
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-automatisering til danske virksomheder | ArqOne Labs</title>
+    <meta name="description" content="Mindre administration. Mere tid til forretningen. ArqOne Labs hjælper virksomheder med at automatisere gentagne opgaver og forbedre arbejdsgange.">
+    <link rel="canonical" href="https://arqonelabs.com/da/">
+    <link rel="alternate" hreflang="da" href="https://arqonelabs.com/da/">
+    <link rel="alternate" hreflang="en" href="https://arqonelabs.com/">
+    <link rel="alternate" hreflang="x-default" href="https://arqonelabs.com/">
+    <link rel="stylesheet" href="/locale.css">
+    <link rel="stylesheet" href="/da/danish-market.css">
+    <!-- Open Graph -->
+    <meta property="og:title" content="AI-automatisering til danske virksomheder | ArqOne Labs">
+    <meta property="og:description" content="Mindre administration. Mere tid til forretningen. Få hjælp til praktisk AI-automatisering af gentagne opgaver.">
+    <meta property="og:image" content="https://arqonelabs.com/Meet%20Athena_ArqOne%20Labs.png">
+    <meta property="og:url" content="https://arqonelabs.com/da/">
+    <meta property="og:locale" content="da_DK">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="ArqOne Labs">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ArqOne Labs - AI products and advisory for business impact">
+    <meta name="twitter:description" content="AI venture studio and practical advisory for place intelligence, voice automation, leadership capability and business transformation.">
+    <meta name="twitter:image" content="https://arqonelabs.com/Meet%20Athena_ArqOne%20Labs.png">
+    <link rel="icon" type="image/gif" href="/favicon.gif">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- GSAP Core + ScrollTrigger -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollToPlugin.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #08080C;
+            --bg-elevated: #0E0E14;
+            --bg-card: #12121A;
+            --bg-card-hover: #181822;
+            --teal: #00DCD0;
+            --teal-dim: #00A89E;
+            --teal-glow: rgba(0, 220, 205, 0.12);
+            --teal-glow-strong: rgba(0, 220, 205, 0.25);
+            --teal-glow-intense: rgba(0, 220, 205, 0.4);
+            --white: #F0F0F4;
+            --gray-100: #C8C8D0;
+            --gray-200: #9898A4;
+            --gray-300: #68687A;
+            --gray-400: #3A3A4A;
+            --gray-500: #22222E;
+            --border: rgba(255, 255, 255, 0.06);
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg);
+            color: var(--gray-100);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ---- ANIMATED GRID BACKGROUND ---- */
+        .grid-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ---- HERO CANVAS ---- */
+        #hero-canvas {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .content { position: relative; z-index: 1; }
+
+        /* ---- NAV ---- */
+        nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: rgba(8, 8, 12, 0.7);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.4s;
+        }
+
+        nav.scrolled {
+            padding: 14px 40px;
+            background: rgba(8, 8, 12, 0.92);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-logo {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-logo img { height: 54px; width: auto; display: block; }
+
+        .nav-links { display: flex; gap: 32px; align-items: center; }
+
+        .nav-links a {
+            font-size: 0.85rem;
+            color: var(--gray-200);
+            text-decoration: none;
+            font-weight: 400;
+            transition: color 0.3s;
+            letter-spacing: 0.02em;
+            position: relative;
+        }
+
+        .nav-links a:not(.nav-cta)::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 1px;
+            background: var(--teal);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:not(.nav-cta):hover::after { width: 100%; }
+        .nav-links a:hover { color: var(--teal); }
+
+        .nav-cta {
+            background: transparent !important;
+            border: 1px solid var(--gray-400) !important;
+            color: var(--white) !important;
+            padding: 8px 20px !important;
+            border-radius: 6px;
+            font-size: 0.85rem !important;
+            transition: all 0.3s !important;
+        }
+
+        .nav-cta:hover {
+            border-color: var(--teal) !important;
+            color: var(--teal) !important;
+            box-shadow: 0 0 20px rgba(0, 220, 205, 0.1) !important;
+        }
+
+        .nav-cta-book {
+            background: rgba(0, 220, 205, 0.08) !important;
+            border: 1px solid rgba(0, 220, 205, 0.45) !important;
+            color: var(--teal) !important;
+            padding: 8px 20px !important;
+            border-radius: 6px;
+            font-size: 0.85rem !important;
+            font-weight: 500 !important;
+            transition: all 0.3s !important;
+            text-decoration: none;
+        }
+
+        .nav-cta-book:hover {
+            background: rgba(0, 220, 205, 0.16) !important;
+            border-color: var(--teal) !important;
+            box-shadow: 0 0 24px rgba(0, 220, 205, 0.18) !important;
+            transform: translateY(-1px);
+        }
+
+        /* ---- HERO ---- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 40px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-glow {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -55%);
+            width: 800px; height: 800px;
+            background: radial-gradient(circle, rgba(0, 220, 205, 0.08) 0%, rgba(0, 220, 205, 0.03) 30%, transparent 70%);
+            pointer-events: none;
+            animation: glowPulse 6s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { transform: translate(-50%, -55%) scale(1); opacity: 1; }
+            50% { transform: translate(-50%, -55%) scale(1.15); opacity: 0.7; }
+        }
+
+        /* GSAP-ready: elements start hidden, fallback shows them if GSAP fails */
+        .gsap-ready .hero-badge,
+        .gsap-ready .hero h1,
+        .gsap-ready .hero-sub,
+        .gsap-ready .hero-cta-group,
+        .gsap-ready .hero-athena-hint,
+        .gsap-ready .hero-scroll {
+            opacity: 0;
+        }
+
+        .hero-badge {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--teal);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 28px;
+            padding: 6px 16px;
+            border: 1px solid rgba(0, 220, 205, 0.2);
+            border-radius: 20px;
+            background: rgba(0, 220, 205, 0.05);
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 6.5vw, 5rem);
+            font-weight: 800;
+            color: var(--white);
+            line-height: 1.05;
+            letter-spacing: -0.04em;
+            max-width: 850px;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 .accent {
+            color: var(--teal);
+            position: relative;
+        }
+
+        .hero h1 .accent::after {
+            content: '';
+            position: absolute;
+            bottom: -2px; left: 0;
+            width: 100%; height: 3px;
+            background: linear-gradient(90deg, var(--teal), transparent);
+            opacity: 0.4;
+            border-radius: 2px;
+        }
+
+        /* Split text for character animation */
+        .hero h1 .char {
+            display: inline-block;
+            opacity: 0;
+        }
+
+        .hero-sub {
+            font-size: clamp(1rem, 2vw, 1.15rem);
+            color: var(--gray-200);
+            max-width: 560px;
+            line-height: 1.75;
+            font-weight: 300;
+            margin-bottom: 48px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-cta-group {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .btn-primary {
+            padding: 14px 36px;
+            background: var(--teal);
+            color: var(--bg);
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 0; height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-primary:hover::before { width: 300px; height: 300px; }
+        .btn-primary:hover { background: #00F0E2; box-shadow: 0 0 40px var(--teal-glow-strong); transform: translateY(-1px); }
+
+        .btn-secondary {
+            padding: 14px 36px;
+            background: transparent;
+            color: var(--gray-100);
+            font-weight: 500;
+            font-size: 0.9rem;
+            border: 1px solid var(--gray-400);
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover { border-color: var(--teal-dim); color: var(--white); transform: translateY(-1px); }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            z-index: 2;
+        }
+
+        .scroll-line {
+            width: 1px; height: 40px;
+            background: linear-gradient(to bottom, var(--teal), transparent);
+            animation: scrollDraw 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollDraw {
+            0% { transform: scaleY(0); transform-origin: top; opacity: 1; }
+            50% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+            50.1% { transform: scaleY(1); transform-origin: bottom; }
+            100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+        }
+
+        .scroll-text {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--gray-300);
+            letter-spacing: 0.2em;
+        }
+
+        /* ---- SECTIONS ---- */
+        section {
+            padding: 120px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--teal);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-label::before {
+            content: '';
+            width: 24px; height: 1px;
+            background: var(--teal);
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4.5vw, 3rem);
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+            line-height: 1.1;
+        }
+
+        .section-sub {
+            font-size: 1.05rem;
+            color: var(--gray-200);
+            max-width: 560px;
+            line-height: 1.75;
+            font-weight: 300;
+            margin-bottom: 56px;
+        }
+
+        /* ============================================ */
+        /* ORBITAL ECOSYSTEM VISUALIZATION              */
+        /* ============================================ */
+        .ecosystem {
+            padding: 100px 40px 120px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .ecosystem-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .ecosystem-header .section-label {
+            justify-content: center;
+        }
+
+        .ecosystem-header .section-label::before { display: none; }
+
+        .orbit-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            height: 800px;
+            margin: 0 auto;
+        }
+
+        /* Orbit canvas for dynamic lines */
+        #orbit-canvas {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* Orbit rings */
+        .orbit-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 220, 208, 0.06);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .orbit-ring-1 { width: 300px; height: 300px; }
+        .orbit-ring-2 { width: 520px; height: 520px; border-style: dashed; border-color: rgba(0, 220, 208, 0.04); }
+        .orbit-ring-3 { width: 720px; height: 720px; border-color: rgba(0, 220, 208, 0.03); }
+
+        /* Center hub */
+        .orbit-center {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            text-align: center;
+        }
+
+        .orbit-center-glow {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px; height: 200px;
+            background: radial-gradient(circle, rgba(0, 220, 205, 0.15) 0%, rgba(0, 220, 205, 0.05) 40%, transparent 70%);
+            border-radius: 50%;
+            animation: centerPulse 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes centerPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.5; }
+        }
+
+        .orbit-center-logo {
+            width: 100px; height: 100px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-elevated) 100%);
+            border: 2px solid rgba(0, 220, 205, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 0 60px rgba(0, 220, 205, 0.1), 0 0 120px rgba(0, 220, 205, 0.05);
+        }
+
+        .orbit-center-logo .logo-text {
+            font-family: var(--font-sans);
+            font-weight: 800;
+            font-size: 1rem;
+            color: var(--white);
+            letter-spacing: -0.03em;
+        }
+
+        .orbit-center-logo .logo-text span { color: var(--teal); }
+
+        .orbit-center-logo .logo-sub {
+            font-family: var(--font-mono);
+            font-size: 0.5rem;
+            color: var(--gray-300);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        /* Satellite platform nodes */
+        .orbit-node {
+            position: absolute;
+            z-index: 5;
+            cursor: default;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .orbit-node:hover { transform: scale(1.08); }
+
+        .orbit-node-dot {
+            width: 56px; height: 56px;
+            border-radius: 14px;
+            background: var(--bg-card);
+            border: 1px solid rgba(0, 220, 205, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.4s;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+        }
+
+        .orbit-node:hover .orbit-node-dot {
+            border-color: var(--teal);
+            box-shadow: 0 0 30px rgba(0, 220, 205, 0.15), 0 4px 24px rgba(0,0,0,0.3);
+        }
+
+        .orbit-node-dot .node-initial {
+            font-family: var(--font-sans);
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--teal);
+        }
+
+        .orbit-node-info { min-width: 120px; }
+
+        .orbit-node-name {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: -0.01em;
+            margin-bottom: 2px;
+        }
+
+        .orbit-node-tag {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--gray-300);
+            letter-spacing: 0.03em;
+        }
+
+        .orbit-node-status {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 0.55rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 2px 7px;
+            border-radius: 3px;
+            margin-top: 4px;
+        }
+
+        .orbit-node-status.live {
+            color: var(--teal);
+            background: rgba(0, 220, 205, 0.1);
+        }
+
+        .orbit-node-status.pre {
+            color: var(--gray-200);
+            background: rgba(152, 152, 164, 0.1);
+        }
+
+        /* Connection lines from center to satellites */
+        .orbit-line {
+            position: absolute;
+            top: 50%; left: 50%;
+            height: 1px;
+            transform-origin: 0 0;
+            z-index: 1;
+            opacity: 0;
+        }
+
+        .orbit-line-inner {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(0, 220, 205, 0.3), rgba(0, 220, 205, 0.02));
+        }
+
+        /* Data pulse animation along lines */
+        .orbit-pulse {
+            position: absolute;
+            top: -2px;
+            width: 5px; height: 5px;
+            background: var(--teal);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--teal);
+            opacity: 0;
+        }
+
+        /* ---- PORTFOLIO GRID ---- */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 20px;
+        }
+
+        .platform-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 36px 32px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            text-decoration: none;
+            display: block;
+            position: relative;
+            overflow: clip;
+        }
+
+        .platform-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--teal), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .platform-card::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 220, 205, 0.06) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.4s;
+            pointer-events: none;
+        }
+
+        .platform-card:hover {
+            background: var(--bg-card-hover);
+            border-color: rgba(0, 220, 205, 0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 220, 205, 0.05);
+        }
+
+        .platform-card:hover::before { opacity: 1; }
+        .platform-card:hover::after { opacity: 1; }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .card-name {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: -0.02em;
+        }
+
+        .card-status {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .status-live {
+            color: var(--teal);
+            background: rgba(0, 220, 205, 0.1);
+            border: 1px solid rgba(0, 220, 205, 0.2);
+        }
+
+        .status-live::before {
+            content: '';
+            display: inline-block;
+            width: 5px; height: 5px;
+            background: var(--teal);
+            border-radius: 50%;
+            margin-right: 6px;
+            animation: livePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes livePulse {
+            0%, 100% { opacity: 0.4; box-shadow: 0 0 0 0 rgba(0, 220, 205, 0.4); }
+            50% { opacity: 1; box-shadow: 0 0 0 4px rgba(0, 220, 205, 0); }
+        }
+
+        .status-prelaunch {
+            color: var(--gray-200);
+            background: rgba(152, 152, 164, 0.1);
+            border: 1px solid rgba(152, 152, 164, 0.15);
+        }
+
+        .card-domain {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--teal-dim);
+            margin-bottom: 14px;
+        }
+
+        .card-desc {
+            font-size: 0.92rem;
+            color: var(--gray-200);
+            line-height: 1.65;
+            font-weight: 300;
+        }
+
+        .card-tag {
+            display: inline-block;
+            margin-top: 18px;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--gray-300);
+            padding: 4px 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 4px;
+            letter-spacing: 0.03em;
+            transition: color 0.3s, background 0.3s;
+        }
+
+        .platform-card:hover .card-tag {
+            color: var(--teal-dim);
+            background: rgba(0, 220, 205, 0.05);
+        }
+
+        /* ---- ABOUT ---- */
+        .about-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .about-left .section-label { margin-bottom: 16px; }
+
+        .about-name {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        .about-role {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--teal);
+            margin-bottom: 24px;
+            letter-spacing: 0.03em;
+        }
+
+        .about-bio {
+            font-size: 0.95rem;
+            color: var(--gray-200);
+            line-height: 1.75;
+            font-weight: 300;
+        }
+
+        .about-bio p + p { margin-top: 16px; }
+
+        .about-right {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px 36px;
+            position: relative;
+        }
+
+        .about-right::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 200px; height: 200px;
+            background: radial-gradient(circle, rgba(0, 220, 205, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .about-right h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 24px;
+            letter-spacing: -0.01em;
+        }
+
+        .credential-list { list-style: none; }
+
+        @keyframes credentialFadeIn {
+            from { opacity: 0; transform: translateX(-16px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+
+        .credential-list li {
+            font-size: 0.9rem;
+            color: var(--gray-100);
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            line-height: 1.55;
+            transition: padding-left 0.3s, color 0.3s;
+            opacity: 0;
+        }
+
+        .credential-list.in-view li {
+            animation: credentialFadeIn 0.5s ease forwards;
+        }
+        .credential-list.in-view li:nth-child(1) { animation-delay: 0.55s; }
+        .credential-list.in-view li:nth-child(2) { animation-delay: 0.7s; }
+        .credential-list.in-view li:nth-child(3) { animation-delay: 0.85s; }
+        .credential-list.in-view li:nth-child(4) { animation-delay: 1.0s; }
+        .credential-list.in-view li:nth-child(5) { animation-delay: 1.15s; }
+
+        .credential-list li:hover { padding-left: 8px; color: var(--white); }
+        .credential-list li:last-child { border-bottom: none; }
+
+        .credential-icon {
+            color: var(--teal);
+            font-size: 0.55rem;
+            margin-top: 7px;
+            flex-shrink: 0;
+            transition: transform 0.3s;
+        }
+
+        .credential-list li:hover .credential-icon { transform: translateX(2px); }
+
+        /* ---- SERVICES ---- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        @media (max-width: 1024px) {
+            .services-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .service-card-link {
+            display: inline-block;
+            margin-top: 20px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--teal);
+            text-decoration: none;
+            letter-spacing: 0.02em;
+            transition: opacity 0.2s;
+        }
+        .service-card-link:hover { opacity: 0.7; }
+
+        .service-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px 32px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0; height: 2px;
+            background: var(--teal);
+            transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .service-card:hover {
+            border-color: rgba(0, 220, 205, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+        }
+
+        .service-card:hover::after { width: 100%; }
+
+        .service-icon-wrap {
+            width: 52px; height: 52px;
+            border-radius: 12px;
+            background: rgba(0, 220, 205, 0.08);
+            border: 1px solid rgba(0, 220, 205, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            transition: all 0.4s;
+        }
+
+        .service-card:hover .service-icon-wrap {
+            background: rgba(0, 220, 205, 0.12);
+            box-shadow: 0 0 24px rgba(0, 220, 205, 0.1);
+        }
+
+        .service-icon-wrap svg {
+            width: 24px; height: 24px;
+            stroke: var(--teal);
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        .service-card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 12px;
+            letter-spacing: -0.01em;
+        }
+
+        .service-card p {
+            font-size: 0.9rem;
+            color: var(--gray-200);
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        /* ---- SERVICE PROCESS FLOW ---- */
+        .service-process {
+            display: flex;
+            align-items: flex-start;
+            gap: 0;
+            margin: 48px 0 56px;
+            position: relative;
+        }
+
+        .service-process::before {
+            content: '';
+            position: absolute;
+            top: 22px;
+            left: calc(12.5% + 11px);
+            right: calc(12.5% + 11px);
+            height: 1px;
+            background: linear-gradient(90deg, rgba(0,220,205,0.3), rgba(0,220,205,0.1) 50%, rgba(0,220,205,0.3));
+        }
+
+        .process-step {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .process-step-num {
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid rgba(0,220,205,0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--teal);
+            letter-spacing: 0.05em;
+            margin-bottom: 14px;
+            position: relative;
+            z-index: 1;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: default;
+        }
+
+        /* Step-specific glow colors on hover */
+        .process-step:nth-child(1):hover .process-step-num {
+            border-color: #00DCD0;
+            color: #00DCD0;
+            box-shadow: 0 0 20px rgba(0,220,208,0.45), 0 0 40px rgba(0,220,208,0.15);
+            background: rgba(0,220,208,0.08);
+            transform: scale(1.12);
+        }
+        .process-step:nth-child(2):hover .process-step-num {
+            border-color: #3B9EFF;
+            color: #3B9EFF;
+            box-shadow: 0 0 20px rgba(59,158,255,0.45), 0 0 40px rgba(59,158,255,0.15);
+            background: rgba(59,158,255,0.08);
+            transform: scale(1.12);
+        }
+        .process-step:nth-child(3):hover .process-step-num {
+            border-color: #A78BFA;
+            color: #A78BFA;
+            box-shadow: 0 0 20px rgba(167,139,250,0.45), 0 0 40px rgba(167,139,250,0.15);
+            background: rgba(167,139,250,0.08);
+            transform: scale(1.12);
+        }
+        .process-step:nth-child(4):hover .process-step-num {
+            border-color: #34D399;
+            color: #34D399;
+            box-shadow: 0 0 20px rgba(52,211,153,0.45), 0 0 40px rgba(52,211,153,0.15);
+            background: rgba(52,211,153,0.08);
+            transform: scale(1.12);
+        }
+
+        /* Step label follows hover color */
+        .process-step:nth-child(1):hover .process-step-label { color: #00DCD0; }
+        .process-step:nth-child(2):hover .process-step-label { color: #3B9EFF; }
+        .process-step:nth-child(3):hover .process-step-label { color: #A78BFA; }
+        .process-step:nth-child(4):hover .process-step-label { color: #34D399; }
+
+        .process-step-label { transition: color 0.35s; }
+
+        .process-step-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--white);
+            letter-spacing: 0.02em;
+            margin-bottom: 4px;
+        }
+
+        .process-step-desc {
+            font-size: 0.72rem;
+            color: var(--gray-300);
+            line-height: 1.5;
+            max-width: 110px;
+        }
+
+        /* ---- SERVICE TIER LABEL ---- */
+        .service-tier {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            margin-top: 8px;
+        }
+
+        .service-tier-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gray-300);
+        }
+
+        .service-tier-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* ---- CTA SECTION ---- */
+        .cta-section {
+            text-align: center;
+            padding: 120px 40px;
+            position: relative;
+        }
+
+        .cta-glow {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(0, 220, 205, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+            animation: glowPulse 6s ease-in-out infinite;
+        }
+
+        .cta-section .section-title { margin-bottom: 20px; }
+        .cta-section .section-sub { margin: 0 auto 40px; }
+        .cta-section .section-label { justify-content: center; }
+        .cta-section .section-label::before { display: none; }
+
+        /* ---- FLOATING ORBS ---- */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            filter: blur(80px);
+            opacity: 0.3;
+        }
+
+        .orb-1 {
+            width: 300px; height: 300px;
+            background: rgba(0, 220, 205, 0.08);
+            top: 20%; right: -5%;
+            animation: orbFloat1 20s ease-in-out infinite;
+        }
+
+        .orb-2 {
+            width: 200px; height: 200px;
+            background: rgba(0, 180, 200, 0.06);
+            top: 60%; left: -3%;
+            animation: orbFloat2 25s ease-in-out infinite;
+        }
+
+        @keyframes orbFloat1 {
+            0%, 100% { transform: translate(0, 0); }
+            33% { transform: translate(-30px, 40px); }
+            66% { transform: translate(20px, -30px); }
+        }
+
+        @keyframes orbFloat2 {
+            0%, 100% { transform: translate(0, 0); }
+            33% { transform: translate(40px, -20px); }
+            66% { transform: translate(-20px, 40px); }
+        }
+
+        /* ---- FOOTER ---- */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-left {
+            font-size: 0.8rem;
+            color: var(--gray-300);
+        }
+
+        .footer-left span { color: var(--gray-200); }
+
+        .footer-right {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--gray-400);
+            letter-spacing: 0.05em;
+        }
+
+        /* ---- DIVIDER ---- */
+        .divider {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            height: 1px;
+            background: var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .divider::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 60%; height: 100%;
+            background: linear-gradient(90deg, transparent, var(--teal-dim), transparent);
+            opacity: 0.3;
+            animation: dividerSweep 4s ease-in-out infinite;
+        }
+
+        @keyframes dividerSweep {
+            0% { left: -60%; }
+            100% { left: 160%; }
+        }
+
+        /* ---- MAGNETIC CURSOR ---- */
+        .magnetic-target {
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* ---- HAMBURGER ---- */
+        .nav-hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            z-index: 110;
+        }
+
+        .nav-hamburger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--gray-100);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            transform-origin: center;
+        }
+
+        .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        /* ---- RESPONSIVE ---- */
+        @media (max-width: 768px) {
+            nav { padding: 16px 20px; }
+            nav.scrolled { padding: 12px 20px; }
+            .nav-hamburger { display: flex; }
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 0; left: 0; right: 0;
+                padding: 80px 24px 32px;
+                background: rgba(8, 8, 12, 0.97);
+                backdrop-filter: blur(24px);
+                -webkit-backdrop-filter: blur(24px);
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0;
+                border-bottom: 1px solid var(--border);
+                z-index: 105;
+            }
+            .nav-links.open { display: flex; }
+            .nav-links a {
+                font-size: 1.1rem;
+                padding: 14px 0;
+                width: 100%;
+                border-bottom: 1px solid var(--border);
+            }
+            .nav-links a:last-child { border-bottom: none; }
+            .nav-cta, .nav-cta-book {
+                margin-top: 8px;
+                width: 100% !important;
+                text-align: center !important;
+                padding: 12px 20px !important;
+                justify-content: center;
+            }
+            section { padding: 80px 20px; }
+            .hero { padding: 100px 20px 60px; }
+            .about-layout { grid-template-columns: 1fr; gap: 32px; }
+            .portfolio-grid { grid-template-columns: 1fr; }
+            .services-grid { grid-template-columns: 1fr; }
+            .service-process { flex-wrap: wrap; gap: 20px; }
+            .service-process::before { display: none; }
+            .process-step { flex: 1 1 calc(50% - 10px); }
+            footer { flex-direction: column; gap: 16px; text-align: center; }
+
+            /* Orbital responsive */
+            .orbit-container { height: 600px; max-width: 100%; }
+            .orbit-ring-1 { width: 180px; height: 180px; }
+            .orbit-ring-2 { width: 340px; height: 340px; }
+            .orbit-ring-3 { width: 500px; height: 500px; }
+            .orbit-center-logo { width: 72px; height: 72px; }
+            .orbit-center-logo .logo-text { font-size: 0.8rem; }
+            .orbit-node-dot { width: 42px; height: 42px; }
+            .orbit-node-info { display: none; }
+            .ecosystem { padding: 60px 20px 80px; }
+        }
+
+        @media (max-width: 480px) {
+            .orbit-container { height: 450px; }
+            .orbit-ring-1 { width: 140px; height: 140px; }
+            .orbit-ring-2 { width: 260px; height: 260px; }
+            .orbit-ring-3 { width: 380px; height: 380px; }
+        }
+
+        /* ---- ATHENA AI AGENT ---- */
+        .nav-athena-link { color: var(--teal) !important; font-weight: 500 !important; }
+
+        .hero-athena-hint {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            font-size: 0.82rem;
+            color: var(--gray-300);
+            transition: color 0.3s;
+            position: relative;
+            z-index: 2;
+            margin-top: 14px;
+            background: none;
+            border: none;
+            font-family: var(--font-sans);
+        }
+        .hero-athena-hint:hover { color: var(--teal); }
+
+        .athena-pulse-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--teal);
+            flex-shrink: 0;
+            animation: livePulse 2s ease-in-out infinite;
+        }
+
+        .athena-card {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, rgba(0, 220, 205, 0.06) 0%, var(--bg-card) 60%);
+            border: 1px solid rgba(0, 220, 205, 0.28);
+            border-radius: 20px;
+            padding: 48px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 48px;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .athena-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--teal), transparent);
+            opacity: 0.5;
+        }
+
+        .athena-card::after {
+            content: '';
+            position: absolute;
+            top: -100px; right: -100px;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(0, 220, 205, 0.04) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .athena-badge {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: var(--teal);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 4px 12px;
+            border: 1px solid rgba(0, 220, 205, 0.25);
+            border-radius: 4px;
+            background: rgba(0, 220, 205, 0.06);
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+
+        .athena-card h3 {
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -0.03em;
+            margin-bottom: 14px;
+        }
+
+        .athena-card-left p {
+            font-size: 0.95rem;
+            color: var(--gray-200);
+            line-height: 1.75;
+            max-width: 540px;
+            font-weight: 300;
+            margin-bottom: 24px;
+        }
+
+        .athena-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .athena-features span {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: var(--teal-dim);
+            padding: 4px 10px;
+            background: rgba(0, 220, 205, 0.06);
+            border: 1px solid rgba(0, 220, 205, 0.12);
+            border-radius: 4px;
+            letter-spacing: 0.02em;
+        }
+
+        .athena-card-right {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            min-width: 180px;
+        }
+
+        .athena-avatar {
+            position: relative;
+            width: 130px; height: 130px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .athena-avatar-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 220, 205, 0.2);
+            animation: athenaRingPulse 3s ease-in-out infinite;
+        }
+
+        .athena-avatar-ring:first-child { width: 110px; height: 110px; }
+        .athena-avatar-ring-2 { width: 86px; height: 86px; border-color: rgba(0, 220, 205, 0.3); animation-delay: 0.6s; }
+
+        @keyframes athenaRingPulse {
+            0%, 100% { transform: scale(1); opacity: 0.4; }
+            50% { transform: scale(1.06); opacity: 0.9; }
+        }
+
+        .athena-avatar-core {
+            width: 82px; height: 82px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid rgba(0, 220, 205, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s;
+            box-shadow: 0 0 30px rgba(0, 220, 205, 0.15), inset 0 0 20px rgba(0, 220, 205, 0.04);
+            background: var(--bg-card);
+        }
+
+        .athena-avatar-core img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            display: block;
+            border-radius: 50%;
+        }
+
+        .athena-avatar-core .athena-icon-fallback {
+            width: 30px; height: 30px;
+            color: var(--teal);
+            display: none;
+        }
+
+        .athena-avatar-core img[data-error] ~ .athena-icon-fallback { display: block; }
+
+        .athena-avatar:hover .athena-avatar-core {
+            box-shadow: 0 0 50px rgba(0, 220, 205, 0.3);
+            border-color: var(--teal);
+            transform: scale(1.05);
+        }
+
+        /* Active call state */
+        .athena-avatar.athena-call-active .athena-avatar-ring {
+            border-color: rgba(0, 220, 205, 0.7);
+            animation: athenaRingPulse 0.8s ease-in-out infinite;
+        }
+        .athena-avatar.athena-call-active .athena-avatar-core {
+            border-color: var(--teal);
+            box-shadow: 0 0 50px rgba(0, 220, 205, 0.4);
+        }
+
+
+        .athena-avatar-name {
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            color: var(--gray-300);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            position: absolute;
+            bottom: 0;
+        }
+
+        .athena-cta-btn {
+            white-space: nowrap;
+            font-size: 0.85rem !important;
+            padding: 12px 28px !important;
+        }
+
+        .athena-sub-note {
+            font-family: var(--font-mono);
+            font-size: 0.63rem;
+            color: var(--gray-300);
+            letter-spacing: 0.04em;
+            text-align: center;
+        }
+
+        .athena-calendly-cta {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        .athena-calendly-cta.visible { display: flex; }
+
+        .athena-book-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 22px;
+            border: 1px solid rgba(0, 220, 205, 0.4);
+            border-radius: 8px;
+            background: rgba(0, 220, 205, 0.06);
+            color: var(--teal);
+            font-size: 0.82rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background 0.3s, border-color 0.3s;
+            white-space: nowrap;
+        }
+
+        .athena-book-btn:hover {
+            background: rgba(0, 220, 205, 0.12);
+            border-color: rgba(0, 220, 205, 0.7);
+        }
+
+        .athena-book-note {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            color: var(--gray-300);
+            letter-spacing: 0.04em;
+        }
+
+        .athena-end-btn {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 28px;
+            border: 1px solid rgba(220, 60, 60, 0.5);
+            border-radius: 8px;
+            background: rgba(220, 60, 60, 0.08);
+            color: #e05555;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s, border-color 0.3s;
+            white-space: nowrap;
+        }
+
+        .athena-end-btn:hover {
+            background: rgba(220, 60, 60, 0.16);
+            border-color: rgba(220, 60, 60, 0.8);
+        }
+
+        .athena-end-btn.visible { display: flex; }
+
+        @media (max-width: 768px) {
+            .athena-card {
+                grid-template-columns: 1fr;
+                padding: 32px 24px;
+                gap: 32px;
+                text-align: center;
+            }
+            .athena-card-left p { max-width: 100%; }
+            .athena-features { justify-content: center; }
+            .athena-card-right { margin: 0 auto; }
+        }
+        /* October refresh: bring the two business engines and place intelligence forward. */
+        section[id] { scroll-margin-top: 90px; }
+        .engine-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+        .engine-card { padding: 32px; border: 1px solid var(--border); border-radius: 16px; background: var(--bg-card); }
+        .engine-label { color: var(--teal); font-family: var(--font-mono); font-size: .875rem; margin-bottom: 20px; }
+        .engine-card h3 { font-size: 1.5rem; line-height: 1.35; margin-bottom: 16px; color: var(--white); }
+        .engine-card p { font-size: 1rem; line-height: 1.75; color: var(--gray-200); margin-bottom: 24px; }
+        .platform-card-featured { grid-column: 1 / -1; padding: 40px; border-color: rgba(0, 220, 205, .35); }
+        .platform-card-featured .card-name { font-size: 2rem; }
+        .platform-card-featured .card-desc { max-width: 760px; font-size: 1.0625rem; }
+        .place-capabilities { display: flex; flex-wrap: wrap; gap: 12px; margin: 24px 0; }
+        .place-capabilities span { padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: .875rem; }
+        .card-status { font-size: .875rem; letter-spacing: .02em; }
+        .card-header { gap: 12px; flex-wrap: wrap; }
+        .engine-card a:focus-visible, .platform-card a:focus-visible { outline: 2px solid var(--teal); outline-offset: 6px; }
+        @media (max-width: 768px) {
+            .engine-grid { grid-template-columns: minmax(0, 1fr); }
+            .engine-card, .platform-card-featured { padding: 24px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+        }
+        /* Product showcase: authentic public visuals and a consistent reading order. */
+        .portfolio-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+        .platform-card { padding: 0; display: flex; flex-direction: column; }
+        .product-visual { position: relative; margin: 0; overflow: hidden; background: #0b101a; aspect-ratio: 16 / 10; border-bottom: 1px solid var(--border); }
+        .product-visual img { display: block; width: 100%; height: 100%; object-fit: contain; }
+        .product-visual figcaption { position: absolute; bottom: 12px; left: 12px; max-width: calc(100% - 24px); padding: 5px 9px; border: 1px solid rgba(255,255,255,.15); background: rgba(8,8,12,.92); color: #d8dce5; font-size: .75rem; line-height: 1.4; border-radius: 4px; }
+        .product-content { display: flex; flex-direction: column; flex: 1; padding: 30px; position: relative; z-index: 1; }
+        .product-content .card-name { font-size: 1.5rem; margin: 0; }
+        .product-headline { font-size: 1.125rem; line-height: 1.5; color: var(--white); margin-bottom: 14px; font-weight: 500; }
+        .product-content .card-desc { font-size: 1rem; line-height: 1.75; font-weight: 400; }
+        .product-audience { margin-top: 24px; margin-bottom: 18px; color: #b9bcc8; font-size: .875rem; }
+        .product-content .service-card-link { margin-top: auto; font-size: .9375rem; }
+        .platform-card-featured { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; padding: 0; }
+        .platform-card-featured .product-content { padding: 30px; }
+        .platform-card-featured .card-name { font-size: 1.5rem; }
+        .platform-card-featured .card-desc { font-size: 1rem; }
+        .placepulse-visual { aspect-ratio: auto; display: flex; flex-direction: column; gap: 20px; align-items: center; justify-content: center; min-height: 320px; padding: 28px 24px 54px; border-bottom: 0; border-right: 1px solid var(--border); background: #101d36; }
+        .placepulse-visual img { height: auto; width: 100%; }
+        .placepulse-visual .placepulse-logo { width: 70%; max-width: 300px; }
+        .placepulse-video-frame { position: relative; width: 100%; overflow: hidden; border: 1px solid var(--border); border-radius: 8px; background: #080a0e; }
+        .placepulse-video-frame video { display: block; width: 100%; height: auto; aspect-ratio: 3818 / 2008; object-fit: contain; }
+        .placepulse-overview { border: 1px solid var(--border); border-radius: 8px; }
+        .placepulse-visual figcaption { letter-spacing: .06em; }
+        .product-visual-book { background: #10151d; }
+        .product-visual-book img { padding: 16px; }
+        .product-visual-logo { display: flex; align-items: center; justify-content: center; padding: 40px; background: #101d36; }
+        .product-visual-logo img { height: auto; }
+        .product-visual-twiin img { object-fit: cover; object-position: top; }
+        .product-visual-video { background: #080a0e; }
+        .product-visual-video video { display: block; width: 100%; height: 100%; object-fit: contain; background: #080a0e; }
+        .product-visual-video figcaption { top: 12px; bottom: auto; }
+        .product-video-play { position: absolute; z-index: 1; top: 72%; left: 50%; transform: translate(-50%, -50%); display: flex; align-items: center; gap: 12px; width: max-content; max-width: calc(100% - 32px); border: 1px solid rgba(255,255,255,.5); border-radius: 999px; background: rgba(8,8,12,.9); color: #fff; padding: 12px 20px; cursor: pointer; font: inherit; font-size: .875rem; font-weight: 600; line-height: 1.3; box-shadow: 0 8px 32px rgba(0,0,0,.35); transition: background .2s, border-color .2s; }
+        .product-video-play:hover { background: #18242b; border-color: var(--teal); }
+        .product-video-play:focus-visible { outline: 3px solid var(--teal); outline-offset: 4px; }
+        .product-video-play[hidden] { display: none; }
+        .product-video-play-icon { display: inline-block; width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 13px solid var(--teal); }
+        .portfolio-note { color: var(--gray-200); font-size: .875rem; line-height: 1.7; margin-top: 24px; max-width: 760px; }
+        .card-status { font-size: .75rem; }
+        .status-live::before { display: none; }
+        .service-process { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+        .service-process::before { left: calc(16.67% + 11px); right: calc(16.67% + 11px); }
+        html { overflow-x: clip; }
+        @media (max-width: 768px) {
+            .portfolio-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+            .platform-card-featured { display: flex; gap: 0; }
+            .placepulse-visual { min-height: 210px; border-right: 0; border-bottom: 1px solid var(--border); }
+            .product-content, .platform-card-featured .product-content { padding: 24px; }
+            .service-process { grid-template-columns: minmax(0, 1fr); }
+        }
+    </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://arqonelabs.com/#organization",
+          "name": "ArqOne Labs",
+          "url": "https://arqonelabs.com/",
+          "description": "AI venture studio and advisory helping organisations build specialist AI products and turn AI into useful business capability.",
+          "founder": {
+            "@type": "Person",
+            "name": "Piero Saleme"
+          }
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://arqonelabs.com/#website",
+          "name": "ArqOne Labs",
+          "url": "https://arqonelabs.com/",
+          "publisher": {
+            "@id": "https://arqonelabs.com/#organization"
+          }
+        }
+      ]
+    }
+    </script>
+    <style>
+      .language-choice{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;padding:5px 9px;border:1px solid rgba(255,255,255,.2);border-radius:7px;font-size:12px;letter-spacing:.07em;color:#d8dce8}
+      .language-choice a{color:#aaaebc;text-decoration:none}
+      .language-choice a[aria-current="page"]{color:#80e0d7;font-weight:700}
+      .language-choice a:hover{color:#fff}
+      .language-choice span{opacity:.45}
+      @media(max-width:900px){.mobile-language-choice{position:fixed;top:16px;right:76px;z-index:1100;background:#10131c}.nav-links .language-choice{position:static}}
+    </style>
+<style>.mobile-language-choice{display:none}@media(max-width:900px){.mobile-language-choice{display:inline-flex}}</style></head>
+<body>
+    <div class="grid-bg"></div>
+
+    <!-- Floating orbs -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <div class="content">
+
+        <!-- NAV -->
+        <nav>
+            <a href="#" class="nav-logo"><img src="/ArqOne%20Labs%20Logo.gif" alt="ArqOne Labs"></a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Åbn eller luk menu">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav-links" id="nav-links">
+                <a href="#ecosystem">Økosystem</a>
+                <a href="#portfolio">Portefølje</a>
+                <a href="#about">Om os</a>
+                <a href="/da/services.html">Ydelser</a>
+                <a href="/da/blog/">Artikler</a>
+                <a href="#athena" class="nav-athena-link">Athena</a>
+                
+                <span class="language-choice" aria-label="Sprog"><a href="https://arqonelabs.com/" lang="en" hreflang="en">EN</a><span aria-hidden="true">/</span><a href="https://arqonelabs.com/da/" lang="da" hreflang="da" aria-current="page">DA</a></span>
+            <a href="https://calendly.com/piero-ainavigator" target="_blank" class="nav-cta-book magnetic-target">Book et møde</a>
+                <a href="/da/contact.html" class="nav-cta magnetic-target">Kontakt os</a>
+            </div>
+        </nav>
+
+        <!-- HERO -->
+        <section class="hero">
+            <canvas id="hero-canvas"></canvas>
+            <div class="hero-glow"></div>
+            <div class="hero-badge">Praktisk AI-hjælp til virksomheder</div>
+<h1>Mindre administration.<br><span class="accent">Mere tid til forretningen.</span></h1>
+<p class="hero-sub">ArqOne hjælper virksomheder med at automatisere tidskrævende opgaver ved hjælp af AI. Vi tager udgangspunkt i jeres konkrete udfordringer, bygger løsninger og tilpasser dem til jeres daglige arbejdsgange.</p>
+            <div class="hero-cta-group">
+                <a href="/da/contact.html?interest=Agentic%20Automation%20Services" class="btn-primary magnetic-target">Fortæl os, hvad I vil automatisere</a>
+                <a href="https://calendly.com/piero-ainavigator" target="_blank" rel="noopener noreferrer" class="btn-secondary magnetic-target">Book en uforpligtende samtale</a>
+            </div>
+            <button class="hero-athena-hint" id="hero-athena-trigger">
+                <div class="athena-pulse-dot"></div>
+                <span>Vil I undersøge mulighederne? Mød Athena (på engelsk) &rarr;</span>
+            </button>
+            <div class="hero-scroll">
+                <div class="scroll-line"></div>
+                <span class="scroll-text">RUL NED</span>
+            </div>
+        </section>
+
+        <section class="engines" aria-labelledby="engines-title">
+            <div class="section-label">Sådan arbejder vi</div>
+            <h2 class="section-title" id="engines-title">Forretningsindsigt styrer udviklingen.</h2>
+            <div class="engine-grid">
+                <article class="engine-card">
+                    <div class="engine-label">Produktstudie</div>
+                    <h3>Produkter skabt til konkrete forretningsbehov</h3>
+                    <p>Vores produktstudie udvikler målrettede løsninger til de beslutninger og arbejdsgange, der betyder noget: hvor man skal investere, hvordan kunder betjenes, og hvordan arbejdet kan forbedres.</p>
+                    <a href="#portfolio" class="service-card-link">Se porteføljen</a>
+                </article>
+                <article class="engine-card">
+                    <div class="engine-label">Rådgivning</div>
+                    <h3>AI-automatisering, der giver jer tid tilbage</h3>
+                    <p>Vi finder manuelle opgaver, der tager unødig tid. Vi foreslår en løsning, der passer til jeres behov og eksisterende systemer, og hjælper med at bygge, teste og forbedre den.</p>
+                    <a href="/da/services.html" class="service-card-link">Se vores rådgivningsydelser</a>
+                </article>
+            </div>
+        </section>
+
+        <!-- DANISH MARKET: PRACTICAL AUTOMATION -->
+        <section class="dk-business" id="automatisering" aria-labelledby="dk-business-title">
+            <div class="section-label">AI til hverdagen</div>
+            <h2 class="section-title" id="dk-business-title">Hvad kan vi hjælpe jer med?</h2>
+            <p class="section-sub">Bruger I for meget tid på gentagne opgaver? Her er eksempler på arbejdsgange, hvor automatisering kan være relevant. Vi finder først ud af, hvad der faktisk giver mening i jeres virksomhed.</p>
+            <div class="dk-business-grid">
+                <article class="dk-business-card"><h3>Kundekommunikation</h3><p>Gør det lettere at besvare henvendelser og give kunderne hurtig, relevant information.</p></article>
+                <article class="dk-business-card"><h3>E-mails og opfølgning</h3><p>Automatisér tilbagevendende beskeder og opfølgninger, så færre opgaver bliver glemt.</p></article>
+                <article class="dk-business-card"><h3>Dokumentbehandling</h3><p>Hent og strukturér oplysninger fra dokumenter, når manuelle gennemgange tager for lang tid.</p></article>
+                <article class="dk-business-card"><h3>Administrative arbejdsgange</h3><p>Reducér gentagen indtastning og flytning af information mellem systemer.</p></article>
+                <article class="dk-business-card"><h3>AI-assistenter</h3><p>Giv medarbejderne hjælp til at finde viden og håndtere rutinespørgsmål.</p></article>
+            </div>
+            <p class="dk-business-note">Eksemplerne viser mulige løsninger. Den konkrete funktionalitet, tidsbesparelse og integrationsmuligheder afhænger af jeres behov og systemer.</p>
+            <div class="dk-business-cta">
+                <a href="/da/contact.html?interest=Agentic%20Automation%20Services" class="btn-primary">Fortæl os, hvad I vil automatisere</a>
+                <a href="/da/services.html#approach" class="btn-secondary">Se, hvordan vi arbejder</a>
+            </div>
+        </section>
+
+        <!-- PRODUCT SHOWCASE -->
+        <div class="divider"></div>
+        <section id="portfolio">
+            <div class="section-label">Porteføljen</div>
+            <h2 class="section-title">Bygget til de opgaver, der gør en forskel.</h2>
+            <p class="section-sub">Udforsk specialiserede produkter til bedre beslutninger, stærkere kundedialog og lettere adgang til ekspertise.</p>
+            <div class="portfolio-grid">
+                <article class="platform-card platform-card-featured">
+                    <figure class="product-visual placepulse-visual">
+                        <img class="placepulse-logo" src="/assets/products/placepulse-new-logo.webp" width="595" height="172" loading="lazy" decoding="async" alt="PlacePulse logo, blue pixel P and white wordmark">
+                        <div class="placepulse-video-frame">
+                            <video id="placepulse-demo-video" controls playsinline preload="none" poster="/assets/products/placepulse-launch-poster.webp" aria-label="PlacePulse-lanceringsfilm, et minut og sytten sekunder">
+                                <source src="/assets/products/placepulse-launch-film-1080p.mp4" type="video/mp4">
+                                Din browser understøtter ikke indlejret video.
+                            </video>
+                            <button class="product-video-play" id="placepulse-video-play" type="button" aria-controls="placepulse-demo-video" aria-label="Afspil PlacePulse-lanceringsfilmen">
+                                <span class="product-video-play-icon" aria-hidden="true"></span>
+                                <span>Se lanceringsfilm (1:17)</span>
+                            </button>
+                        </div>
+                        <figcaption>PlacePulse-lanceringsfilm</figcaption>
+                    </figure>
+                    <div class="product-content">
+                        <div class="card-header"><h3 class="card-name">PlacePulse</h3><span class="card-status status-prelaunch">Demo</span></div>
+                        <h4 class="product-headline">Forstå et sted. Beslut det næste skridt.</h4>
+                        <p class="card-desc">Saml lokationskontekst, præstationssignaler og sammenligninger med lignende steder i ét beslutningsgrundlag. Se, hvad dokumentationen understøtter, hvor usikkerheden er størst, og hvilke tiltag der fortjener opmærksomhed.</p>
+                        <div class="place-capabilities" aria-label="PlacePulse capabilities"><span>Lokationskontekst</span><span>Dokumentation og sikkerhed</span><span>Sammenligning med lignende steder</span><span>Anbefalede tiltag</span></div>
+                        <p class="product-audience">Til investorer, driftsansvarlige og destinationsaktører</p>
+                        <a href="/da/contact.html?interest=PlacePulse" class="service-card-link">Få en introduktion til PlacePulse</a>
+                    </div>
+                </article>
+                <article class="platform-card">
+                    <figure class="product-visual product-visual-logo">
+                        <img src="/assets/products/salesx-transparent.webp" loading="lazy" decoding="async" alt="SalesX logo">
+                        <figcaption>STEMMETEKNOLOGI</figcaption>
+                    </figure>
+                    <div class="product-content">
+                        <div class="card-header"><h3 class="card-name">SalesX</h3><span class="card-status status-prelaunch">Lukket forhåndsvisning</span></div>
+                        <h4 class="product-headline">Stemmebaseret AI til salg og kundedrift</h4>
+                        <p class="card-desc">Gør kundesamtaler til en sammenhængende salgsproces. Stemmeagenter hjælper med indgående henvendelser, kvalificering og opfølgning, med overdragelse til medarbejdere og relevant forretningskontekst.</p>
+                        <p class="product-audience">Til salgs- og serviceteams</p>
+                        <a href="/da/contact.html?interest=SalesX" class="service-card-link">Drøft et SalesX-pilotprojekt</a>
+                    </div>
+                </article>
+                <article class="platform-card">
+                    <figure class="product-visual">
+                        <img src="/assets/products/plymio.jpg" loading="lazy" decoding="async" alt="Plymio public site: expertise, AI Presences and Guides">
+                        <figcaption>Forhåndsvisning af offentlig side</figcaption>
+                    </figure>
+                    <div class="product-content">
+                        <div class="card-header"><h3 class="card-name">Plymio</h3><span class="card-status status-prelaunch">Beta</span></div>
+                        <h4 class="product-headline">Professionel ekspertise inden for rækkevidde</h4>
+                        <p class="card-desc">Udforsk AI-profiler baseret på virkelige coaches og mentorer samt strukturerede guider til træning og forberedelse. Fagpersoner kan dele deres viden og stemme og samtidig bevare kontrollen med deres ekspertise.</p>
+                        <p class="product-audience">Til privatpersoner, coaches og mentorer</p>
+                        <a href="/da/contact.html?interest=Plymio" class="service-card-link">Udforsk Plymio sammen med os</a>
+                    </div>
+                </article>
+                <article class="platform-card">
+                    <figure class="product-visual product-visual-video">
+                        <video id="brandsprk-launch-video" controls playsinline preload="none" poster="/assets/products/brandsprk-launch-poster.webp" aria-label="BrandSprk-lanceringsfilm, et minut og ti sekunder">
+                            <source src="/assets/products/brandsprk-launch-film.mp4" type="video/mp4">
+                            Din browser understøtter ikke indlejret video.
+                        </video>
+                        <button class="product-video-play" id="brandsprk-video-play" type="button" aria-controls="brandsprk-launch-video" aria-label="Afspil BrandSprk-lanceringsfilmen">
+                            <span class="product-video-play-icon" aria-hidden="true"></span>
+                            <span>Se lanceringsfilm (1:10)</span>
+                        </button>
+                        <figcaption>BrandSprk-lanceringsfilm</figcaption>
+                    </figure>
+                    <div class="product-content">
+                        <div class="card-header"><h3 class="card-name">BrandSprk</h3><span class="card-status status-prelaunch">Demo</span></div>
+                        <h4 class="product-headline">Kreative beslutninger med afsæt i dit brand</h4>
+                        <p class="card-desc">Find godkendte brandmaterialer, udvikl kampagnebriefs og forbind kreativ indsigt med styret produktion. Pitch Room og vejledende kreativ test giver bedre grundlag for forberedelse og kvalificeret kritik.</p>
+                        <p class="product-audience">Til bureauer og brandteams</p>
+                        <a href="/da/contact.html?interest=BrandSprk" class="service-card-link">Få en introduktion til BrandSprk</a>
+                    </div>
+                </article>
+                <article class="platform-card">
+                    <figure class="product-visual product-visual-video">
+                        <video id="ai-fluency-promo-video" controls playsinline preload="none" poster="/assets/products/ai-fluency-second-edition-poster.webp" aria-label="AI Fluency for Leaders, anden udgave, fyrre sekunder">
+                            <source src="/assets/products/ai-fluency-second-edition-promo.mp4" type="video/mp4">
+                            Din browser understøtter ikke indlejret video.
+                        </video>
+                        <button class="product-video-play" id="ai-fluency-video-play" type="button" aria-controls="ai-fluency-promo-video" aria-label="Afspil filmen om anden udgave af AI Fluency for Leaders">
+                            <span class="product-video-play-icon" aria-hidden="true"></span>
+                            <span>Se bogfilmen (0:40)</span>
+                        </button>
+                        <figcaption>AI Fluency for Leaders · Anden udgave</figcaption>
+                    </figure>
+                    <div class="product-content">
+                        <div class="card-header"><h3 class="card-name">AI Fluency for Leaders</h3><span class="card-status status-live">Anden udgave · 2026</span></div>
+                        <h4 class="product-headline">Led AI med dømmekraft, ikke kun teknologi.</h4>
+                        <p class="card-desc">En praktisk ledelsesguide til dømmekraft, governance og beslutninger i AI-tidsalderen. Skrevet til ledere og beslutningstagere, der skal vide, hvornår de kan stole på AI, hvornår de skal udfordre den, og hvordan de bevarer ansvaret.</p>
+                        <p class="product-audience">Til direktioner, bestyrelser og transformationsledere · Byg videre på din viden med AI Navigator-programmet</p>
+                        <a href="https://www.amazon.com/dp/B0HNHLBKC3" target="_blank" rel="noopener noreferrer" class="service-card-link">Find anden udgave på Amazon</a>
+                        <a href="https://ainavigator.info/" target="_blank" rel="noopener noreferrer" class="service-card-link">Udforsk AI Navigator-uddannelsen</a>
+                    </div>
+                </article>
+                <article class="platform-card">
+                    <figure class="product-visual">
+                        <img src="/assets/products/shieldpilot.jpg" loading="lazy" decoding="async" alt="ShieldPilot public illustrative demo: fraud signals and recommended actions">
+                        <figcaption>Offentlig illustrativ demo</figcaption>
+                    </figure>
+                    <div class="product-content">
+                        <div class="card-header"><h3 class="card-name">ShieldPilot</h3><span class="card-status status-live">Tilgængelig</span></div>
+                        <h4 class="product-headline">Et bedre beslutningsgrundlag, før du handler</h4>
+                        <p class="card-desc">Vurder mistænkelige e-mails, beskeder og betalingsanmodninger. Forstå faresignalerne, vurder risikoen, og se næste skridt, før du klikker, svarer eller godkender en betaling.</p>
+                        <p class="product-audience">Til økonomi, drift og mindre teams</p>
+                        <a href="/da/contact.html?interest=ShieldPilot" class="service-card-link">Læs om ShieldPilot</a>
+                    </div>
+                </article>
+                <article class="platform-card">
+                    <figure class="product-visual product-visual-twiin">
+                        <img src="/assets/products/twiin-loaded.webp" loading="lazy" decoding="async" alt="TWIIN public site: AI video twins and branded video creation">
+                        <figcaption>Forhåndsvisning af offentlig side</figcaption>
+                    </figure>
+                    <div class="product-content">
+                        <div class="card-header"><h3 class="card-name">TWIIN</h3><span class="card-status status-live">Tilgængelig</span></div>
+                        <h4 class="product-headline">Din ekspertise på video i stor skala</h4>
+                        <p class="card-desc">Skab brandet videoindhold med en digital tvilling af dit udseende og din stemme. Tilpas manuskripter, sprog og formater uden at skulle optage hver version fra bunden.</p>
+                        <p class="product-audience">Til eksperter, undervisere og indholdsteams</p>
+                        <a href="/da/contact.html?interest=TWIIN" class="service-card-link">Drøft videoproduktion</a>
+                    </div>
+                </article>
+            </div>
+            <p class="portfolio-note">Produkternes udviklingsfaser vises ovenfor. Forhåndsvisninger og lanceringsfilm illustrerer løsningerne; en gennemgang kan afdække de funktioner, der er relevante for din virksomhed.</p>
+        </section>
+
+        <!-- ORBITAL ECOSYSTEM -->
+        <div class="divider"></div>
+        <section class="ecosystem" id="ecosystem">
+            <div class="ecosystem-header">
+                <div class="section-label">Økosystem</div>
+                <h2 class="section-title">Ét produktstudie. En voksende portefølje.</h2>
+                <p class="section-sub" style="margin: 0 auto 0; max-width: 520px;">Specialiseret intelligens til forretningsbeslutninger og daglige opgaver. Hvert produkt har sit eget fokus, men bygger på samme studie.</p>
+            </div>
+
+            <div class="orbit-container" id="orbitContainer">
+                <!-- Orbit rings -->
+                <div class="orbit-ring orbit-ring-1"></div>
+                <div class="orbit-ring orbit-ring-2"></div>
+                <div class="orbit-ring orbit-ring-3"></div>
+
+                <!-- Center hub -->
+                <div class="orbit-center">
+                    <div class="orbit-center-glow"></div>
+                    <div class="orbit-center-logo">
+                        <div class="logo-text">Arq<span>One</span></div>
+                        <div class="logo-sub">Labs</div>
+                    </div>
+                </div>
+
+                <!-- Connection lines (drawn by JS) -->
+
+                <!-- Canvas for dynamic connection lines -->
+                <canvas id="orbit-canvas"></canvas>
+
+                <!-- Platform satellites (7 nodes) -->
+                <div class="orbit-node" data-angle="15">
+                    <div class="orbit-node-dot"><span class="node-initial">SP</span></div>
+                    <div class="orbit-node-info">
+                        <div class="orbit-node-name">ShieldPilot</div>
+                        <div class="orbit-node-tag">Cybersikkerhed</div>
+                        <div class="orbit-node-status live">Tilgængelig</div>
+                    </div>
+                </div>
+
+                <div class="orbit-node" data-angle="66">
+                    <div class="orbit-node-dot"><span class="node-initial">SX</span></div>
+                    <div class="orbit-node-info">
+                        <div class="orbit-node-name">SalesX</div>
+                        <div class="orbit-node-tag">Stemmebaseret kundedrift</div>
+                        <div class="orbit-node-status pre">Lukket forhåndsvisning</div>
+                    </div>
+                </div>
+
+                <div class="orbit-node" data-angle="117">
+                    <div class="orbit-node-dot"><span class="node-initial">TW</span></div>
+                    <div class="orbit-node-info">
+                        <div class="orbit-node-name">TWIIN</div>
+                        <div class="orbit-node-tag">AI-video</div>
+                        <div class="orbit-node-status live">Tilgængelig</div>
+                    </div>
+                </div>
+
+                <div class="orbit-node" data-angle="168">
+                    <div class="orbit-node-dot"><span class="node-initial">Bs</span></div>
+                    <div class="orbit-node-info">
+                        <div class="orbit-node-name">BrandSprk</div>
+                        <div class="orbit-node-tag">Kreativ intelligens</div>
+                        <div class="orbit-node-status pre">Demo</div>
+                    </div>
+                </div>
+
+                <div class="orbit-node" data-angle="220">
+                    <div class="orbit-node-dot"><span class="node-initial">AI</span></div>
+                    <div class="orbit-node-info">
+                        <div class="orbit-node-name">AI Navigator</div>
+                        <div class="orbit-node-tag">Uddannelse</div>
+                        <div class="orbit-node-status live">Tilgængelig</div>
+                    </div>
+                </div>
+
+                <div class="orbit-node" data-angle="271">
+                    <div class="orbit-node-dot"><span class="node-initial">PP</span></div>
+                    <div class="orbit-node-info">
+                        <div class="orbit-node-name">PlacePulse</div>
+                        <div class="orbit-node-tag">Lokationsintelligens</div>
+                        <div class="orbit-node-status pre">Demo</div>
+                    </div>
+                </div>
+
+                <div class="orbit-node" data-angle="322">
+                    <div class="orbit-node-dot"><span class="node-initial">Pl</span></div>
+                    <div class="orbit-node-info">
+                        <div class="orbit-node-name">Plymio</div>
+                        <div class="orbit-node-tag">AI-profiler og guider</div>
+                        <div class="orbit-node-status live">Beta</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT -->
+        <div class="divider"></div>
+        <section id="about">
+            <div class="about-layout">
+                <div class="about-left gs-reveal-left">
+                    <div class="section-label">Grundlægger</div>
+                    <div class="about-name">Piero Saleme</div>
+                    <div class="about-role">Grundlægger og CEO, ArqOne Labs</div>
+                    <div class="about-bio">
+                        <p>ArqOne Labs udspringer af en enkel erkendelse: Små og mellemstore virksomheder står over for mange af de samme udfordringer som store koncerner, fra cybersikkerhed og salg til marketing og kompetenceudvikling, men uden ressourcer til at ansætte specialister til hver opgave.</p>
+                        <p>ArqOne Labs har to forretningsområder. Produktstudiet udvikler løsninger inden for lokationsintelligens, stemmeautomatisering, kompetenceudvikling og specialiserede arbejdsgange. Rådgivningen hjælper virksomheder med at vurdere muligheder, effektivisere AI-brug, bygge ansvarlige workflows og styrke ledelsens kompetencer.</p>
+                        <p>Arbejder i krydsfeltet mellem AI-strategi, forretningsudvikling og produktdesign. Forfatter til <a href="https://www.amazon.com/Fluency-Leaders-Judgement-Decision-Making-AI-Driven/dp/B0GR8CKV3C/ref=sr_1_2?crid=3LDK51YW936H2&dib=eyJ2IjoiMSJ9.QJDUIamXrzgZTSdM-iW54Lq0TtWaXm2yv7pelUs-1NiZ7CslQRCwgms2Fvw9qiOQlPH6wyzKcrPTbpfghHnVlkONkuEIgzo63KXRCEwWLbUS6_7FPwt3i8g8nMa_HT9X02mZHh0wFtvWVfSvrNbRE-byd_M-4IDtplcFCgV2WFO3ZynmGhtzDY7-gFqztH36VVP7qb0iiWvcAe5vWDnaI25w7E6TPtuHnsUpnEbgAxE.i4ApIcFdFp4jB27JTbUifNj1xkxlLGk9JRqwJfbNsAQ&dib_tag=se&keywords=AI+Fluency+for+Leaders&qid=1778491693&sprefix=ai+fluency+for+leader%2Caps%2C372&sr=8-2" target="_blank" rel="noopener" style="color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(0,220,205,0.3);transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='rgba(0,220,205,0.3)'"><em>AI Fluency For Leaders</em></a>.</p>
+                    </div>
+                </div>
+                <div class="about-right gs-reveal-right">
+                    <h3>ArqOne-metoden</h3>
+                    <ul class="credential-list">
+                        <li><span class="credential-icon">&#9654;</span> Hver platform udspringer af et reelt forretningsbehov, ikke en teknologi på jagt efter et problem</li>
+                        <li><span class="credential-icon">&#9654;</span> Rådgivning og produktudvikling styrker hinanden: indsigt former produkterne, og produkterne afprøver vores tilgang</li>
+                        <li><span class="credential-icon">&#9654;</span> Bygget til ledere uden teknisk baggrund. Klart sprog, konkrete handlinger og målbare resultater</li>
+                        <li><span class="credential-icon">&#9654;</span> Observer, eksperimentér og skalér: en disciplin, der adskiller varig AI-værdi fra projekter, der går i stå</li>
+                        <li><span class="credential-icon">&#9654;</span> AI er motoren. Forretningsværdi er resultatet</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICES -->
+        <div class="divider"></div>
+        <section id="services">
+            <div class="section-label gs-reveal">AI-rådgivning og implementering</div>
+            <h2 class="section-title gs-reveal">Bedre AI-beslutninger.<br>Praktisk implementering.</h2>
+            <p class="section-sub gs-reveal">Find de rigtige muligheder, afprøv dem systematisk, og opbyg evnen til at skalere. Vores rådgivning kombinerer forretningsforståelse med erfaring fra produktudvikling, klar styring og målbare resultater.</p>
+
+            <!-- OES connects advisory diagnosis, experiments and implementation. -->
+            <div class="service-process gs-reveal">
+                <div class="process-step"><div class="process-step-num">01</div><div class="process-step-label">Observer</div><div class="process-step-desc">Forstå arbejdsgangen, dokumentationen og mulighederne</div></div>
+                <div class="process-step"><div class="process-step-num">02</div><div class="process-step-label">Eksperimentér</div><div class="process-step-desc">Afprøv med tydeligt ansvar og klare succeskriterier</div></div>
+                <div class="process-step"><div class="process-step-num">03</div><div class="process-step-label">Skalér</div><div class="process-step-desc">Forankr det, der virker, mål værdien og opbyg kompetencer</div></div>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card gs-reveal" style="grid-column: 1 / -1;">
+                    <div class="service-icon-wrap">
+                        <svg viewBox="0 0 24 24"><path d="M12 20V10M18 20V4M6 20v-4" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 20h20" stroke-linecap="round"/></svg>
+                    </div>
+                    <h3>AI Efficiency Framework&trade;</h3>
+                    <p><strong>Gør spredte AI-værktøjer til målbar forretningskapacitet.</strong> Reducér AI-spild, få kontrol over værktøjerne, vælg de rette modeller, og forbind AI-brug med målbar forretningsværdi.</p>
+                    <a href="/da/ai-efficiency.html" class="service-card-link">Udforsk rammeværket &rarr;</a>
+                </div>
+                <div class="service-card gs-reveal">
+                    <div class="service-icon-wrap">
+                        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v3l2 2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <h3>AI-parathedsanalyse</h3>
+                    <p>En struktureret analyse af virksomhedens arbejdsgange. Vi identificerer, hvor AI kan skabe målbar værdi, estimerer afkast og udarbejder en prioriteret implementeringsplan.</p>
+                    <a href="/da/services.html#readiness" class="service-card-link">Læs mere &rarr;</a>
+                </div>
+                <div class="service-card gs-reveal">
+                    <div class="service-icon-wrap">
+                        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <h3>Skræddersyet agentbaseret automatisering</h3>
+                    <p>AI-understøttede arbejdsgange og specialbyggede agenter til jeres virksomhed. Fra mindre manuelt arbejde til intelligente agenter for salg, support og data, med løsninger tilpasset jeres infrastruktur og data.</p>
+                    <a href="/da/services.html#automation" class="service-card-link">Læs mere &rarr;</a>
+                </div>
+                <div class="service-card gs-reveal">
+                    <div class="service-icon-wrap">
+                        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <h3>AI-uddannelse for ledere</h3>
+                    <p>Strukturerede workshops og løbende rådgivning til ledelsesteams. Opbyg interne kompetencer, fastlæg ansvarlig styring, og tag aktivt lederskab over AI-udviklingen.</p>
+                    <a href="/da/services.html#training" class="service-card-link">Læs mere &rarr;</a>
+                </div>
+
+                <!-- ATHENA FEATURED CARD -->
+                <div class="athena-card gs-reveal" id="athena">
+                    <div class="athena-card-left">
+                        <div class="athena-badge">AI-vurderingsagent</div>
+                        <h3>Mød Athena</h3>
+                        <p>Athena gennemfører en struktureret virksomhedsanalyse på 15 minutter og leverer en personlig rapport om AI-parathed. Rapporten viser væsentlige ineffektiviteter, hurtige forbedringer, estimeret afkast og næste skridt. Athena understøtter også <a href="/da/ai-efficiency.html" style="color:var(--teal);text-decoration:none;">AI Efficiency Scan</a> ved at kortlægge brugsmønstre, strukturere resultater og omsætte gentagne arbejdsgange til en handlingsorienteret plan.</p>
+                        <div class="athena-features">
+                            <span>Score for forretningseffektivitet</span>
+                            <span>Plan for hurtige forbedringer</span>
+                            <span>Indsats-/effektmatrix</span>
+                            <span>Estimat af investeringsafkast</span>
+                            <span>Implementeringsplan</span>
+                        </div>
+                    </div>
+                    <div class="athena-card-right">
+                        <div class="athena-avatar" id="athena-avatar-btn" title="Click to speak with Athena">
+                            <div class="athena-avatar-ring"></div>
+                            <div class="athena-avatar-ring athena-avatar-ring-2"></div>
+                            <div class="athena-avatar-core">
+                                <img src="/Athena.jpg" alt="Athena" id="athena-photo"
+                                     onerror="this.setAttribute('data-error','1');this.style.display='none';document.querySelector('.athena-icon-fallback').style.display='block';" />
+                                <svg class="athena-icon-fallback" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 2a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z"/>
+                                    <path d="M19 10v1a7 7 0 0 1-14 0v-1"/>
+                                    <line x1="12" y1="19" x2="12" y2="23"/>
+                                    <line x1="8" y1="23" x2="16" y2="23"/>
+                                </svg>
+                            </div>
+                            <div class="athena-avatar-name">Athena</div>
+                        </div>
+                        <button class="btn-primary athena-cta-btn magnetic-target" id="athena-start-btn">Åbn Athena (på engelsk)</button>
+                        <button class="athena-end-btn" id="athena-end-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7 2 2 0 0 1 1.72 2v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.42 19.42 0 0 1 4.43 9.88a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.34 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.31 8.91"/><line x1="23" y1="1" x2="1" y2="23"/></svg>
+                            Afslut samtalen
+                        </button>
+                        <p class="athena-sub-note">15 minutter &nbsp;&middot;&nbsp; Personlig rapport &nbsp;&middot;&nbsp; Uforpligtende</p>
+                        <div class="athena-calendly-cta" id="athena-calendly-cta">
+                            <a href="https://calendly.com/piero-ainavigator" target="_blank" class="athena-book-btn">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                Book en gennemgang på 30 minutter
+                            </a>
+                            <span class="athena-book-note">Gratis &nbsp;&middot;&nbsp; Med Piero fra ArqOne Labs</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <div class="divider"></div>
+        <section class="cta-section">
+            <div class="cta-glow"></div>
+            <div class="section-label gs-reveal">Lad os tale sammen</div>
+            <h2 class="section-title gs-reveal">Klar til at arbejde smartere?</h2>
+            <p class="section-sub gs-reveal">Fortæl os, hvilken beslutning eller arbejdsgang I vil forbedre. Vi kan udforske et produkt, tilrettelægge et fokuseret pilotprojekt eller starte et rådgivningsforløb.</p>
+            <div class="gs-reveal" style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+                <a href="https://calendly.com/piero-ainavigator" target="_blank" class="btn-primary magnetic-target">Book et møde på 30 minutter</a>
+                <a href="/da/contact.html" class="btn-secondary magnetic-target">Kontakt os</a>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer>
+            <div class="footer-left" style="display:flex;align-items:center;gap:10px;">
+                <img src="/ArqOne%20Labs%20Logo.gif" alt="ArqOne Labs" style="height:31px;width:auto;">
+                <span style="color:var(--gray-400);">-</span> AI-produkter og rådgivning med forretningsværdi
+            </div>
+            <div class="footer-right" style="display:flex;align-items:center;gap:20px;">
+                <a href="/privacy.html" style="font-family:var(--font-mono);font-size:0.7rem;color:var(--gray-400);text-decoration:none;letter-spacing:0.05em;transition:color 0.2s;" onmouseover="this.style.color='var(--teal)'" onmouseout="this.style.color='var(--gray-400)'">Privatlivspolitik</a>
+                <a href="/terms.html" style="font-family:var(--font-mono);font-size:0.7rem;color:var(--gray-400);text-decoration:none;letter-spacing:0.05em;transition:color 0.2s;" onmouseover="this.style.color='var(--teal)'" onmouseout="this.style.color='var(--gray-400)'">Vilkår og betingelser</a>
+                <span style="font-family:var(--font-mono);font-size:0.7rem;color:var(--gray-400);letter-spacing:0.05em;">&copy; 2026 ArqOne Labs</span>
+            </div>
+        </footer>
+
+    </div>
+
+
+    <script>
+    // ============================================
+    // GSAP INIT + FALLBACK
+    // ============================================
+    if (typeof gsap !== 'undefined') {
+        document.body.classList.add('gsap-ready');
+        gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+    } else {
+        // GSAP didn't load - all elements stay visible via CSS defaults
+        console.warn('GSAP not loaded - animations disabled, content visible.');
+    }
+
+    // Fallback: force-show any element that is still invisible after 3s
+    setTimeout(function() {
+        document.querySelectorAll('.hero-badge, .hero h1, .hero-sub, .hero-cta-group, .hero-athena-hint, .hero-scroll, .gs-reveal, .platform-card, .service-card, .athena-card, .gs-reveal-left, .gs-reveal-right').forEach(function(el) {
+            if (parseFloat(getComputedStyle(el).opacity) < 0.1) {
+                el.style.opacity = '1';
+                el.style.transform = 'none';
+            }
+        });
+    }, 3000);
+
+    // ============================================
+    // HERO 3D PERSPECTIVE SPIKE FIELD
+    // ============================================
+    (function() {
+        const canvas = document.getElementById('hero-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+
+        let W, H, WORLD_W;
+        const FOCAL       = 500;
+        const WORLD_DEPTH = 1800;
+        const Z_NEAR      = 200;
+        const SPEED       = 52;
+        const COL_SPACING = 40;
+        const LANE_REPEAT = 260;
+
+        let bars = [];
+        let camZ = 0;
+
+        function buildBars() {
+            bars = [];
+            const halfW       = WORLD_W / 2;
+            const laneCount   = Math.floor(WORLD_W / COL_SPACING) + 1;
+            const repsPerLane = Math.ceil(WORLD_DEPTH / LANE_REPEAT) + 2;
+            for (let li = 0; li < laneCount; li++) {
+                const wx     = -halfW + li * COL_SPACING;
+                const xRatio = (wx + halfW) / WORLD_W;
+                for (let ri = 0; ri < repsPerLane; ri++) {
+                    // 60% teal, 25% blue, 15% violet
+                    const r = Math.random();
+                    const colorType = r < 0.60 ? 0 : r < 0.85 ? 1 : 2;
+                    bars.push({
+                        wx,
+                        wz:       Z_NEAR + ri * LANE_REPEAT + Math.random() * LANE_REPEAT * 0.55,
+                        maxH:     48 + Math.random() * 195,
+                        wid:      4  + Math.random() * 7,
+                        phase:    (li * 1.618 + ri * 0.927) % (Math.PI * 2),
+                        freq:     0.05 + Math.random() * 0.11,
+                        xRatio,
+                        colorType // 0=teal, 1=blue, 2=violet
+                    });
+                }
+            }
+        }
+
+        function resize() {
+            W = canvas.width  = window.innerWidth;
+            H = canvas.height = canvas.parentElement.offsetHeight;
+            WORLD_W = W * 1.35; // always wider than viewport for full edge coverage
+        }
+
+        function draw(time, delta) {
+            camZ += SPEED * delta;
+            ctx.clearRect(0, 0, W, H);
+
+            bars.forEach(b => {
+                if (b.wz - camZ < Z_NEAR - 30) {
+                    b.wz   += WORLD_DEPTH;
+                    b.maxH  = 48 + Math.random() * 195;
+                    b.phase = Math.random() * Math.PI * 2;
+                }
+            });
+
+            const sorted = bars
+                .map(b => ({ ...b, rz: b.wz - camZ }))
+                .filter(b => b.rz > 10)
+                .sort((a, b) => b.rz - a.rz);
+
+            sorted.forEach(b => {
+                const scale = Math.min(1.9, FOCAL / b.rz);
+                const sx    = b.wx * scale + W * 0.5;
+                const sw    = Math.min(20, Math.max(0.5, b.wid * scale));
+                if (sx < -sw * 2 || sx > W + sw * 2) return;
+
+                const hFactor = 0.12 + 0.88 * (0.5 + 0.5 * Math.sin(time * b.freq + b.phase));
+                const sh      = Math.min(H * 0.50, Math.max(2, b.maxH * hFactor * scale));
+                const topY    = H - sh;
+
+                // Steeper depth curve - far bars much dimmer, perspective more obvious
+                const depth = Math.pow(Math.max(0, 1 - b.rz / WORLD_DEPTH), 0.38);
+                const alpha = 0.02 + depth * 0.54;
+
+                // Color by type - teal dominant, blue/indigo as subtle accents
+                let rC, gC, bC, alphaScale;
+                if (b.colorType === 1) {
+                    // Electric blue - slightly dimmer than teal
+                    rC = 0; gC = Math.round(100 + depth * 35); bC = Math.round(215 + depth * 12);
+                    alphaScale = 0.75;
+                } else if (b.colorType === 2) {
+                    // Deep indigo - present but subdued, not competing
+                    rC = Math.round(55 + depth * 20); gC = 0; bC = Math.round(135 + depth * 25);
+                    alphaScale = 0.45;
+                } else {
+                    const edge = Math.abs(b.xRatio - 0.5) * 2;
+                    rC = 0; gC = Math.round(188 + depth * 22 - edge * 20); bC = Math.round(196 + edge * 38);
+                    alphaScale = 1.0;
+                }
+                const a = alpha * alphaScale;
+
+                const grad = ctx.createLinearGradient(sx, topY, sx, H);
+                grad.addColorStop(0,    `rgba(${rC},${gC},${bC},0)`);
+                grad.addColorStop(0.08, `rgba(${rC},${gC},${bC},${a.toFixed(3)})`);
+                grad.addColorStop(0.78, `rgba(${rC},${gC},${bC},${(a * 0.16).toFixed(3)})`);
+                grad.addColorStop(1,    `rgba(${rC},${gC},${bC},0.01)`);
+                ctx.fillStyle = grad;
+                ctx.fillRect(sx - sw * 0.5, topY, sw, H - topY);
+
+                // Soft glow tip - teal only, reduced intensity
+                if (b.colorType === 0 && depth > 0.62 && sh > 25) {
+                    const gr = ctx.createRadialGradient(sx, topY, 0, sx, topY, sw * 2.5);
+                    gr.addColorStop(0, `rgba(${rC},${gC},${bC},${(a * 0.20).toFixed(3)})`);
+                    gr.addColorStop(1, `rgba(${rC},${gC},${bC},0)`);
+                    ctx.fillStyle = gr;
+                    ctx.fillRect(sx - sw * 2.5, topY - sw * 2.5, sw * 5, sw * 5);
+                }
+            });
+
+            // Top fade
+            const topFade = ctx.createLinearGradient(0, 0, 0, H * 0.60);
+            topFade.addColorStop(0,    'rgba(8,8,12,0.95)');
+            topFade.addColorStop(0.28, 'rgba(8,8,12,0.52)');
+            topFade.addColorStop(1,    'rgba(8,8,12,0)');
+            ctx.fillStyle = topFade;
+            ctx.fillRect(0, 0, W, H * 0.60);
+
+            // Central vignette
+            const vig = ctx.createRadialGradient(W * 0.5, H * 0.37, H * 0.04, W * 0.5, H * 0.37, H * 0.80);
+            vig.addColorStop(0,    'rgba(8,8,12,0.68)');
+            vig.addColorStop(0.38, 'rgba(8,8,12,0.14)');
+            vig.addColorStop(1,    'rgba(8,8,12,0)');
+            ctx.fillStyle = vig;
+            ctx.fillRect(0, 0, W, H);
+        }
+
+        resize();
+        buildBars();
+        window.addEventListener('resize', () => { resize(); buildBars(); });
+        gsap.ticker.add((time, delta) => draw(time, delta / 1000));
+    })();
+
+    // ============================================
+    // GSAP HERO ENTRANCE ANIMATION
+    // ============================================
+    if (typeof gsap === 'undefined') { /* skip all GSAP blocks */ } else {
+
+    (function() {
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+        tl.fromTo('.hero-badge', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, delay: 0.2 })
+          .fromTo('.hero h1', { y: 40, opacity: 0, filter: 'blur(8px)' }, { y: 0, opacity: 1, filter: 'blur(0px)', duration: 1 }, '-=0.4')
+          .fromTo('.hero-sub', { y: 25, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8 }, '-=0.5')
+          .fromTo('.hero-cta-group', { y: 25, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8 }, '-=0.4')
+          .fromTo('.hero-scroll', { opacity: 0 }, { opacity: 1, duration: 1 }, '-=0.2')
+          .fromTo('.hero-athena-hint', { y: 12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7 }, '-=0.6');
+    })();
+
+    // ============================================
+    // GSAP SCROLL REVEAL ANIMATIONS
+    // ============================================
+    (function() {
+        // Fade up reveals
+        gsap.utils.toArray('.gs-reveal').forEach(el => {
+            gsap.from(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: 'top 92%',
+                    toggleActions: 'play none none none'
+                },
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                ease: 'power3.out',
+                immediateRender: false
+            });
+        });
+
+        // Left reveals
+        gsap.utils.toArray('.gs-reveal-left').forEach(el => {
+            gsap.from(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: 'top 85%',
+                    toggleActions: 'play none none none'
+                },
+                x: -60,
+                opacity: 0,
+                duration: 1,
+                ease: 'power3.out'
+            });
+        });
+
+        // Right reveals
+        gsap.utils.toArray('.gs-reveal-right').forEach(el => {
+            gsap.from(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: 'top 85%',
+                    toggleActions: 'play none none none'
+                },
+                x: 60,
+                opacity: 0,
+                duration: 1,
+                ease: 'power3.out'
+            });
+        });
+
+
+        // Credential list reveal handled by CSS animation + IntersectionObserver (below)
+
+        // Divider animations - draw in on scroll
+        gsap.utils.toArray('.divider').forEach(div => {
+            gsap.from(div, {
+                scrollTrigger: {
+                    trigger: div,
+                    start: 'top 90%',
+                    toggleActions: 'play none none none'
+                },
+                scaleX: 0,
+                transformOrigin: 'left center',
+                duration: 1.2,
+                ease: 'power3.inOut'
+            });
+        });
+    })();
+
+    // ============================================
+    // ORBITAL ECOSYSTEM - DYNAMIC CANVAS + ANIMATION
+    // ============================================
+    (function() {
+        const container = document.getElementById('orbitContainer');
+        const oCanvas = document.getElementById('orbit-canvas');
+        if (!container || !oCanvas) return;
+
+        const oCtx = oCanvas.getContext('2d');
+        const nodes = container.querySelectorAll('.orbit-node');
+        let nodePositions = []; // {x, y, angle, baseAngle} for each node
+        let pulses = []; // active data pulses
+        let orbitAngleOffset = 0; // slow global rotation
+        let hoveredNode = -1;
+
+        function orbitRadius() {
+            const w = container.offsetWidth;
+            if (w < 480) return w * 0.42;
+            if (w < 768) return Math.min(w * 0.39, 240);
+            return Math.min(w * 0.40, 320);
+        }
+
+        function resizeOrbitCanvas() {
+            oCanvas.width = container.offsetWidth;
+            oCanvas.height = container.offsetHeight;
+        }
+
+        function positionNodes() {
+            const r = orbitRadius();
+            const cx = container.offsetWidth / 2;
+            const cy = container.offsetHeight / 2;
+            nodePositions = [];
+
+            nodes.forEach((node, i) => {
+                const baseAngle = parseFloat(node.dataset.angle);
+                const angle = (baseAngle + orbitAngleOffset) % 360;
+                const rad = angle * (Math.PI / 180);
+                const x = cx + r * Math.cos(rad);
+                const y = cy + r * Math.sin(rad);
+
+                nodePositions.push({ x, y, angle, baseAngle, rad });
+
+                const isRight = angle < 90 || angle > 270;
+                node.style.position = 'absolute';
+                node.style.left = x + 'px';
+                node.style.top  = y + 'px';
+                node.style.transform = 'translate(-28px, -28px)';
+                node.style.flexDirection = isRight ? 'row' : 'row-reverse';
+
+                const info = node.querySelector('.orbit-node-info');
+                if (info) info.style.textAlign = isRight ? 'left' : 'right';
+            });
+        }
+
+        // Draw dynamic connection lines + pulses on canvas
+        function drawConnections() {
+            oCtx.clearRect(0, 0, oCanvas.width, oCanvas.height);
+            const cx = oCanvas.width / 2;
+            const cy = oCanvas.height / 2;
+
+            // Draw lines from center to each node
+            nodePositions.forEach((pos, i) => {
+                const isHovered = hoveredNode === i;
+                const alpha = isHovered ? 0.35 : 0.1;
+
+                // Gradient line
+                const grad = oCtx.createLinearGradient(cx, cy, pos.x, pos.y);
+                grad.addColorStop(0, `rgba(0, 220, 205, ${alpha})`);
+                grad.addColorStop(1, `rgba(0, 220, 205, ${alpha * 0.3})`);
+
+                oCtx.beginPath();
+                oCtx.strokeStyle = grad;
+                oCtx.lineWidth = isHovered ? 1.5 : 0.8;
+                oCtx.moveTo(cx, cy);
+                oCtx.lineTo(pos.x, pos.y);
+                oCtx.stroke();
+
+                // Small dot at connection point on node side
+                oCtx.beginPath();
+                oCtx.arc(pos.x, pos.y, isHovered ? 3 : 2, 0, Math.PI * 2);
+                oCtx.fillStyle = `rgba(0, 220, 205, ${isHovered ? 0.6 : 0.25})`;
+                oCtx.fill();
+            });
+
+            // Draw inter-node connections (adjacent nodes)
+            for (let i = 0; i < nodePositions.length; i++) {
+                const j = (i + 1) % nodePositions.length;
+                const a = nodePositions[i], b = nodePositions[j];
+                oCtx.beginPath();
+                oCtx.strokeStyle = 'rgba(0, 220, 205, 0.04)';
+                oCtx.lineWidth = 0.5;
+                oCtx.moveTo(a.x, a.y);
+                oCtx.lineTo(b.x, b.y);
+                oCtx.stroke();
+            }
+
+            // Draw active pulses
+            pulses.forEach(p => {
+                const t = p.progress;
+                const px = cx + (p.targetX - cx) * t;
+                const py = cy + (p.targetY - cy) * t;
+                const size = 3 + Math.sin(t * Math.PI) * 2;
+                const alpha = Math.sin(t * Math.PI) * 0.8;
+
+                oCtx.beginPath();
+                oCtx.arc(px, py, size, 0, Math.PI * 2);
+                oCtx.fillStyle = `rgba(0, 220, 205, ${alpha})`;
+                oCtx.fill();
+
+                // Glow
+                oCtx.beginPath();
+                oCtx.arc(px, py, size * 3, 0, Math.PI * 2);
+                oCtx.fillStyle = `rgba(0, 220, 205, ${alpha * 0.15})`;
+                oCtx.fill();
+            });
+        }
+
+        // Animate pulses
+        function updatePulses() {
+            pulses = pulses.filter(p => {
+                p.progress += p.speed;
+                return p.progress < 1;
+            });
+        }
+
+        function firePulse() {
+            if (nodePositions.length === 0) return;
+            const idx = Math.floor(Math.random() * nodePositions.length);
+            const pos = nodePositions[idx];
+            pulses.push({
+                targetX: pos.x,
+                targetY: pos.y,
+                progress: 0,
+                speed: 0.008 + Math.random() * 0.006
+            });
+
+            // Occasionally fire a return pulse (node to center)
+            if (Math.random() > 0.6) {
+                setTimeout(() => {
+                    const cx = oCanvas.width / 2, cy = oCanvas.height / 2;
+                    pulses.push({
+                        targetX: cx + (cx - pos.x), // reverse - we draw from center, so fake it
+                        targetY: cy + (cy - pos.y),
+                        progress: 0,
+                        speed: 0.01
+                    });
+                }, 600);
+            }
+        }
+
+        // Main orbit animation loop
+        let lastPulseTime = 0;
+        function orbitLoop(timestamp) {
+            // Slow rotation (0.5 deg per second)
+            orbitAngleOffset += 0.008;
+            positionNodes();
+            updatePulses();
+            drawConnections();
+
+            // Fire pulse every 1.5-3s
+            if (timestamp - lastPulseTime > 1500 + Math.random() * 1500) {
+                firePulse();
+                lastPulseTime = timestamp;
+            }
+
+            requestAnimationFrame(orbitLoop);
+        }
+
+        // Hover interactions
+        nodes.forEach((node, i) => {
+            node.addEventListener('mouseenter', () => { hoveredNode = i; });
+            node.addEventListener('mouseleave', () => { hoveredNode = -1; });
+        });
+
+        // Init
+        resizeOrbitCanvas();
+        positionNodes();
+        window.addEventListener('resize', () => { resizeOrbitCanvas(); positionNodes(); });
+
+        // GSAP scroll-triggered entrance
+        const orbitTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: '.ecosystem',
+                start: 'top 70%',
+                toggleActions: 'play none none none',
+                onEnter: () => { orbitAngleOffset = 0; positionNodes(); }
+            }
+        });
+
+        orbitTl.from('.orbit-ring', {
+            scale: 0, opacity: 0, duration: 1, stagger: 0.15,
+            ease: 'power3.out', transformOrigin: 'center center'
+        });
+
+        orbitTl.from('.orbit-center', {
+            scale: 0, opacity: 0, duration: 0.8,
+            ease: 'elastic.out(1, 0.5)'
+        }, '-=0.6');
+
+        orbitTl.from('.orbit-node', {
+            scale: 0, opacity: 0, duration: 0.7, stagger: 0.08,
+            ease: 'back.out(1.4)',
+            onComplete: () => { requestAnimationFrame(orbitLoop); }
+        }, '-=0.3');
+
+        // Orbit ring rotation
+        gsap.to('.orbit-ring-2', {
+            rotation: 360, duration: 120, repeat: -1, ease: 'none',
+            transformOrigin: 'center center'
+        });
+        gsap.to('.orbit-ring-3', {
+            rotation: -360, duration: 180, repeat: -1, ease: 'none',
+            transformOrigin: 'center center'
+        });
+
+        // Node dot pulse (opacity only - avoids transform conflict with positionNodes)
+        nodes.forEach((node, i) => {
+            const dot = node.querySelector('.orbit-node-dot');
+            if (dot) gsap.to(dot, {
+                boxShadow: '0 0 18px rgba(0,220,205,0.22), 0 4px 24px rgba(0,0,0,0.3)',
+                duration: 2.2 + i * 0.15, repeat: -1, yoyo: true,
+                ease: 'sine.inOut', delay: i * 0.2
+            });
+        });
+    })();
+
+    // ============================================
+    // NAV SCROLL EFFECT
+    // ============================================
+    (function() {
+        const nav = document.querySelector('nav');
+        ScrollTrigger.create({
+            start: 60,
+            onUpdate: (self) => {
+                nav.classList.toggle('scrolled', self.scroll() > 60);
+            }
+        });
+    })();
+
+    // ============================================
+    // MOBILE NAV HAMBURGER
+    // ============================================
+    (function() {
+        const btn = document.getElementById('nav-hamburger');
+        const links = document.getElementById('nav-links');
+        if (!btn || !links) return;
+
+        btn.addEventListener('click', () => {
+            const open = links.classList.toggle('open');
+            btn.classList.toggle('open', open);
+            document.body.style.overflow = open ? 'hidden' : '';
+        });
+
+        links.querySelectorAll('a').forEach(a => {
+            a.addEventListener('click', () => {
+                links.classList.remove('open');
+                btn.classList.remove('open');
+                document.body.style.overflow = '';
+            });
+        });
+    })();
+
+    // ============================================
+    // CARD MOUSE GLOW TRACKING
+    // ============================================
+    (function() {
+        document.querySelectorAll('.platform-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                card.style.setProperty('--mouse-x', ((e.clientX - rect.left) / rect.width) * 100 + '%');
+                card.style.setProperty('--mouse-y', ((e.clientY - rect.top) / rect.height) * 100 + '%');
+            });
+        });
+    })();
+
+    // ============================================
+    // MAGNETIC BUTTON EFFECT
+    // ============================================
+    (function() {
+        document.querySelectorAll('.magnetic-target').forEach(btn => {
+            btn.addEventListener('mousemove', e => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                gsap.to(btn, { x: x * 0.2, y: y * 0.2, duration: 0.3, ease: 'power2.out' });
+            });
+            btn.addEventListener('mouseleave', () => {
+                gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.3)' });
+            });
+        });
+    })();
+
+    // ============================================
+    // SMOOTH SCROLL FOR ANCHOR LINKS
+    // ============================================
+    // Native fragment navigation keeps deep links and keyboard behaviour intact.
+    // CSS scroll-behavior supplies smooth scrolling without a plugin dependency.
+
+    // ============================================
+    // PARALLAX FLOATING ORBS
+    // ============================================
+    (function() {
+        gsap.utils.toArray('.orb').forEach((orb, i) => {
+            gsap.to(orb, {
+                scrollTrigger: {
+                    scrub: 1
+                },
+                y: (i + 1) * -120,
+                ease: 'none'
+            });
+        });
+    })();
+
+    // Refresh all ScrollTriggers after full page layout is settled
+    window.addEventListener('load', function() {
+        ScrollTrigger.refresh();
+    });
+
+    } // end GSAP guard
+
+    </script>
+
+    <script>
+    (function() {
+        [
+            ['brandsprk-launch-video', 'brandsprk-video-play'],
+            ['placepulse-demo-video', 'placepulse-video-play'],
+            ['ai-fluency-promo-video', 'ai-fluency-video-play']
+        ].forEach(function(ids) {
+            const video = document.getElementById(ids[0]);
+            const playButton = document.getElementById(ids[1]);
+            if (!video || !playButton) return;
+
+            playButton.addEventListener('click', function() {
+                if (video.ended) video.currentTime = 0;
+                playButton.hidden = true;
+                const playing = video.play();
+                if (playing && typeof playing.catch === 'function') {
+                    playing.catch(function() { playButton.hidden = false; });
+                }
+            });
+            video.addEventListener('play', function() { playButton.hidden = true; });
+            video.addEventListener('ended', function() { playButton.hidden = false; });
+        });
+    })();
+    </script>
+
+    <!-- ATHENA - ElevenLabs JS SDK (true single-click) -->
+    <script type="module">
+    import { Conversation } from 'https://esm.sh/@11labs/client';
+
+    const AGENT_ID = 'agent_8901kpzxg3kneyzbzht3zwy506d9';
+    let conversation = null;
+    let isActive = false;
+
+    const av       = document.querySelector('.athena-avatar');
+    const startBtn = document.getElementById('athena-start-btn');
+    const endBtn   = document.getElementById('athena-end-btn');
+
+    function setCallActive(active) {
+        isActive = active;
+        if (av) av.classList.toggle('athena-call-active', active);
+        if (startBtn) startBtn.style.display = active ? 'none' : '';
+        if (endBtn)   endBtn.classList.toggle('visible', active);
+    }
+
+    function onCallEnded() {
+        setCallActive(false);
+        const cta = document.getElementById('athena-calendly-cta');
+        if (cta) cta.classList.add('visible');
+    }
+
+    async function startAthena() {
+        if (isActive) return;
+        setCallActive(true);
+        try {
+            conversation = await Conversation.startSession({
+                agentId: AGENT_ID,
+                onConnect: () => { isActive = true; },
+                onDisconnect: onCallEnded,
+                onError: (err) => {
+                    console.error('Athena error:', err);
+                    setCallActive(false);
+                }
+            });
+        } catch(e) {
+            console.error('Failed to start Athena session:', e);
+            setCallActive(false);
+        }
+    }
+
+    async function stopAthena() {
+        if (conversation) {
+            try { await conversation.endSession(); } catch(e) {}
+            conversation = null;
+        }
+        onCallEnded();
+    }
+
+    ['athena-avatar-btn', 'athena-start-btn', 'hero-athena-trigger'].forEach(function(id) {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('click', function(e) {
+            e.preventDefault();
+            startAthena();
+        });
+    });
+
+    if (endBtn) endBtn.addEventListener('click', stopAthena);
+
+    // Credential list: add in-view class when list enters viewport (CSS animation takes over)
+    (function() {
+        var list = document.querySelector('.credential-list');
+        if (!list) return;
+        var obs = new IntersectionObserver(function(entries) {
+            if (entries[0].isIntersecting) {
+                list.classList.add('in-view');
+                obs.disconnect();
+            }
+        }, { threshold: 0.2 });
+        obs.observe(list);
+    })();
+    </script>
+</body>
+</html>

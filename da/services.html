@@ -1,0 +1,1234 @@
+<!-- Danish market edition: practical business outcomes and implementation process. -->
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Praktisk AI-automatisering for virksomheder | ArqOne Labs</title>
+    <meta name="description" content="Få hjælp til e-mails, kundedialog, dokumenter og administration. Vi afklarer opgaven, foreslår en løsning og bygger, tester og forbedrer den med jer.">
+    <link rel="canonical" href="https://arqonelabs.com/da/services.html">
+    <link rel="alternate" hreflang="da" href="https://arqonelabs.com/da/services.html">
+    <link rel="alternate" hreflang="en" href="https://arqonelabs.com/services">
+    <link rel="alternate" hreflang="x-default" href="https://arqonelabs.com/services">
+    <link rel="stylesheet" href="/locale.css">
+    <link rel="stylesheet" href="/da/danish-market.css">
+    <meta property="og:title" content="Praktisk AI-automatisering for virksomheder | ArqOne Labs">
+    <meta property="og:description" content="Færre manuelle opgaver. Mere tid til kunderne. Vi hjælper med at bygge og forbedre AI-automatisering i praksis.">
+    <meta property="og:url" content="https://arqonelabs.com/da/services.html">
+    <meta property="og:locale" content="da_DK">
+    <meta property="og:type" content="website">
+    <link rel="icon" type="image/gif" href="/favicon.gif">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #08080C;
+            --bg-elevated: #0E0E14;
+            --bg-card: #12121A;
+            --teal: #00DCD0;
+            --teal-dim: #00A89E;
+            --white: #F0F0F4;
+            --gray-100: #C8C8D0;
+            --gray-200: #9898A4;
+            --gray-300: #68687A;
+            --gray-400: #3A3A4A;
+            --border: rgba(255,255,255,0.06);
+            --font-sans: 'Inter', -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg);
+            color: var(--gray-100);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Grid background */
+        .grid-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 100;
+            transition: all 0.4s;
+        }
+        nav.scrolled {
+            background: rgba(8,8,12,0.92);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 40px;
+        }
+        .nav-logo img { height: 38px; width: auto; display: block; }
+        .nav-links { display: flex; align-items: center; gap: 32px; }
+        .nav-links a {
+            font-size: 0.875rem;
+            color: var(--gray-200);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--white); }
+        .nav-links a.nav-athena { color: var(--teal); font-weight: 500; }
+        .nav-cta-book {
+            padding: 8px 18px;
+            border: 1.5px solid var(--teal);
+            border-radius: 8px;
+            color: var(--teal) !important;
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+        .nav-cta-book:hover { background: rgba(0,220,205,0.08); }
+        .nav-cta {
+            padding: 8px 18px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
+            color: var(--white) !important;
+            font-weight: 500;
+            font-size: 0.875rem;
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+        .nav-cta:hover { border-color: rgba(255,255,255,0.3); }
+
+        /* PAGE WRAPPER */
+        .page { position: relative; z-index: 1; }
+
+        /* HERO */
+        .services-hero {
+            min-height: 72vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 140px 40px 100px;
+            position: relative;
+            overflow: hidden;
+        }
+        .services-hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0,220,205,0.10) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 30% at 20% 80%, rgba(59,158,255,0.06) 0%, transparent 50%),
+                radial-gradient(ellipse 40% 30% at 80% 70%, rgba(167,139,250,0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .hero-label {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: 20px;
+        }
+        .services-hero h1 {
+            font-size: clamp(2.4rem, 5vw, 4rem);
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            max-width: 760px;
+            margin-bottom: 24px;
+        }
+        .services-hero h1 .accent { color: var(--teal); }
+        .services-hero p {
+            font-size: 1.05rem;
+            color: var(--gray-200);
+            max-width: 540px;
+            line-height: 1.75;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+        .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+        .btn-primary {
+            padding: 14px 28px;
+            background: var(--teal);
+            color: #08080C;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+        .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+        .btn-secondary {
+            padding: 14px 28px;
+            background: transparent;
+            color: var(--white);
+            font-weight: 500;
+            font-size: 0.9rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.15);
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+        .btn-secondary:hover { border-color: rgba(255,255,255,0.35); transform: translateY(-1px); }
+
+        /* SERVICE NAV ANCHORS */
+        .service-nav {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 0 40px 60px;
+            flex-wrap: wrap;
+        }
+        .service-nav a {
+            padding: 8px 20px;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.82rem;
+            color: var(--gray-200);
+            text-decoration: none;
+            transition: all 0.25s;
+            font-weight: 500;
+        }
+        .service-nav a:hover {
+            border-color: rgba(0,220,205,0.3);
+            color: var(--teal);
+            background: rgba(0,220,205,0.04);
+        }
+
+        /* DIVIDER */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* SERVICE SECTION */
+        .service-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 40px;
+        }
+        .service-section + .service-section { border-top: 1px solid var(--border); }
+
+        .service-section-inner {
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        /* Left column */
+        .service-aside { position: sticky; top: 100px; }
+        .service-num {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            color: var(--teal);
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        .service-aside h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -0.025em;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        .service-aside p {
+            font-size: 0.9rem;
+            color: var(--gray-200);
+            line-height: 1.75;
+            font-weight: 300;
+            margin-bottom: 28px;
+        }
+        .service-aside-cta {
+            display: inline-block;
+            padding: 12px 24px;
+            background: var(--teal);
+            color: #08080C;
+            font-weight: 700;
+            font-size: 0.85rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .service-aside-cta:hover { opacity: 0.85; }
+        .service-aside-cta-outline {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 11px 24px;
+            border: 1px solid rgba(0,220,205,0.3);
+            color: var(--teal);
+            font-weight: 600;
+            font-size: 0.85rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .service-aside-cta-outline:hover { background: rgba(0,220,205,0.06); }
+
+        /* Right column */
+        .service-body {}
+
+        .service-block { margin-bottom: 52px; }
+        .service-block:last-child { margin-bottom: 0; }
+
+        .service-block-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gray-300);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .service-block-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* Deliverables grid */
+        .deliverables-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        .deliverable-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 18px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: border-color 0.25s;
+        }
+        .deliverable-item:hover { border-color: rgba(0,220,205,0.15); }
+        .deliverable-icon {
+            width: 32px; height: 32px;
+            border-radius: 8px;
+            background: rgba(0,220,205,0.08);
+            border: 1px solid rgba(0,220,205,0.15);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .deliverable-icon svg {
+            width: 15px; height: 15px;
+            stroke: var(--teal);
+            fill: none;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .deliverable-text strong {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 3px;
+        }
+        .deliverable-text span {
+            font-size: 0.78rem;
+            color: var(--gray-200);
+            line-height: 1.5;
+        }
+
+        /* Process steps */
+        .process-list { display: flex; flex-direction: column; gap: 0; }
+        .process-item {
+            display: flex;
+            gap: 20px;
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+        }
+        .process-item:last-child { border-bottom: none; }
+        .process-item-num {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid rgba(0,220,205,0.2);
+            display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--teal);
+            flex-shrink: 0;
+        }
+        .process-item-content strong {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 4px;
+        }
+        .process-item-content p {
+            font-size: 0.85rem;
+            color: var(--gray-200);
+            line-height: 1.65;
+        }
+
+        /* Use case cards */
+        .use-cases-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        .use-case-card {
+            padding: 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .use-case-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 3px; height: 100%;
+            background: var(--teal);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .use-case-card:hover { border-color: rgba(0,220,205,0.12); transform: translateY(-2px); }
+        .use-case-card:hover::before { opacity: 1; }
+        .use-case-card h4 {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+        .use-case-card p {
+            font-size: 0.82rem;
+            color: var(--gray-200);
+            line-height: 1.6;
+        }
+        .use-case-card .use-case-tag {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 3px 10px;
+            background: rgba(0,220,205,0.06);
+            border: 1px solid rgba(0,220,205,0.15);
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--teal);
+            letter-spacing: 0.08em;
+        }
+
+        /* Who it's for */
+        .audience-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .audience-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.88rem;
+            color: var(--gray-100);
+        }
+        .audience-item::before {
+            content: '';
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--teal);
+            flex-shrink: 0;
+        }
+
+        /* Programme format cards */
+        .formats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .formats-grid.two { grid-template-columns: repeat(2, 1fr); }
+        .format-card {
+            padding: 32px 28px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            transition: all 0.35s;
+            position: relative;
+        }
+        .format-card.featured {
+            border-color: rgba(0,220,205,0.25);
+            background: linear-gradient(135deg, rgba(0,220,205,0.05) 0%, var(--bg-card) 60%);
+        }
+        .format-card.featured::after {
+            content: 'Most Popular';
+            position: absolute;
+            top: -1px; right: 20px;
+            padding: 4px 12px;
+            background: var(--teal);
+            color: #08080C;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            border-radius: 0 0 6px 6px;
+            text-transform: uppercase;
+        }
+        .format-card:hover { border-color: rgba(0,220,205,0.2); transform: translateY(-3px); }
+        .format-card h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 6px;
+        }
+        .format-duration {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--teal);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        .format-card p {
+            font-size: 0.85rem;
+            color: var(--gray-200);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        .format-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .format-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 0.8rem;
+            color: var(--gray-200);
+            line-height: 1.5;
+        }
+        .format-list li::before {
+            content: '→';
+            color: var(--teal);
+            flex-shrink: 0;
+            font-size: 0.75rem;
+            margin-top: 2px;
+        }
+
+        /* CTA SECTION */
+        .cta-section {
+            text-align: center;
+            padding: 120px 40px;
+            position: relative;
+            border-top: 1px solid var(--border);
+        }
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 50%; transform: translateX(-50%);
+            width: 600px; height: 300px;
+            background: radial-gradient(ellipse at center top, rgba(0,220,205,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: 16px;
+        }
+        .cta-section h2 {
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -0.025em;
+            margin-bottom: 16px;
+        }
+        .cta-section p {
+            font-size: 1rem;
+            color: var(--gray-200);
+            max-width: 500px;
+            margin: 0 auto 36px;
+            line-height: 1.7;
+        }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer-left {
+            font-size: 0.8rem;
+            color: var(--gray-300);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .footer-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .footer-right a {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--gray-400);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            transition: color 0.2s;
+        }
+        .footer-right a:hover { color: var(--teal); }
+        .footer-copy {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--gray-400);
+            letter-spacing: 0.05em;
+        }
+
+        /* REVEAL ANIMATION */
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .reveal.visible { opacity: 1; transform: none; }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .service-section-inner { grid-template-columns: 1fr; gap: 48px; }
+            .service-aside { position: static; }
+            .formats-grid, .formats-grid.two { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            nav { padding: 16px 20px; }
+            .nav-links { display: none; }
+            .services-hero { padding: 120px 20px 80px; }
+            .service-section { padding: 60px 20px; }
+            .deliverables-grid { grid-template-columns: 1fr; }
+            .use-cases-grid { grid-template-columns: 1fr; }
+            footer { flex-direction: column; gap: 16px; text-align: center; padding: 32px 20px; }
+        }
+    </style>
+    <style>
+      .language-choice{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;padding:5px 9px;border:1px solid rgba(255,255,255,.2);border-radius:7px;font-size:12px;letter-spacing:.07em;color:#d8dce8}
+      .language-choice a{color:#aaaebc;text-decoration:none}
+      .language-choice a[aria-current="page"]{color:#80e0d7;font-weight:700}
+      .language-choice a:hover{color:#fff}
+      .language-choice span{opacity:.45}
+      @media(max-width:900px){.mobile-language-choice{position:fixed;top:16px;right:76px;z-index:1100;background:#10131c}.nav-links .language-choice{position:static}}
+    </style>
+<style>.mobile-language-choice{display:none}@media(max-width:900px){.mobile-language-choice{display:inline-flex}}</style></head>
+<body>
+    <div class="grid-bg"></div>
+
+    <nav id="main-nav">
+        <div class="nav-logo">
+            <a href="/da/"><img src="/ArqOne%20Labs%20Logo.gif" alt="ArqOne Labs"></a>
+        </div>
+        
+        <span class="mobile-language-choice"><span class="language-choice" aria-label="Sprog"><a href="https://arqonelabs.com/services" lang="en" hreflang="en">EN</a><span aria-hidden="true">/</span><a href="https://arqonelabs.com/da/services.html" lang="da" hreflang="da" aria-current="page">DA</a></span></span><div class="nav-links">
+            <a href="/da/#ecosystem">Økosystem</a>
+            <a href="/da/#portfolio">Portefølje</a>
+            <a href="/da/#about">Om os</a>
+            <a href="/da/services.html" class="active">Ydelser</a>
+            <a href="/da/blog/">Artikler</a>
+            <a href="/da/#athena" class="nav-athena">Athena</a>
+            
+            <span class="language-choice" aria-label="Sprog"><a href="https://arqonelabs.com/services" lang="en" hreflang="en">EN</a><span aria-hidden="true">/</span><a href="https://arqonelabs.com/da/services.html" lang="da" hreflang="da" aria-current="page">DA</a></span>
+            <a href="https://calendly.com/piero-ainavigator" target="_blank" class="nav-cta-book">Book et møde</a>
+            <a href="/da/contact.html" class="nav-cta">Kontakt os</a>
+        </div>
+    </nav>
+
+    <div class="page">
+
+        <!-- HERO -->
+        <section class="services-hero">
+            <div class="hero-label">AI-løsninger til konkrete opgaver</div>
+            <h1>Slip for unødigt manuelt arbejde.<br><span class="accent">Brug tiden på jeres kunder.</span></h1>
+            <p>Vi hjælper med at automatisere opgaver, som gentager sig i hverdagen. Det kan være kundemails, opfølgninger, dokumenter eller intern administration. Vi starter med jeres udfordring, ikke med et bestemt AI-værktøj.</p>
+            <div class="hero-ctas">
+                <a href="/da/contact.html?interest=Agentic%20Automation%20Services" class="btn-primary">Fortæl os, hvad I vil automatisere</a>
+                <a href="https://calendly.com/piero-ainavigator" target="_blank" rel="noopener noreferrer" class="btn-secondary">Book en uforpligtende samtale</a>
+            </div>
+        </section>
+
+        <!-- DANISH MARKET: OUTCOMES BEFORE FRAMEWORKS -->
+        <section class="dk-services-intro" id="examples" aria-labelledby="dk-examples-title">
+            <h2 id="dk-examples-title">Hvad kan vi hjælpe jer med?</h2>
+            <p>Automatisering skal løse et konkret problem og passe til det arbejde, I allerede udfører. Vi undersøger, hvor jeres virksomhed kan spare tid og undgå gentagne opgaver.</p>
+            <div class="dk-business-grid">
+                <article class="dk-business-card"><h3>Kundekommunikation</h3><p>Gør det lettere at besvare henvendelser og give kunderne hurtig, relevant information.</p></article>
+                <article class="dk-business-card"><h3>E-mails og opfølgning</h3><p>Automatisér tilbagevendende beskeder og opfølgninger, så færre opgaver bliver glemt.</p></article>
+                <article class="dk-business-card"><h3>Dokumentbehandling</h3><p>Hent og strukturér oplysninger fra dokumenter, når manuelle gennemgange tager for lang tid.</p></article>
+                <article class="dk-business-card"><h3>Administrative arbejdsgange</h3><p>Reducér gentagen indtastning og flytning af information mellem systemer.</p></article>
+                <article class="dk-business-card"><h3>AI-assistenter</h3><p>Giv medarbejderne hjælp til at finde viden og håndtere rutinespørgsmål.</p></article>
+            </div>
+            <p class="dk-business-note">Eksemplerne er mulige projekter, ikke færdige løsninger eller løfter om bestemte resultater. Vi undersøger de praktiske og tekniske forudsætninger sammen.</p>
+            <div class="dk-process" id="approach">
+                <h2>Sådan kommer vi i gang</h2>
+                <p>Ingen lang analyse er nødvendig for den første samtale. Vi begynder med den arbejdsgang, der tager tid.</p>
+                <div class="dk-process-grid">
+                    <div class="dk-process-step">
+                        <span class="dk-process-num">01</span><h3>Vi forstår jeres udfordring</h3>
+                        <p>En kort samtale om problemet, det nuværende arbejde og de systemer, I bruger.</p>
+                    </div>
+                    <div class="dk-process-step">
+                        <span class="dk-process-num">02</span><h3>Vi foreslår en konkret løsning</h3>
+                        <p>I får et forslag med afgrænset omfang, forventede fordele, fremgangsmåde og pris, før I beslutter jer.</p>
+                    </div>
+                    <div class="dk-process-step">
+                        <span class="dk-process-num">03</span><h3>Vi bygger, tester og forbedrer</h3>
+                        <p>Vi implementerer løsningen, afprøver den i praksis og justerer den sammen med jer.</p>
+                    </div>
+                </div>
+                <p class="dk-guardrails">Vi tager hensyn til datasikkerhed, fortrolighed og behovet for menneskelig kontrol under hele forløbet. Vi vurderer også, om løsningen kan fungere med jeres eksisterende systemer.</p>
+                <div class="dk-business-cta">
+                    <a href="/da/contact.html?interest=Agentic%20Automation%20Services" class="btn-primary">Fortæl os om jeres opgave</a>
+                    <a href="https://calendly.com/piero-ainavigator" target="_blank" rel="noopener noreferrer" class="btn-secondary">Book en uforpligtende samtale</a>
+                </div>
+                <p class="dk-athena-note">Foretrækker I en digital vurdering, er <a href="/da/#athena">Athena</a> fortsat en mulighed. Brug den på engelsk.</p>
+            </div>
+        </section>
+
+        <!-- ANCHOR NAV -->
+        <div class="service-nav">
+            <a href="#examples">Eksempler</a>
+            <a href="#approach">Sådan arbejder vi</a>
+            <a href="#automation">Flere muligheder</a>
+            <a href="#efficiency">AI-effektivitet</a>
+        </div>
+
+        <!-- ─────────────────────────────────────────── -->
+        <!-- SERVICE 0: AI EFFICIENCY FRAMEWORK          -->
+        <!-- ─────────────────────────────────────────── -->
+        <section class="service-section" id="efficiency">
+            <div class="service-section-inner">
+
+                <div class="service-aside reveal">
+                    <div class="service-num">00 / AI Efficiency Framework&trade;</div>
+                    <h2>Hvor bliver virksomhedens AI-budget af?</h2>
+                    <p>Stigende AI-udgifter afslører ofte mangler i arbejdsgange, ansvar og styring. AI Efficiency Framework&trade; er vores praktiske rådgivningsmodel til at reducere AI-spild, få overblik over værktøjer, vælge de rette modeller og knytte udgifterne til målbar forretningsværdi.</p>
+                    <a href="/da/ai-efficiency.html" class="service-aside-cta">Udforsk rammeværket</a><br>
+                    <a href="https://calendly.com/piero-ainavigator" target="_blank" class="service-aside-cta-outline">Book en gennemgang af AI-effektivitet</a>
+                </div>
+
+                <div class="service-body">
+
+                    <div class="service-block reveal">
+                        <div class="service-block-label">To måder at komme i gang på</div>
+                        <div class="formats-grid two">
+                            <div class="format-card">
+                                <h4>AI Efficiency Scan</h4>
+                                <div class="format-duration">Med Athena &middot; Dage, ikke uger</div>
+                                <p>Til små og mellemstore virksomheder, som hurtigt vil forstå, hvor AI-værktøjer, udgifter og arbejdsgange taber værdi, uden et stort konsulentforløb.</p>
+                                <ul class="format-list">
+                                    <li>Guidet spørgeskema og overblik over AI-værktøjer</li>
+                                    <li>Vurdering af arbejdsgange og AI-effektivitetsscore</li>
+                                    <li>Automatisk rapport med personlig gennemgang</li>
+                                    <li>Mulighed for opfølgende rådgivning</li>
+                                </ul>
+                            </div>
+                            <div class="format-card">
+                                <h4>AI Efficiency Diagnostic</h4>
+                                <div class="format-duration">Personlig rådgivning &middot; 2 uger</div>
+                                <p>Til ledelsesteams, der ønsker en dybere gennemgang af AI-værktøjer, arbejdsgange, governance, modelvalg og målbar forretningsværdi.</p>
+                                <ul class="format-list">
+                                    <li>Kortlægning af værditab på tværs af teams og værktøjer</li>
+                                    <li>Regler for modelvalg og brugspolitik</li>
+                                    <li>Gennemgang af governance og adgangsrettigheder</li>
+                                    <li>Hurtige forbedringer og en 90-dages plan</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-block reveal">
+                        <div class="service-block-label">Hvem løsningen er til</div>
+                        <div class="audience-list">
+                            <div class="audience-item">Ledelsesteams, hvor udgifter til AI-abonnementer og API’er vokser hurtigere end den synlige forretningsværdi</div>
+                            <div class="audience-item">Virksomheder i vækst med overlappende AI-værktøjer og uklare regler eller ansvarsområder</div>
+                            <div class="audience-item">Økonomi- og driftsdirektører, der vil koble AI-udgifter til målbare resultater frem for aktivitetsmål</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ─────────────────────────────────────────── -->
+        <!-- SERVICE 1: AI READINESS ASSESSMENT          -->
+        <!-- ─────────────────────────────────────────── -->
+        <section class="service-section" id="readiness">
+            <div class="service-section-inner">
+
+                <!-- Left: overview + CTA -->
+                <div class="service-aside reveal">
+                    <div class="service-num">01 / AI-parathed</div>
+                    <h2>Find ud af, hvor AI passer ind, før I investerer</h2>
+                    <p>En struktureret analyse af virksomhedens drift. Vi udpeger muligheder med stor effekt, estimerer afkast og udarbejder en prioriteret plan, så AI-investeringer træffes på et oplyst grundlag.</p>
+                    <a href="/da/#athena" class="service-aside-cta">Start gratis med Athena</a><br>
+                    <a href="https://calendly.com/piero-ainavigator" target="_blank" class="service-aside-cta-outline">Book et afklaringsmøde</a>
+                </div>
+
+                <!-- Right: detail -->
+                <div class="service-body">
+
+                    <div class="service-block reveal">
+                        <div class="service-block-label">Det får I</div>
+                        <div class="deliverables-grid">
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>Score for forretningseffektivitet</strong>
+                                    <span>Vurdering på tværs af seks driftsdimensioner med tydelige forbedringsområder</span>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>Mulighedsmatrix</strong>
+                                    <span>Hver mulighed vurderet efter indsats, omkostning og forventet afkast</span>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>Plan for hurtige forbedringer</strong>
+                                    <span>3–5 automatiseringer eller AI-værktøjer, som kan indføres inden for 30 dage</span>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>90-dages handlingsplan</strong>
+                                    <span>Trinvis implementeringsplan med ansvarlige, værktøjer og milepæle</span>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>Afkastmodel</strong>
+                                    <span>Økonomisk estimat for de tre vigtigste muligheder, herunder tid til effekt</span>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>Strategigennemgang</strong>
+                                    <span>30 minutters samtale med Piero om resultater og prioriteringer</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-block reveal">
+                        <div class="service-block-label">Sådan foregår det</div>
+                        <div class="process-list">
+                            <div class="process-item">
+                                <div class="process-item-num">01</div>
+                                <div class="process-item-content">
+                                    <strong>Athena-analyse (gratis, 15 min.)</strong>
+                                    <p>Begynd med Athena, vores AI-vurderingsagent. Hun gennemfører en struktureret analyse af drift, team, forretningsmodel og nuværende teknologi. Derefter får I en foreløbig rapport om AI-parathed.</p>
+                                </div>
+                            </div>
+                            <div class="process-item">
+                                <div class="process-item-num">02</div>
+                                <div class="process-item-content">
+                                    <strong>Uddybende afklaringsmøde</strong>
+                                    <p>En samtale på 30 minutter med Piero om de vigtigste områder. Vi gennemgår Athena-rapporten og identificerer de mest lovende forbedringer.</p>
+                                </div>
+                            </div>
+                            <div class="process-item">
+                                <div class="process-item-num">03</div>
+                                <div class="process-item-content">
+                                    <strong>Fuld rapport om AI-parathed</strong>
+                                    <p>Et samlet dokument med mulighedsmatrix, afkastmodeller, hurtige forbedringer og en 90-dages plan. Leveres inden for fem arbejdsdage efter afklaringsmødet.</p>
+                                </div>
+                            </div>
+                            <div class="process-item">
+                                <div class="process-item-num">04</div>
+                                <div class="process-item-content">
+                                    <strong>Strategigennemgang og næste skridt</strong>
+                                    <p>Vi gennemgår rapporten sammen, besvarer spørgsmål og aftaler, hvilke muligheder der skal prioriteres, samt om vi er den rette partner til implementeringen.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-block reveal">
+                        <div class="service-block-label">Hvem løsningen er til</div>
+                        <div class="audience-list">
+                            <div class="audience-item">Ejere og driftsledere i SMV’er, som ser potentialet i AI, men mangler et klart udgangspunkt</div>
+                            <div class="audience-item">Virksomheder med en omsætning på £500.000–£20 mio., der overvejer deres første større AI-investering</div>
+                            <div class="audience-item">Ledelsesteams, som har afprøvet AI-værktøjer, men mangler en sammenhængende strategi</div>
+                            <div class="audience-item">Drifts- og strategiansvarlige, som vil vurdere AI-parathed før en bestyrelsespræsentation</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ─────────────────────────────────────────── -->
+        <!-- SERVICE 2: CUSTOM AGENTIC AUTOMATION        -->
+        <!-- ─────────────────────────────────────────── -->
+        <section class="service-section" id="automation">
+            <div class="service-section-inner">
+
+                <div class="service-aside reveal">
+                    <div class="service-num">02 / Agentbaseret automatisering</div>
+                    <h2>AI, der udfører arbejdet, ikke bare taler om det</h2>
+                    <p>Vi designer og implementerer intelligente arbejdsgange og skræddersyede AI-agenter til gentagne opgaver i stor skala. Det kan være kvalificering af kundeemner, dokumentbehandling eller prioritering af supporthenvendelser. Løsningerne omfatter kontrol, håndtering af undtagelser og eskalering til medarbejdere.</p>
+                    <a href="https://calendly.com/piero-ainavigator" target="_blank" class="service-aside-cta">Book et afklaringsmøde</a>
+                </div>
+
+                <div class="service-body">
+
+                    <div class="service-block reveal">
+                        <div class="service-block-label">Det bygger vi</div>
+                        <div class="deliverables-grid">
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>Agentbaserede arbejdsgange i flere trin</strong>
+                                    <span>Automatisering i flere trin med betingelser, godkendelser og fejlhåndtering</span>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>Skræddersyede AI-agenter</strong>
+                                    <span>Intelligente agenter tilpasset jeres data til salg, support, analyse og drift</span>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.43 9.88 19.79 19.79 0 0 1 1.37 1.18 2 2 0 0 1 3.34 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6.29 6.29l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>AI-stemmeagenter</strong>
+                                    <span>Indgående og udgående stemmeautomatisering til salgskvalificering og kundeservice</span>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>Interne videnssystemer</strong>
+                                    <span>Dokumentintelligens med RAG, interne vidensbaser og AI-søgning</span>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><polyline points="8 21 12 17 16 21"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>CRM- og platformintegrationer</strong>
+                                    <span>Integrationer med blandt andet HubSpot, Salesforce, Notion, Slack og over 200 værktøjer</span>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>Overvågning og overdragelse</strong>
+                                    <span>Dokumentation, overvågning og oplæring, så I selv har kontrol over løsningen</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-block reveal">
+                        <div class="service-block-label">Typiske anvendelser</div>
+                        <div class="use-cases-grid">
+                            <div class="use-case-card">
+                                <h4>Salgsautomatisering</h4>
+                                <p>Kundeemner fra flere kanaler → AI-kvalificering → personlig opfølgning → registrering i CRM og overdragelse til salgsteamet. Kan arbejde døgnet rundt uden tilsvarende bemanding.</p>
+                                <span class="use-case-tag">Salg og omsætning</span>
+                            </div>
+                            <div class="use-case-card">
+                                <h4>Prioritering af kundesupport</h4>
+                                <p>AI kategoriserer indgående henvendelser og kan håndtere almindelige spørgsmål. Sager sendes videre til medarbejdere efter behov. Servicemål aftales og testes på virksomhedens faktiske supportsager.</p>
+                                <span class="use-case-tag">Drift</span>
+                            </div>
+                            <div class="use-case-card">
+                                <h4>Dokumentbehandling</h4>
+                                <p>Kontrakter, fakturaer, ansøgninger og rapporter kan behandles, struktureres, fordeles og arkiveres automatisk. Det reducerer tidskrævende manuel indtastning.</p>
+                                <span class="use-case-tag">Administration</span>
+                            </div>
+                            <div class="use-case-card">
+                                <h4>Intern vidensagent</h4>
+                                <p>En AI-agent med adgang til jeres procedurer, politikker og vidensbase. Medarbejderne kan finde svar uden at afbryde kolleger eller lede i flere systemer.</p>
+                                <span class="use-case-tag">Teamproduktivitet</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-block reveal">
+                        <div class="service-block-label">Typisk projektforløb</div>
+                        <div class="process-list">
+                            <div class="process-item">
+                                <div class="process-item-num">W1</div>
+                                <div class="process-item-content">
+                                    <strong>Afklaring og proceskortlægning</strong>
+                                    <p>Vi dokumenterer den nuværende proces, fra input og output til undtagelser, overdragelser og flaskehalse. Det er fundamentet for løsningen.</p>
+                                </div>
+                            </div>
+                            <div class="process-item">
+                                <div class="process-item-num">W2</div>
+                                <div class="process-item-content">
+                                    <strong>Arkitektur og værktøjer</strong>
+                                    <p>Vi designer den tekniske løsning med relevante AI-modeller, automationsplatforme, API’er og infrastruktur. I godkender tilgangen, før udviklingen begynder.</p>
+                                </div>
+                            </div>
+                            <div class="process-item">
+                                <div class="process-item-num">W3–5</div>
+                                <div class="process-item-content">
+                                    <strong>Byg, test og forbedr</strong>
+                                    <p>Automatiseringen bygges, testes på relevante data, forbedres på baggrund af undtagelser og valideres sammen med jeres team før produktionssætning.</p>
+                                </div>
+                            </div>
+                            <div class="process-item">
+                                <div class="process-item-num">W6</div>
+                                <div class="process-item-content">
+                                    <strong>Implementering, oplæring og overdragelse</strong>
+                                    <p>Produktionssætning, overvågning, gennemgang med teamet og fuld dokumentation. I får ejerskab og indsigt i løsningen uden en uigennemsigtig leverandørafhængighed.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-block reveal">
+                        <div class="service-block-label">Hvem løsningen er til</div>
+                        <div class="audience-list">
+                            <div class="audience-item">Teams, der bruger over 20 timer ugentligt på regelbaserede, gentagne manuelle opgaver</div>
+                            <div class="audience-item">Virksomheder, hvor antallet af kundehenvendelser vokser hurtigere end bemandingen</div>
+                            <div class="audience-item">Virksomhedsejere, der har afprøvet automationsværktøjer, men har brug for mere avanceret udvikling</div>
+                            <div class="audience-item">Driftsledere med mange forbedringsidéer, men for få ressourcer til at gennemføre dem</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ─────────────────────────────────────────── -->
+        <!-- SERVICE 3: EXECUTIVE AI TRAINING            -->
+        <!-- ─────────────────────────────────────────── -->
+        <section class="service-section" id="training">
+            <div class="service-section-inner">
+
+                <div class="service-aside reveal">
+                    <div class="service-num">03 / AI-uddannelse for ledere</div>
+                    <h2>Tag lederskab over AI-udviklingen</h2>
+                    <p>Strukturerede forløb til ledelsesteams, der skal arbejde med AI. Vi styrker forståelsen, beslutningsrammerne og handlingsplanen, så virksomheden kan træffe kvalificerede valg.</p>
+                    <a href="https://calendly.com/piero-ainavigator" target="_blank" class="service-aside-cta">Book en samtale om et forløb</a>
+                </div>
+
+                <div class="service-body">
+
+                    <div class="service-block reveal">
+                        <div class="service-block-label">Det arbejder vi med</div>
+                        <div class="deliverables-grid">
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>AI-landskabet og det væsentlige</strong>
+                                    <span>Skil fakta fra hype, og fokusér på det, der er relevant for virksomheden</span>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>Identifikation af muligheder</strong>
+                                    <span>Strukturerede metoder til at finde AI-muligheder i jeres egne arbejdsgange</span>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>Evaluering af leverandører og værktøjer</strong>
+                                    <span>Vurdér leverandører, beslut mellem at bygge og købe, og undgå dyre fejl</span>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>Udvikling af AI-handlingsplan</strong>
+                                    <span>En prioriteret og realistisk plan, der tager udgangspunkt i forretningsmål frem for teknologiske ønskelister</span>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>Governance og risiko</strong>
+                                    <span>Ansvarlig AI-implementering, databeskyttelse, relevante krav og etiske rammer</span>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                                </div>
+                                <div class="deliverable-text">
+                                    <strong>Forandringsledelse</strong>
+                                    <span>Sådan får I medarbejderne med gennem kommunikation, ibrugtagning og kompetenceudvikling</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-block reveal">
+                        <div class="service-block-label">Forløbsformater</div>
+                        <div class="formats-grid">
+                            <div class="format-card">
+                                <h4>AI-workshop for teams</h4>
+                                <div class="format-duration">Halv dag – fysisk eller online</div>
+                                <p>AI-forståelse og kortlægning af muligheder for hele ledelsesteamet. Praktisk og tilpasset jeres branche.</p>
+                                <ul class="format-list">
+                                    <li>AI-grundlag og relevans for jeres branche</li>
+                                    <li>Fælles kortlægning af muligheder</li>
+                                    <li>Værktøjsdemonstrationer med konkrete eksempler</li>
+                                    <li>Spørgsmål og svar med Piero</li>
+                                </ul>
+                            </div>
+                            <div class="format-card featured">
+                                <h4>AI-strategidag</h4>
+                                <div class="format-duration">Hel dag – for øverste ledelse</div>
+                                <p>En dybdegående session med den øverste ledelse. I får en konkret AI-plan prioriteret efter forventet afkast og klar til bestyrelsen.</p>
+                                <ul class="format-list">
+                                    <li>Virksomhedsanalyse og AI-audit</li>
+                                    <li>Ramme for vurdering af leverandører og værktøjer</li>
+                                    <li>Workshop om handlingsplan</li>
+                                    <li>Ramme for governance og risici</li>
+                                    <li>Dokumenteret materiale efter sessionen</li>
+                                </ul>
+                            </div>
+                            <div class="format-card">
+                                <h4>Løbende AI-rådgiver</h4>
+                                <div class="format-duration">Månedligt – løbende samarbejde</div>
+                                <p>Piero som løbende strategisk AI-partner. Månedlige sessioner, rådgivning efter behov og løbende tilpasning af planen, når markedet ændrer sig.</p>
+                                <ul class="format-list">
+                                    <li>Månedlig strategi- og statusgennemgang</li>
+                                    <li>Prioriteret adgang til rådgivning ved konkrete spørgsmål</li>
+                                    <li>Rådgivning om leverandører og indkøb</li>
+                                    <li>Kvartalsvis gennemgang og opdatering af planen</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-block reveal">
+                        <div class="service-block-label">Hvem løsningen er til</div>
+                        <div class="audience-list">
+                            <div class="audience-item">Direktioner og ledergrupper i SMV’er, der står over for deres første større AI-beslutninger</div>
+                            <div class="audience-item">Konsulent- og servicevirksomheder, der ønsker at styrke AI-kompetencerne til kundearbejde</div>
+                            <div class="audience-item">Strategi- og driftsansvarlige, der forbereder en AI-business case til bestyrelsen</div>
+                            <div class="audience-item">Ledelsesteams, der ønsker et uafhængigt perspektiv frem for en softwareleverandørs salgstale</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta-section">
+            <div class="section-label">Lad os tale sammen</div>
+            <h2>Klar til at komme i gang?</h2>
+            <p>Start med en gratis Athena-analyse for at se, hvor AI kan skabe værdi, eller book en direkte samtale med Piero.</p>
+            <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+                <a href="https://calendly.com/piero-ainavigator" target="_blank" class="btn-primary">Book et møde på 30 minutter</a>
+                <a href="/da/#athena" class="btn-secondary">Start gratis med Athena</a>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer>
+            <div class="footer-left">
+                <img src="/ArqOne%20Labs%20Logo.gif" alt="ArqOne Labs" style="height:31px;width:auto;">
+                <span style="color:var(--gray-400);">-</span> Professionelle AI-løsninger til virksomheder i vækst
+            </div>
+            <div class="footer-right">
+                <a href="/privacy.html">Privatlivspolitik</a>
+                <a href="/terms.html">Vilkår og betingelser</a>
+                <span class="footer-copy">&copy; 2026 ArqOne Labs</span>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        // Nav scroll effect
+        const nav = document.getElementById('main-nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 60);
+        });
+
+        // Reveal on scroll
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    observer.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+        reveals.forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

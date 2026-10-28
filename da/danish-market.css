@@ -1,0 +1,49 @@
+/* Danish market adaptation, layered over the existing ArqOne design. */
+.dk-business { padding-top: 64px; padding-bottom: 72px; }
+.dk-business .section-sub { max-width: 760px; margin-bottom: 28px; }
+.dk-business-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.dk-business-card {
+  padding: 26px 24px;
+  background: linear-gradient(155deg, rgba(27, 39, 60, .88), rgba(13, 17, 30, .82));
+  border: 1px solid rgba(145, 179, 207, .16);
+  border-radius: 16px;
+}
+.dk-business-card h3 { color: #f4f6fa; font-size: 1.14rem; font-weight: 650; margin-bottom: 10px; }
+.dk-business-card p { color: #b8c1d0; line-height: 1.65; font-size: .96rem; }
+.dk-business-cta { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin-top: 30px; }
+.dk-business-note { font-size: .85rem; line-height: 1.55; color: #9ca8b9; margin-top: 22px; }
+.dk-business-cta .btn-primary, .dk-business-cta .btn-secondary { text-decoration: none; }
+.dk-services-intro { max-width: 1200px; margin: 0 auto; padding: 52px 40px 74px; }
+.dk-services-intro h2 { color: #f4f6fa; font-size: clamp(1.9rem, 3.4vw, 2.65rem); line-height: 1.15; letter-spacing: -.025em; margin-bottom: 16px; }
+.dk-services-intro > p, .dk-services-intro .dk-process > p { color: #aeb6c5; font-size: 1rem; line-height: 1.75; max-width: 780px; margin-bottom: 30px; }
+.dk-services-intro .dk-business-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.dk-process { margin-top: 78px; }
+.dk-process-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.dk-process-step { padding: 27px 24px; border: 1px solid rgba(116, 220, 209, .22); background: rgba(16, 24, 40, .8); border-radius: 15px; }
+.dk-process-num { display: block; font-size: .84rem; letter-spacing: .12em; font-weight: 700; color: #79d8cd; margin-bottom: 14px; }
+.dk-process-step h3 { color: #f4f6fa; font-size: 1.2rem; margin-bottom: 10px; }
+.dk-process-step p { color: #aeb7c6; font-size: .97rem; line-height: 1.65; }
+.dk-services-intro .dk-business-cta { margin-top: 34px; }
+.dk-athena-note { margin-top: 15px; color: #9da9b9; font-size: .88rem; line-height: 1.55; }
+.dk-athena-note a { color: #83dbd2; }
+.dk-services-intro .dk-guardrails { margin-top: 28px; color: #aeb7c6; font-size: .9rem; line-height: 1.65; max-width: 900px; }
+.dk-contact-note { margin: 18px 0 24px; padding: 16px 20px; color: #d8e6e7; border-left: 3px solid #83dbd2; background: rgba(25, 41, 54, .6); border-radius: 0 10px 10px 0; line-height: 1.65; }
+.hero-cta-group a, .services-hero .hero-ctas a { max-width: 100%; box-sizing: border-box; text-align: center; white-space: normal; }
+.content nav { gap: 12px; }
+@media(max-width:900px) {
+  .dk-business-grid, .dk-services-intro .dk-business-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .dk-process-grid { grid-template-columns: 1fr; }
+  .dk-services-intro { padding: 42px 22px 58px; }
+}
+@media(max-width:620px) {
+  .dk-business-grid, .dk-services-intro .dk-business-grid { grid-template-columns: 1fr; }
+  .dk-business-card { padding: 22px 20px; }
+  .dk-business { padding-top: 48px; padding-bottom: 52px; }
+  .dk-business-cta { align-items: stretch; flex-direction: column; }
+  .dk-business-cta a { text-align: center; }
+  .hero-cta-group { width: 100%; }
+  .hero-cta-group a { width: 100%; }
+  .services-hero .hero-ctas { align-items: stretch; flex-direction: column; }
+  .services-hero .hero-ctas a { width: 100%; }
+  .content nav { flex-wrap: wrap; }
+}

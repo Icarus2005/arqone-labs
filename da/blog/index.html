@@ -1,0 +1,626 @@
+<!-- Danish-language blog overview; linked articles are currently in English. -->
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indsigter om AI og forretning | ArqOne Labs</title>
+    <meta name="description" content="Artikler om AI-strategi, agentbaserede systemer og virksomheders arbejde med AI. Artikelteksterne er på engelsk.">
+    <link rel="canonical" href="https://arqonelabs.com/da/blog/">
+    <link rel="alternate" hreflang="da" href="https://arqonelabs.com/da/blog/">
+    <link rel="alternate" hreflang="en" href="https://arqonelabs.com/blog/">
+    <link rel="alternate" hreflang="x-default" href="https://arqonelabs.com/blog/">
+    <link rel="stylesheet" href="/locale.css">
+    <meta property="og:title" content="Indsigter om AI og forretning | ArqOne Labs">
+    <meta property="og:description" content="Artikler om AI-strategi, agentbaserede systemer og virksomheders arbejde med AI. Artikelteksterne er på engelsk.">
+    <meta property="og:url" content="https://arqonelabs.com/da/blog/">
+    <meta property="og:locale" content="da_DK">
+    <meta property="og:type" content="website">
+    <link rel="icon" type="image/gif" href="/favicon.gif">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #08080C;
+            --bg-elevated: #0E0E14;
+            --bg-card: #12121A;
+            --teal: #00DCD0;
+            --teal-dim: #00A89E;
+            --white: #F0F0F4;
+            --gray-100: #C8C8D0;
+            --gray-200: #9898A4;
+            --gray-300: #68687A;
+            --gray-400: #3A3A4A;
+            --border: rgba(255,255,255,0.06);
+            --font-sans: 'Inter', -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg);
+            color: var(--gray-100);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .grid-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 100;
+            transition: all 0.4s;
+        }
+        nav.scrolled {
+            background: rgba(8,8,12,0.92);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 40px;
+        }
+        .nav-logo img { height: 38px; width: auto; display: block; }
+        .nav-links { display: flex; align-items: center; gap: 32px; }
+        .nav-links a {
+            font-size: 0.875rem;
+            color: var(--gray-200);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--white); }
+        .nav-links a.nav-athena { color: var(--teal); font-weight: 500; }
+        .nav-cta-book {
+            padding: 8px 18px;
+            border: 1.5px solid var(--teal);
+            border-radius: 8px;
+            color: var(--teal) !important;
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+        .nav-cta-book:hover { background: rgba(0,220,205,0.08); }
+        .nav-cta {
+            padding: 8px 18px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
+            color: var(--white) !important;
+            font-weight: 500;
+            font-size: 0.875rem;
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+        .nav-cta:hover { border-color: rgba(255,255,255,0.3); }
+
+        .page { position: relative; z-index: 1; }
+
+        /* HERO */
+        .blog-hero {
+            padding: 160px 40px 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .hero-label {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: 20px;
+        }
+        .blog-hero h1 {
+            font-size: clamp(2.2rem, 4vw, 3.2rem);
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            max-width: 640px;
+            margin-bottom: 20px;
+        }
+        .blog-hero p {
+            font-size: 1rem;
+            color: var(--gray-200);
+            max-width: 520px;
+            line-height: 1.75;
+            font-weight: 300;
+        }
+
+        /* ARTICLES GRID */
+        .articles-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px 120px;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 28px;
+        }
+
+        .article-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            transition: all 0.3s;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+        .article-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--teal), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .article-card:hover {
+            border-color: rgba(0,220,205,0.14);
+            transform: translateY(-3px);
+            background: #14141E;
+        }
+        .article-card:hover::before { opacity: 1; }
+
+        .article-card-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .article-category {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--teal);
+            background: rgba(0,220,205,0.08);
+            border: 1px solid rgba(0,220,205,0.15);
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+        .article-read-time {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--gray-300);
+            letter-spacing: 0.06em;
+        }
+        .article-date {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--gray-300);
+            letter-spacing: 0.06em;
+            margin-left: auto;
+        }
+
+        .article-card h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: -0.02em;
+            line-height: 1.3;
+        }
+
+        .article-card p {
+            font-size: 0.875rem;
+            color: var(--gray-200);
+            line-height: 1.75;
+            font-weight: 300;
+            flex: 1;
+        }
+
+        .article-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+        .article-author {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .article-author-dot {
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(0,220,205,0.3), rgba(0,220,205,0.05));
+            border: 1px solid rgba(0,220,205,0.2);
+            display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 9px;
+            color: var(--teal);
+            font-weight: 600;
+        }
+        .article-author-name {
+            font-size: 0.78rem;
+            color: var(--gray-200);
+        }
+        .article-read-link {
+            font-size: 0.82rem;
+            color: var(--teal);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: gap 0.2s;
+        }
+        .article-card:hover .article-read-link { gap: 10px; }
+
+        /* FEATURE CARD (first article, full width) */
+        .article-card.featured {
+            grid-column: 1 / -1;
+            flex-direction: row;
+            gap: 48px;
+            align-items: center;
+        }
+        .article-card.featured .article-card-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .article-card.featured h2 {
+            font-size: 1.6rem;
+        }
+        .article-card.featured .article-featured-accent {
+            width: 220px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+            justify-content: center;
+            height: 160px;
+            background: rgba(0,220,205,0.04);
+            border: 1px solid rgba(0,220,205,0.1);
+            border-radius: 16px;
+        }
+        .article-card.featured .article-featured-accent .accent-label {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--gray-300);
+        }
+        .article-card.featured .article-featured-accent .accent-quote {
+            font-size: 0.82rem;
+            color: var(--teal);
+            font-weight: 600;
+            text-align: center;
+            line-height: 1.5;
+            padding: 0 16px;
+        }
+
+        /* CTA STRIP */
+        .cta-strip {
+            background: var(--bg-elevated);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+        }
+        .cta-strip::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 50%; transform: translateX(-50%);
+            width: 500px; height: 200px;
+            background: radial-gradient(ellipse at center top, rgba(0,220,205,0.07) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .cta-strip p {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+        .cta-strip span {
+            font-size: 0.9rem;
+            color: var(--gray-200);
+            display: block;
+            margin-bottom: 28px;
+        }
+        .cta-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+        .btn-primary {
+            padding: 12px 24px;
+            background: var(--teal);
+            color: #08080C;
+            font-weight: 700;
+            font-size: 0.875rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+        .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+        .btn-secondary {
+            padding: 12px 24px;
+            background: transparent;
+            color: var(--white);
+            font-weight: 500;
+            font-size: 0.875rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.15);
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+        .btn-secondary:hover { border-color: rgba(255,255,255,0.35); transform: translateY(-1px); }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer-left {
+            font-size: 0.8rem;
+            color: var(--gray-300);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .footer-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .footer-right a {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--gray-400);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            transition: color 0.2s;
+        }
+        .footer-right a:hover { color: var(--teal); }
+        .footer-copy {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--gray-400);
+            letter-spacing: 0.05em;
+        }
+
+        .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .reveal.visible { opacity: 1; transform: none; }
+
+        @media (max-width: 900px) {
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-card.featured { flex-direction: column; }
+            .article-card.featured .article-featured-accent { width: 100%; height: auto; padding: 20px; }
+        }
+        @media (max-width: 768px) {
+            nav { padding: 16px 20px; }
+            .nav-links { display: none; }
+            .blog-hero { padding: 120px 20px 60px; }
+            .articles-section { padding: 0 20px 80px; }
+            footer { flex-direction: column; gap: 16px; text-align: center; padding: 32px 20px; }
+        }
+    </style>
+    <style>
+      .language-choice{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;padding:5px 9px;border:1px solid rgba(255,255,255,.2);border-radius:7px;font-size:12px;letter-spacing:.07em;color:#d8dce8}
+      .language-choice a{color:#aaaebc;text-decoration:none}
+      .language-choice a[aria-current="page"]{color:#80e0d7;font-weight:700}
+      .language-choice a:hover{color:#fff}
+      .language-choice span{opacity:.45}
+      @media(max-width:900px){.mobile-language-choice{position:fixed;top:16px;right:76px;z-index:1100;background:#10131c}.nav-links .language-choice{position:static}}
+    </style>
+<style>.mobile-language-choice{display:none}@media(max-width:900px){.mobile-language-choice{display:inline-flex}}</style></head>
+<body>
+    <div class="grid-bg"></div>
+
+    <nav id="main-nav">
+        <div class="nav-logo">
+            <a href="/da/"><img src="/ArqOne%20Labs%20Logo.gif" alt="ArqOne Labs"></a>
+        </div>
+        
+        <span class="mobile-language-choice"><span class="language-choice" aria-label="Sprog"><a href="https://arqonelabs.com/blog/" lang="en" hreflang="en">EN</a><span aria-hidden="true">/</span><a href="https://arqonelabs.com/da/blog/" lang="da" hreflang="da" aria-current="page">DA</a></span></span><div class="nav-links">
+            <a href="/da/#ecosystem">Økosystem</a>
+            <a href="/da/#portfolio">Portefølje</a>
+            <a href="/da/#about">Om os</a>
+            <a href="/da/services.html">Ydelser</a>
+            <a href="/da/blog/" class="active">Artikler</a>
+            <a href="/da/#athena" class="nav-athena">Athena</a>
+            
+            <span class="language-choice" aria-label="Sprog"><a href="https://arqonelabs.com/blog/" lang="en" hreflang="en">EN</a><span aria-hidden="true">/</span><a href="https://arqonelabs.com/da/blog/" lang="da" hreflang="da" aria-current="page">DA</a></span>
+            <a href="https://calendly.com/piero-ainavigator" target="_blank" class="nav-cta-book">Book et møde</a>
+            <a href="/da/contact.html" class="nav-cta">Kontakt os</a>
+        </div>
+    </nav>
+
+    <div class="page">
+
+        <div class="blog-hero reveal">
+            <div class="hero-label">Perspektiver</div>
+            <h1>Perspektiver på AI, forretning og fremtiden</h1>
+            <p>Praktiske analyser fra virkeligheden. Om strategi, systemer og hvad AI-modenhed betyder i praksis. Artiklerne er på engelsk.</p>
+        </div>
+
+        <section class="articles-section">
+            <div class="articles-grid">
+
+                <!-- Featured Article -->
+                <a href="/blog/the-model-is-becoming-the-commodity.html" class="article-card featured reveal">
+                    <div class="article-card-content">
+                        <div class="article-card-meta">
+                            <span class="article-category">AI-strategi</span>
+                            <span class="article-read-time">5 minutters læsning</span>
+                            <span class="article-date">Maj 2026</span>
+                        </div>
+                        <h2>Modellen bliver standardvare. Systemet bliver konkurrencefordelen.</h2>
+                        <p>De seneste år har AI-debatten især handlet om, hvilken model der er bedst. Men for mange virksomheder ligger den egentlige konkurrencefordel nu i systemet omkring modellen.</p>
+                        <div class="article-card-footer">
+                            <div class="article-author">
+                                <div class="article-author-dot">PS</div>
+                                <span class="article-author-name">Piero Saleme</span>
+                            </div>
+                            <span class="article-read-link">Læs artikel på engelsk &rarr;</span>
+                        </div>
+                    </div>
+                    <div class="article-featured-accent">
+                        <span class="accent-label">Hovedpointe</span>
+                        <span class="accent-quote">Modellen er ingrediensen. Systemet er opskriften.</span>
+                    </div>
+                </a>
+
+                <!-- Article 2 -->
+                <a href="/blog/ai-agents-new-microservices.html" class="article-card reveal">
+                    <div class="article-card-meta">
+                        <span class="article-category">AI-systemer</span>
+                        <span class="article-read-time">6 minutters læsning</span>
+                        <span class="article-date">Maj 2026</span>
+                    </div>
+                    <h2>Hvorfor AI-agenter bliver de nye mikrotjenester</h2>
+                    <p>For få år siden gik mange virksomheder gennem bølgen af mikrotjenester. Nu opstår et lignende mønster med AI-agenter. Virksomheder, der forbereder sig tidligt, kan stå stærkere.</p>
+                    <div class="article-card-footer">
+                        <div class="article-author">
+                            <div class="article-author-dot">PS</div>
+                            <span class="article-author-name">Piero Saleme</span>
+                        </div>
+                        <span class="article-read-link">Læs artikel på engelsk &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- Article 3 -->
+                <a href="/blog/oes-framework-observe-experiment-scale.html" class="article-card reveal">
+                    <div class="article-card-meta">
+                        <span class="article-category">Strategi</span>
+                        <span class="article-read-time">6 minutters læsning</span>
+                        <span class="article-date">Marts 2026</span>
+                    </div>
+                    <h2>OES-modellen: Observer, eksperimentér, skalér</h2>
+                    <p>Mange AI-projekter fejler, fordi virksomheder forsøger at skalere, før de forstår problemet. OES-modellen giver ledere en struktureret vej fra interesse til værdi.</p>
+                    <div class="article-card-footer">
+                        <div class="article-author">
+                            <div class="article-author-dot">PS</div>
+                            <span class="article-author-name">Piero Saleme</span>
+                        </div>
+                        <span class="article-read-link">Læs artikel på engelsk &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- Article 4 -->
+                <a href="/blog/why-data-strategy-matters-more-than-ai-tools.html" class="article-card reveal">
+                    <div class="article-card-meta">
+                        <span class="article-category">Drift</span>
+                        <span class="article-read-time">5 minutters læsning</span>
+                        <span class="article-date">Marts 2026</span>
+                    </div>
+                    <h2>Hvorfor datastrategi er vigtigere end AI-værktøjer</h2>
+                    <p>AI-leverandører lover ofte nye indsigter og bedre drift. Men effekten afhænger af datagrundlaget. AI forstærker det, den får ind, også dårlige data.</p>
+                    <div class="article-card-footer">
+                        <div class="article-author">
+                            <div class="article-author-dot">PS</div>
+                            <span class="article-author-name">Piero Saleme</span>
+                        </div>
+                        <span class="article-read-link">Læs artikel på engelsk &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- Article 5 -->
+                <a href="/blog/90-day-ai-leadership-action-plan.html" class="article-card reveal">
+                    <div class="article-card-meta">
+                        <span class="article-category">Strategi</span>
+                        <span class="article-read-time">7 minutters læsning</span>
+                        <span class="article-date">Marts 2026</span>
+                    </div>
+                    <h2>90-dages handlingsplan for ledere</h2>
+                    <p>Det er én ting at vide, at AI er vigtigt. Noget andet er at vide, hvad man gør mandag morgen. Her er en praktisk plan uge for uge.</p>
+                    <div class="article-card-footer">
+                        <div class="article-author">
+                            <div class="article-author-dot">PS</div>
+                            <span class="article-author-name">Piero Saleme</span>
+                        </div>
+                        <span class="article-read-link">Læs artikel på engelsk &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- Article 6 -->
+                <a href="/blog/ai-governance-ip-who-owns-the-future.html" class="article-card reveal">
+                    <div class="article-card-meta">
+                        <span class="article-category">Governance</span>
+                        <span class="article-read-time">6 minutters læsning</span>
+                        <span class="article-date">Marts 2026</span>
+                    </div>
+                    <h2>AI-governance og IP: Hvem ejer fremtiden?</h2>
+                    <p>Hvem ejer AI-genereret indhold? Hvem har ansvaret, hvis et autonomt system gør skade? Ledere bør tage stilling, før spørgsmålene bliver akutte.</p>
+                    <div class="article-card-footer">
+                        <div class="article-author">
+                            <div class="article-author-dot">PS</div>
+                            <span class="article-author-name">Piero Saleme</span>
+                        </div>
+                        <span class="article-read-link">Læs artikel på engelsk &rarr;</span>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- CTA STRIP -->
+        <div class="cta-strip">
+            <p>Klar til at omsætte idéerne til værdi?</p>
+            <span>Start med en gratis vurdering af AI-parathed, eller tal direkte med Piero.</span>
+            <div class="cta-buttons">
+                <a href="/da/#athena" class="btn-primary">Prøv Athena gratis</a>
+                <a href="https://calendly.com/piero-ainavigator" target="_blank" class="btn-secondary">Book et møde</a>
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer-left">
+                <img src="/ArqOne%20Labs%20Logo.gif" alt="ArqOne Labs" style="height:31px;width:auto;">
+                <span style="color:var(--gray-400);">-</span> Professionelle AI-løsninger til virksomheder i vækst
+            </div>
+            <div class="footer-right">
+                <a href="/privacy.html">Privatlivspolitik</a>
+                <a href="/terms.html">Vilkår og betingelser</a>
+                <span class="footer-copy">&copy; 2026 ArqOne Labs</span>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        const nav = document.getElementById('main-nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 60);
+        });
+
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    observer.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+        reveals.forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+.language-choice {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  padding: 5px 9px;
+  border: 1px solid rgba(255, 255, 255, .22);
+  border-radius: 7px;
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: .06em;
+  color: #d8dce8;
+  background: rgba(12, 17, 29, .64);
+}
+.language-choice a { color: #b9bece; text-decoration: none; }
+.language-choice a[aria-current="page"] { color: #83ded6; font-weight: 700; }
+.language-choice a:hover { color: #fff; }
+.locale-mobile-switch { display: none; }
+@media(max-width: 900px) {
+  .locale-mobile-switch {
+    display: inline-flex;
+    position: fixed;
+    top: 14px;
+    right: 15px;
+    z-index: 1100;
+  }
+}
