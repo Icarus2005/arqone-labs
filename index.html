@@ -1539,6 +1539,22 @@
 
         .athena-end-btn.visible { display: flex; }
 
+        .athena-call-controls { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px; }
+        .athena-call-controls[hidden], .athena-mute-note[hidden] { display: none; }
+        .athena-call-controls .athena-end-btn { padding: 11px 16px; }
+        .athena-mute-btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 11px 16px; border: 1px solid rgba(0, 220, 205, .45); border-radius: 8px;
+            background: rgba(0, 220, 205, .07); color: var(--teal); font-size: .85rem;
+            font-weight: 600; cursor: pointer; transition: background .2s, border-color .2s;
+        }
+        .athena-mute-btn:hover:not(:disabled) { background: rgba(0, 220, 205, .15); }
+        .athena-mute-btn:disabled { opacity: .5; cursor: wait; }
+        .athena-mute-btn .mic-slash { display: none; }
+        .athena-mute-btn[aria-pressed="true"] { background: rgba(230, 90, 90, .14); border-color: rgba(230, 90, 90, .55); color: #ff9999; }
+        .athena-mute-btn[aria-pressed="true"] .mic-slash { display: block; }
+        .athena-mute-note { max-width: 280px; text-align: center; font-size: .75rem; line-height: 1.45; color: #ffaaaa; }
+
         @media (max-width: 768px) {
             .athena-card {
                 grid-template-columns: 1fr;
@@ -2047,10 +2063,17 @@
                             <div class="athena-avatar-name">Athena</div>
                         </div>
                         <button class="btn-primary athena-cta-btn magnetic-target" id="athena-start-btn">Start Your Free Assessment</button>
-                        <button class="athena-end-btn" id="athena-end-btn">
+                        <div class="athena-call-controls" id="athena-call-controls" hidden>
+                        <button class="athena-mute-btn" id="athena-mute-btn" type="button" aria-label="Mute microphone" aria-pressed="false" disabled>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v1a7 7 0 0 0 14 0v-1M12 18v4m-4 0h8"/><path class="mic-slash" d="M3 3l18 18"/></svg>
+                            <span id="athena-mute-label">Mute mic</span>
+                        </button>
+                        <button class="athena-end-btn" id="athena-end-btn" type="button">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7 2 2 0 0 1 1.72 2v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.42 19.42 0 0 1 4.43 9.88a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.34 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.31 8.91"/><line x1="23" y1="1" x2="1" y2="23"/></svg>
                             End Conversation
                         </button>
+                        </div>
+                        <p class="athena-mute-note" id="athena-mute-note" role="status" hidden>Microphone muted. Athena cannot hear you.</p>
                         <p class="athena-sub-note">15 minutes &nbsp;&middot;&nbsp; Personalised report &nbsp;&middot;&nbsp; No commitment</p>
                         <div class="athena-calendly-cta" id="athena-calendly-cta">
                             <a href="https://calendly.com/piero-ainavigator" target="_blank" class="athena-book-btn">
@@ -2694,16 +2717,35 @@
     const AGENT_ID = 'agent_8901kpzxg3kneyzbzht3zwy506d9';
     let conversation = null;
     let isActive = false;
+    let micMuted = false;
+    let sessionGeneration = 0;
 
     const av       = document.querySelector('.athena-avatar');
     const startBtn = document.getElementById('athena-start-btn');
     const endBtn   = document.getElementById('athena-end-btn');
+    const callControls = document.getElementById('athena-call-controls');
+    const muteBtn = document.getElementById('athena-mute-btn');
+    const muteLabel = document.getElementById('athena-mute-label');
+    const muteNote = document.getElementById('athena-mute-note');
+
+    function syncMicUI() {
+        if (muteBtn) {
+            muteBtn.disabled = !isActive || !conversation;
+            muteBtn.setAttribute('aria-pressed', String(micMuted));
+            muteBtn.setAttribute('aria-label', micMuted ? 'Unmute microphone' : 'Mute microphone');
+        }
+        if (muteLabel) muteLabel.textContent = micMuted ? 'Unmute mic' : 'Mute mic';
+        if (muteNote) muteNote.hidden = !isActive || !micMuted;
+    }
 
     function setCallActive(active) {
         isActive = active;
+        if (!active) micMuted = false;
         if (av) av.classList.toggle('athena-call-active', active);
         if (startBtn) startBtn.style.display = active ? 'none' : '';
         if (endBtn)   endBtn.classList.toggle('visible', active);
+        if (callControls) callControls.hidden = !active;
+        syncMicUI();
     }
 
     function onCallEnded() {
@@ -2714,17 +2756,28 @@
 
     async function startAthena() {
         if (isActive) return;
+        const generation = ++sessionGeneration;
         setCallActive(true);
         try {
-            conversation = await Conversation.startSession({
+            const session = await Conversation.startSession({
                 agentId: AGENT_ID,
-                onConnect: () => { isActive = true; },
-                onDisconnect: onCallEnded,
+                onConnect: syncMicUI,
+                onDisconnect: () => {
+                    if (generation !== sessionGeneration) return;
+                    conversation = null;
+                    onCallEnded();
+                },
                 onError: (err) => {
                     console.error('Athena error:', err);
-                    setCallActive(false);
+                    if (generation === sessionGeneration) setCallActive(false);
                 }
             });
+            if (!isActive || generation !== sessionGeneration) {
+                await session.endSession();
+                return;
+            }
+            conversation = session;
+            syncMicUI();
         } catch(e) {
             console.error('Failed to start Athena session:', e);
             setCallActive(false);
@@ -2732,11 +2785,25 @@
     }
 
     async function stopAthena() {
-        if (conversation) {
-            try { await conversation.endSession(); } catch(e) {}
-            conversation = null;
-        }
+        sessionGeneration++;
+        const session = conversation;
+        conversation = null;
         onCallEnded();
+        if (session) { try { await session.endSession(); } catch(e) {} }
+    }
+
+    async function toggleAthenaMic() {
+        if (!conversation || !isActive || !muteBtn) return;
+        const session = conversation;
+        muteBtn.disabled = true;
+        try {
+            const nextMuted = !micMuted;
+            await session.setMicMuted(nextMuted);
+            if (isActive && conversation === session) micMuted = nextMuted;
+        } catch(err) {
+            console.error('Unable to change Athena microphone state:', err);
+        }
+        syncMicUI();
     }
 
     ['athena-avatar-btn', 'athena-start-btn', 'hero-athena-trigger'].forEach(function(id) {
@@ -2748,6 +2815,7 @@
     });
 
     if (endBtn) endBtn.addEventListener('click', stopAthena);
+    if (muteBtn) muteBtn.addEventListener('click', toggleAthenaMic);
 
     // Credential list: add in-view class when list enters viewport (CSS animation takes over)
     (function() {
