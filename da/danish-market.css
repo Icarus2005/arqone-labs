@@ -1,4 +1,5 @@
 /* Danish market adaptation, layered over the existing ArqOne design. */
+html, body { overflow-x: clip; }
 .dk-business { padding-top: 64px; padding-bottom: 72px; }
 .dk-business .section-sub { max-width: 760px; margin-bottom: 28px; }
 .dk-business-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
@@ -28,6 +29,7 @@
 .dk-athena-note a { color: #83dbd2; }
 .dk-services-intro .dk-guardrails { margin-top: 28px; color: #aeb7c6; font-size: .9rem; line-height: 1.65; max-width: 900px; }
 .dk-contact-note { margin: 18px 0 24px; padding: 16px 20px; color: #d8e6e7; border-left: 3px solid #83dbd2; background: rgba(25, 41, 54, .6); border-radius: 0 10px 10px 0; line-height: 1.65; }
+.dk-contact-note a { color: #83dbd2; text-decoration: underline; text-underline-offset: 3px; }
 .hero-cta-group a, .services-hero .hero-ctas a { max-width: 100%; box-sizing: border-box; text-align: center; white-space: normal; }
 .content nav { gap: 12px; }
 @media(max-width:900px) {
