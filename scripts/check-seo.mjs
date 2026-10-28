@@ -20,8 +20,8 @@ assert(!/Disallow:\s*\/(?:\s|$)/mi.test(file("robots.txt")), "robots.txt blocks 
 
 function sourcePath(url) {
   const pathname = new URL(url).pathname;
-  if (pathname === "/") return "index.html";
-  if (pathname === "/blog/") return "blog/index.html";
+  if (pathname.endsWith("/")) return pathname.slice(1) + "index.html";
+  if (pathname.endsWith(".html")) return pathname.slice(1);
   return pathname.slice(1) + ".html";
 }
 for (const url of urls) {
@@ -39,7 +39,7 @@ for (const url of urls) {
   for (const entry of structured) {
     try { JSON.parse(entry[1]); } catch { assert(false, path + ": invalid JSON-LD"); }
   }
-  if (path === "index.html" || path.startsWith("blog/") && path !== "blog/index.html") {
+  if (path === "index.html" || /(?:^|\/)blog\/[^/]+\.html$/.test(path) && !path.endsWith("/index.html")) {
     assert(structured.length > 0, path + ": organisation or article structured data missing");
   }
 }

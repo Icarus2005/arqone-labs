@@ -1627,6 +1627,16 @@
         .product-video-play:focus-visible { outline: 3px solid var(--teal); outline-offset: 4px; }
         .product-video-play[hidden] { display: none; }
         .product-video-play-icon { display: inline-block; width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 13px solid var(--teal); }
+        /* Danish visitor journey: native-language preview; original English films remain optional. */
+        .dk-product-feature { min-height: 210px; aspect-ratio: 16 / 9; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; padding: 26px 18px; background: radial-gradient(ellipse at 50% 46%,#263d5d 0%,#101725 62%,#0a101b 100%); text-align: center; color: #e8efff; }
+        .dk-product-feature p { max-width: 380px; color: #e7eaf5; line-height: 1.45; font-size: clamp(1rem,2.2vw,1.4rem); font-weight: 600; }
+        .dk-feature-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+        .dk-feature-chips span { padding: 5px 9px; background: rgba(123,166,241,.12); border: 1px solid rgba(163,198,255,.32); border-radius: 6px; font-size: .75rem; color: #d5e7ff; }
+        .dk-video-link { display: inline-flex; font-size: .84rem; line-height: 1.5; margin-top: 13px; color: var(--teal); text-decoration: underline; text-underline-offset: 3px; }
+        .dk-hero-contact { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; align-items: center; margin-top: 20px; z-index: 3; position: relative; font-size: .84rem; color: #bfcbd3; }
+        .dk-hero-contact a, .dk-direct-contact a { color: #80ddd4; text-underline-offset: 4px; }
+        .dk-direct-contact { margin-top: 20px; position: relative; z-index: 2; font-size: .95rem; color: #c5c5d0; text-align: center; }
+        .dk-direct-contact a { font-weight: 600; }
         .portfolio-note { color: var(--gray-200); font-size: .875rem; line-height: 1.7; margin-top: 24px; max-width: 760px; }
         .card-status { font-size: .75rem; }
         .status-live::before { display: none; }
@@ -1717,6 +1727,12 @@
                 <a href="/da/contact.html?interest=Agentic%20Automation%20Services" class="btn-primary magnetic-target">Fortæl os, hvad I vil automatisere</a>
                 <a href="https://calendly.com/piero-ainavigator" target="_blank" rel="noopener noreferrer" class="btn-secondary magnetic-target">Book en uforpligtende samtale</a>
             </div>
+            <div class="dk-hero-contact" aria-label="Kontakt ArqOne Labs direkte">
+                <span>Foretrækker I at skrive?</span>
+                <a href="mailto:hello@arqonelabs.com">hello@arqonelabs.com</a>
+                <span aria-hidden="true">·</span>
+                <a href="/da/contact.html">Dansk kontaktformular</a>
+            </div>
             <button class="hero-athena-hint" id="hero-athena-trigger">
                 <div class="athena-pulse-dot"></div>
                 <span>Vil I undersøge mulighederne? Mød Athena &rarr;</span>
@@ -1777,16 +1793,12 @@
                     <figure class="product-visual placepulse-visual">
                         <img class="placepulse-logo" src="/assets/products/placepulse-new-logo.webp" width="595" height="172" loading="lazy" decoding="async" alt="PlacePulse logo, blue pixel P and white wordmark">
                         <div class="placepulse-video-frame">
-                            <video id="placepulse-demo-video" controls playsinline preload="none" poster="/assets/products/placepulse-launch-poster.webp" aria-label="PlacePulse-lanceringsfilm, et minut og sytten sekunder">
-                                <source src="/assets/products/placepulse-launch-film-1080p.mp4" type="video/mp4">
-                                Din browser understøtter ikke indlejret video.
-                            </video>
-                            <button class="product-video-play" id="placepulse-video-play" type="button" aria-controls="placepulse-demo-video" aria-label="Afspil PlacePulse-lanceringsfilmen">
-                                <span class="product-video-play-icon" aria-hidden="true"></span>
-                                <span>Se lanceringsfilm (1:17)</span>
-                            </button>
+                            <div class="dk-product-feature">
+                                <p>Fra stedets signaler til bedre beslutninger.</p>
+                                <div class="dk-feature-chips"><span>Lokationer</span><span>Kontekst</span><span>Dokumentation</span><span>Handling</span></div>
+                            </div>
                         </div>
-                        <figcaption>PlacePulse-lanceringsfilm</figcaption>
+                        <figcaption>PlacePulse · Beslutningsstøtte til lokationer</figcaption>
                     </figure>
                     <div class="product-content">
                         <div class="card-header"><h3 class="card-name">PlacePulse</h3><span class="card-status status-prelaunch">Demo</span></div>
@@ -1795,6 +1807,7 @@
                         <div class="place-capabilities" aria-label="PlacePulse capabilities"><span>Lokationskontekst</span><span>Dokumentation og sikkerhed</span><span>Sammenligning med lignende steder</span><span>Anbefalede tiltag</span></div>
                         <p class="product-audience">Til investorer, driftsansvarlige og destinationsaktører</p>
                         <a href="/da/contact.html?interest=PlacePulse" class="service-card-link">Få en introduktion til PlacePulse</a>
+                        <a class="dk-video-link" href="/assets/products/placepulse-launch-film-1080p.mp4" target="_blank" rel="noopener noreferrer" lang="da">Se produktfilmen på engelsk (valgfrit)</a>
                     </div>
                 </article>
                 <article class="platform-card">
@@ -1825,15 +1838,8 @@
                 </article>
                 <article class="platform-card">
                     <figure class="product-visual product-visual-video">
-                        <video id="brandsprk-launch-video" controls playsinline preload="none" poster="/assets/products/brandsprk-launch-poster.webp" aria-label="BrandSprk-lanceringsfilm, et minut og ti sekunder">
-                            <source src="/assets/products/brandsprk-launch-film.mp4" type="video/mp4">
-                            Din browser understøtter ikke indlejret video.
-                        </video>
-                        <button class="product-video-play" id="brandsprk-video-play" type="button" aria-controls="brandsprk-launch-video" aria-label="Afspil BrandSprk-lanceringsfilmen">
-                            <span class="product-video-play-icon" aria-hidden="true"></span>
-                            <span>Se lanceringsfilm (1:10)</span>
-                        </button>
-                        <figcaption>BrandSprk-lanceringsfilm</figcaption>
+                        <img src="/assets/products/brandsprk-launch-poster.webp" loading="lazy" decoding="async" alt="BrandSprk logo i guld og hvidt på mørk baggrund">
+                        <figcaption>BrandSprk · Kreativ beslutningsstøtte</figcaption>
                     </figure>
                     <div class="product-content">
                         <div class="card-header"><h3 class="card-name">BrandSprk</h3><span class="card-status status-prelaunch">Demo</span></div>
@@ -1841,19 +1847,13 @@
                         <p class="card-desc">Find godkendte brandmaterialer, udvikl kampagnebriefs og forbind kreativ indsigt med styret produktion. Pitch Room og vejledende kreativ test giver bedre grundlag for forberedelse og kvalificeret kritik.</p>
                         <p class="product-audience">Til bureauer og brandteams</p>
                         <a href="/da/contact.html?interest=BrandSprk" class="service-card-link">Få en introduktion til BrandSprk</a>
+                        <a class="dk-video-link" href="/assets/products/brandsprk-launch-film.mp4" target="_blank" rel="noopener noreferrer">Se produktfilmen på engelsk (valgfrit)</a>
                     </div>
                 </article>
                 <article class="platform-card">
                     <figure class="product-visual product-visual-video">
-                        <video id="ai-fluency-promo-video" controls playsinline preload="none" poster="/assets/products/ai-fluency-second-edition-poster.webp" aria-label="AI Fluency for Leaders, anden udgave, fyrre sekunder">
-                            <source src="/assets/products/ai-fluency-second-edition-promo.mp4" type="video/mp4">
-                            Din browser understøtter ikke indlejret video.
-                        </video>
-                        <button class="product-video-play" id="ai-fluency-video-play" type="button" aria-controls="ai-fluency-promo-video" aria-label="Afspil filmen om anden udgave af AI Fluency for Leaders">
-                            <span class="product-video-play-icon" aria-hidden="true"></span>
-                            <span>Se bogfilmen (0:40)</span>
-                        </button>
-                        <figcaption>AI Fluency for Leaders · Anden udgave</figcaption>
+                        <img src="/assets/products/ai-fluency-second-edition-poster.webp" loading="lazy" decoding="async" alt="Omslaget til AI Fluency for Leaders, anden udgave, af Piero Saleme">
+                        <figcaption>AI Fluency for Leaders · Bog på engelsk</figcaption>
                     </figure>
                     <div class="product-content">
                         <div class="card-header"><h3 class="card-name">AI Fluency for Leaders</h3><span class="card-status status-live">Anden udgave · 2026</span></div>
@@ -1862,6 +1862,7 @@
                         <p class="product-audience">Til direktioner, bestyrelser og transformationsledere · Byg videre på din viden med AI Navigator-programmet</p>
                         <a href="https://www.amazon.com/dp/B0HNHLBKC3" target="_blank" rel="noopener noreferrer" class="service-card-link">Find anden udgave på Amazon</a>
                         <a href="https://ainavigator.info/" target="_blank" rel="noopener noreferrer" class="service-card-link">Udforsk AI Navigator-uddannelsen</a>
+                        <a class="dk-video-link" href="/assets/products/ai-fluency-second-edition-promo.mp4" target="_blank" rel="noopener noreferrer">Se bogfilmen på engelsk (valgfrit)</a>
                     </div>
                 </article>
                 <article class="platform-card">
@@ -2128,8 +2129,9 @@
             <p class="section-sub gs-reveal">Fortæl os, hvilken beslutning eller arbejdsgang I vil forbedre. Vi kan udforske et produkt, tilrettelægge et fokuseret pilotprojekt eller starte et rådgivningsforløb.</p>
             <div class="gs-reveal" style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
                 <a href="https://calendly.com/piero-ainavigator" target="_blank" class="btn-primary magnetic-target">Book et møde på 30 minutter</a>
-                <a href="/da/contact.html" class="btn-secondary magnetic-target">Kontakt os</a>
+                <a href="/da/contact.html" class="btn-secondary magnetic-target">Åbn kontaktformularen</a>
             </div>
+            <p class="dk-direct-contact">I kan også skrive direkte til <a href="mailto:hello@arqonelabs.com">hello@arqonelabs.com</a>. Vi besvarer henvendelser på dansk.</p>
         </section>
 
         <!-- FOOTER -->
