@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plymio Legal - Supervised AI for UAE Law Firms - ArqOne Labs</title>
+    <meta name="description" content="Plymio Legal turns a licensed UAE law firm's playbook into a supervised Arabic and English assistant for its SME clients. A case study from ArqOne Labs.">
+    <!-- Pre-launch: shared by link only. Remove noindex and add to sitemap.xml once a partner firm is live. -->
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="canonical" href="https://arqonelabs.com/legal">
+    <link rel="stylesheet" href="/locale.css">
+    <meta property="og:title" content="Plymio Legal - Supervised AI for UAE Law Firms">
+    <meta property="og:description" content="A law firm's judgment, cloned and supervised. Article-referenced answers for SMEs; everything risky goes to a lawyer first.">
+    <meta property="og:url" content="https://arqonelabs.com/legal">
+    <meta property="og:type" content="website">
+    <link rel="icon" type="image/gif" href="favicon.gif">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #08080C;
+            --bg-elevated: #0E0E14;
+            --bg-card: #12121A;
+            --teal: #00DCD0;
+            --teal-dim: #00A89E;
+            --white: #F0F0F4;
+            --gray-100: #C8C8D0;
+            --gray-200: #9898A4;
+            --gray-300: #68687A;
+            --gray-400: #3A3A4A;
+            --amber: #E8B04B;
+            --red: #F0705A;
+            --border: rgba(255,255,255,0.06);
+            --font-sans: 'Inter', -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-sans); background: var(--bg); color: var(--gray-100); line-height: 1.6; overflow-x: hidden; }
+        a { color: inherit; }
+        .grid-bg {
+            position: fixed; inset: 0; pointer-events: none; z-index: 0;
+            background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        /* NAV (matches services.html) */
+        nav { position: fixed; top: 0; left: 0; width: 100%; padding: 20px 40px; display: flex; align-items: center; justify-content: space-between; z-index: 100; transition: all 0.4s; }
+        nav.scrolled { background: rgba(8,8,12,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 14px 40px; }
+        .nav-logo img { height: 38px; width: auto; display: block; }
+        .nav-links { display: flex; align-items: center; gap: 32px; }
+        .nav-links a { font-size: 0.875rem; color: var(--gray-200); text-decoration: none; transition: color 0.2s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--white); }
+        .nav-links a.nav-athena { color: var(--teal); font-weight: 500; }
+        .nav-cta-book { padding: 8px 18px; border: 1.5px solid var(--teal); border-radius: 8px; color: var(--teal) !important; font-weight: 600; }
+        .nav-cta-book:hover { background: rgba(0,220,205,0.08); }
+        .nav-cta { padding: 8px 18px; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: var(--white) !important; font-weight: 500; }
+
+        .page { position: relative; z-index: 1; }
+        .wrap { max-width: 1120px; margin: 0 auto; padding: 0 40px; }
+        .label { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--teal); margin-bottom: 18px; }
+        h1 { font-size: clamp(2.4rem, 5.2vw, 4rem); line-height: 1.05; letter-spacing: -0.035em; color: var(--white); font-weight: 700; }
+        h2 { font-size: clamp(1.7rem, 3vw, 2.4rem); line-height: 1.15; letter-spacing: -0.025em; color: var(--white); font-weight: 700; }
+        h3 { font-size: 1.05rem; color: var(--white); font-weight: 600; letter-spacing: -0.01em; }
+        .lede { font-size: 1.12rem; color: var(--gray-200); max-width: 62ch; }
+        .muted { color: var(--gray-300); }
+
+        .btn-primary, .btn-secondary { display: inline-flex; align-items: center; gap: 8px; padding: 14px 26px; border-radius: 8px; font-weight: 600; font-size: 0.95rem; text-decoration: none; transition: all 0.25s; }
+        .btn-primary { background: var(--teal); color: var(--bg); }
+        .btn-primary:hover { background: #2fe9df; }
+        .btn-secondary { border: 1px solid rgba(255,255,255,0.18); color: var(--white); }
+        .btn-secondary:hover { border-color: rgba(255,255,255,0.35); }
+
+        /* HERO */
+        .hero { padding: 170px 0 90px; position: relative; }
+        .hero::before { content: ''; position: absolute; inset: 0; pointer-events: none;
+            background: radial-gradient(ellipse 70% 50% at 70% 0%, rgba(0,220,205,0.10) 0%, transparent 60%), radial-gradient(ellipse 40% 30% at 10% 90%, rgba(232,176,75,0.05) 0%, transparent 50%); }
+        .hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 56px; align-items: center; position: relative; }
+        .hero .lede { margin: 26px 0 36px; }
+        .cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
+        .status-note { margin-top: 18px; font-family: var(--font-mono); font-size: 0.72rem; color: var(--gray-300); letter-spacing: 0.04em; }
+
+        /* Product mock */
+        .mock { background: var(--bg-card); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 22px; box-shadow: 0 30px 80px rgba(0,0,0,0.45); }
+        .mock-q { font-size: 0.9rem; color: var(--white); padding: 12px 14px; border: 1px solid var(--border); border-radius: 8px; background: rgba(255,255,255,0.02); }
+        .mock-q[dir="rtl"] { font-family: 'IBM Plex Sans Arabic', var(--font-sans); text-align: right; }
+        .chip { display: inline-block; font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; border: 1px solid; }
+        .chip-info { color: var(--teal); border-color: rgba(0,220,205,0.35); background: rgba(0,220,205,0.07); }
+        .chip-review { color: var(--amber); border-color: rgba(232,176,75,0.35); background: rgba(232,176,75,0.07); }
+        .chip-urgent { color: var(--red); border-color: rgba(240,112,90,0.35); background: rgba(240,112,90,0.07); }
+        .mock-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin: 14px 0 8px; }
+        .mock-ref { font-family: var(--font-mono); font-size: 0.72rem; color: var(--gray-300); }
+        .mock p { font-size: 0.86rem; color: var(--gray-100); }
+        .mock-sep { height: 1px; background: var(--border); margin: 18px 0; }
+
+        section.block { padding: 100px 0; border-top: 1px solid var(--border); }
+        .two-col { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 64px; align-items: start; }
+        .problem-list { list-style: none; display: grid; gap: 18px; }
+        .problem-list li { padding: 20px 22px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 10px; }
+        .problem-list strong { color: var(--white); display: block; margin-bottom: 4px; font-weight: 600; }
+
+        .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 48px; }
+        .step { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+        .step-n { font-family: var(--font-mono); font-size: 0.75rem; color: var(--teal); margin-bottom: 14px; }
+        .step p { font-size: 0.9rem; color: var(--gray-200); margin-top: 8px; }
+
+        table.triage { width: 100%; border-collapse: collapse; margin-top: 36px; font-size: 0.92rem; }
+        table.triage th, table.triage td { text-align: left; padding: 14px 16px; border-bottom: 1px solid var(--border); vertical-align: top; }
+        table.triage th { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray-300); font-weight: 500; }
+        table.triage td:first-child { color: var(--white); }
+
+        .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 44px; }
+        .card { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 12px; padding: 26px; }
+        .card p { font-size: 0.9rem; color: var(--gray-200); margin-top: 8px; }
+
+        .pilot { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-top: 44px; }
+        .pilot div { background: var(--bg); padding: 26px; }
+        .pilot .k { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray-300); }
+        .pilot .v { font-size: 1.35rem; color: var(--white); font-weight: 600; margin-top: 8px; letter-spacing: -0.02em; }
+        .pilot p { font-size: 0.85rem; color: var(--gray-200); margin-top: 6px; }
+
+        .boundary { margin-top: 28px; padding: 22px 24px; border: 1px solid rgba(0,220,205,0.2); background: rgba(0,220,205,0.04); border-radius: 10px; font-size: 0.92rem; }
+
+        .closing { text-align: center; padding: 120px 0; border-top: 1px solid var(--border); }
+        .closing .lede { margin: 18px auto 34px; }
+        .closing .cta-row { justify-content: center; }
+
+        footer { display: flex; justify-content: space-between; align-items: center; padding: 40px; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--gray-300); }
+        .footer-left { display: flex; align-items: center; gap: 10px; }
+        .footer-right { display: flex; gap: 24px; align-items: center; }
+        .footer-right a { font-family: var(--font-mono); font-size: 0.7rem; color: var(--gray-400); text-decoration: none; letter-spacing: 0.05em; }
+        .footer-right a:hover { color: var(--teal); }
+        .footer-copy { font-family: var(--font-mono); font-size: 0.7rem; color: var(--gray-400); }
+
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .reveal.visible { opacity: 1; transform: none; }
+        @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+
+        @media (max-width: 1024px) {
+            .hero-grid, .two-col { grid-template-columns: 1fr; gap: 48px; }
+            .steps, .pilot { grid-template-columns: repeat(2, 1fr); }
+            .cards { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            nav { padding: 16px 20px; }
+            .nav-links { display: none; }
+            .wrap { padding: 0 20px; }
+            .hero { padding: 120px 0 70px; }
+            section.block { padding: 70px 0; }
+            .steps, .pilot { grid-template-columns: 1fr; }
+            table.triage th:nth-child(3), table.triage td:nth-child(3) { display: none; }
+            footer { flex-direction: column; gap: 16px; text-align: center; padding: 32px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-bg"></div>
+
+    <nav id="main-nav">
+        <div class="nav-logo">
+            <a href="index.html"><img src="ArqOne%20Labs%20Logo.gif" alt="ArqOne Labs"></a>
+        </div>
+        <div class="nav-links">
+            <a href="index.html#ecosystem">Ecosystem</a>
+            <a href="index.html#portfolio">Portfolio</a>
+            <a href="index.html#about">About</a>
+            <a href="services.html">Services</a>
+            <a href="blog/index.html">Blog</a>
+            <a href="index.html#athena" class="nav-athena">Athena</a>
+            <a href="https://calendly.com/piero-ainavigator" target="_blank" rel="noopener" class="nav-cta-book">Book a Call</a>
+            <a href="contact.html?interest=Plymio%20Legal" class="nav-cta">Get in Touch</a>
+        </div>
+    </nav>
+
+    <div class="page">
+
+        <!-- HERO -->
+        <header class="hero">
+            <div class="wrap hero-grid">
+                <div>
+                    <div class="label">Case study · Plymio Legal · UAE</div>
+                    <h1>A law firm's judgment, cloned and supervised.</h1>
+                    <p class="lede">Plymio Legal turns a licensed UAE firm's playbook into an Arabic and English assistant for its SME clients, by text or by voice. Routine questions get article-referenced answers. Anything with legal risk reaches a lawyer first, with a ready brief and a drafted reply.</p>
+                    <div class="cta-row">
+                        <a href="https://plymio.com/legal" class="btn-primary" target="_blank" rel="noopener">Open the live demo &rarr;</a>
+                        <a href="contact.html?interest=Plymio%20Legal" class="btn-secondary">Partner as a law firm</a>
+                    </div>
+                    <p class="status-note">Pilot stage · demo runs on public UAE federal law · not legal advice</p>
+                </div>
+
+                <div class="mock" aria-hidden="true">
+                    <div class="mock-q">How is end-of-service gratuity calculated after 7 years?</div>
+                    <div class="mock-row"><span class="chip chip-info">General information</span><span class="mock-ref">LL-51 · Art. 51</span></div>
+                    <p>21 days' basic wage for each of the first five years, then 30 days for each later year, capped at two years' wage.</p>
+                    <div class="mock-sep"></div>
+                    <div class="mock-q" dir="rtl" lang="ar">صاحب العمل لم يدفع راتبي منذ شهرين. هل أحتفظ بمكافأة نهاية الخدمة؟</div>
+                    <div class="mock-row"><span class="chip chip-review">Lawyer review</span><span class="mock-ref">Active dispute</span></div>
+                    <p>Sent to the firm's queue with the matched provisions and the facts the lawyer needs.</p>
+                    <div class="mock-sep"></div>
+                    <div class="mock-q">My employer filed a police case against me.</div>
+                    <div class="mock-row"><span class="chip chip-urgent">Urgent</span><span class="mock-ref">Court / police</span></div>
+                    <p>No automated answer. The client is told to contact the firm directly.</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- PROBLEM -->
+        <section class="block reveal">
+            <div class="wrap two-col">
+                <div>
+                    <div class="label">The gap</div>
+                    <h2>SME legal work is too small to bill and too risky to ignore.</h2>
+                </div>
+                <ul class="problem-list">
+                    <li><strong>Firms turn it away or underprice it.</strong> Probation questions, leave balances and gratuity sums take a senior lawyer's time and pay little at hourly rates.</li>
+                    <li><strong>SMEs guess, or ask a general chatbot.</strong> General tools answer UAE questions with the wrong jurisdiction, invented numbers and no one accountable.</li>
+                    <li><strong>The risky cases look routine at first.</strong> "Can I dismiss him?" is a dismissal decision. A good system knows when to stop answering.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- HOW IT WORKS -->
+        <section class="block reveal">
+            <div class="wrap">
+                <div class="label">How it works</div>
+                <h2>Four steps, one accountable lawyer.</h2>
+                <div class="steps">
+                    <div class="step"><div class="step-n">01</div><h3>The SME asks</h3><p>In Arabic or English, after stating where the business is licensed and who is asking.</p></div>
+                    <div class="step"><div class="step-n">02</div><h3>Triage runs first</h3><p>Court, police, dispute, drafting, high-stakes and out-of-scope signals are checked before any answer.</p></div>
+                    <div class="step"><div class="step-n">03</div><h3>Approved cards answer</h3><p>Low-risk questions get general information from the firm's article-referenced knowledge cards. Nothing else.</p></div>
+                    <div class="step"><div class="step-n">04</div><h3>The lawyer decides</h3><p>Everything else lands in a review workbench with a reply already drafted in the client's language. Approve, amend or book a call; every decision is timed.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TRIAGE -->
+        <section class="block reveal">
+            <div class="wrap">
+                <div class="label">Built for the UAE rulebook</div>
+                <h2>The legal boundary is part of the product.</h2>
+                <table class="triage">
+                    <thead><tr><th>Signal</th><th>Outcome</th><th>Why</th></tr></thead>
+                    <tbody>
+                        <tr><td>Court, police, travel ban, criminal</td><td><span class="chip chip-urgent">Urgent</span></td><td class="muted">General information is not appropriate.</td></tr>
+                        <tr><td>Dismissal, unpaid wages, harassment, share sales</td><td><span class="chip chip-review">Lawyer review</span></td><td class="muted">The outcome turns on facts and evidence.</td></tr>
+                        <tr><td>"Draft my contract" or "review this letter"</td><td><span class="chip chip-review">Lawyer review</span></td><td class="muted">Drafting is the firm's work.</td></tr>
+                        <tr><td>Licensed in DIFC or ADGM</td><td><span class="chip chip-review">Lawyer review</span></td><td class="muted">Own employment, company and data laws; only federal tax answers apply.</td></tr>
+                        <tr><td>Leave, hours, probation, gratuity basics</td><td><span class="chip chip-info">General information</span></td><td class="muted">Answered from cited, firm-approved cards.</td></tr>
+                    </tbody>
+                </table>
+                <div class="boundary">Under Federal Decree-Law No. 34 of 2022, legal advice is a licensed activity. The partner firm is the provider of record and its brand fronts the service. Plymio is the technology.</div>
+            </div>
+        </section>
+
+        <!-- FOR FIRMS -->
+        <section class="block reveal">
+            <div class="wrap">
+                <div class="label">For partner firms</div>
+                <h2>Capacity for small matters, without adding headcount.</h2>
+                <div class="cards">
+                    <div class="card"><h3>Your playbook, your brand</h3><p>The assistant runs on your knowledge cards under your firm's name. You verify every card before clients see it.</p></div>
+                    <div class="card"><h3>Briefs ready to act on</h3><p>Each escalation arrives with the question, licensing location, matched provisions and the facts still missing.</p></div>
+                    <div class="card"><h3>Auditable by design</h3><p>Every answer traces to an article and an official source. Optional AI drafting is rejected if it states a number the source does not contain.</p></div>
+                    <div class="card"><h3>Review in minutes</h3><p>The workbench ranks urgent requests first, drafts the reply from the matched provisions and times each decision, so the firm knows its cost per question.</p></div>
+                    <div class="card"><h3>Judgment that compounds</h3><p>A provision verified once, or a line of firm guidance saved once, reaches every later client with the same question and goes into future drafts.</p></div>
+                    <div class="card"><h3>A return the firm can see</h3><p>A firm dashboard shows questions answered without a lawyer, median review time, drafts approved unchanged and fixed-fee reviews requested.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PILOT -->
+        <section class="block reveal">
+            <div class="wrap">
+                <div class="label">What a pilot looks like</div>
+                <h2>Proven on your own clients first.</h2>
+                <div class="pilot">
+                    <div><div class="k">Duration</div><div class="v">90 days</div><p>Three 30-day phases, each closed by a gate the firm signs off.</p></div>
+                    <div><div class="k">Users</div><div class="v">10–20 SMEs</div><p>From the firm's existing client book first.</p></div>
+                    <div><div class="k">Scope</div><div class="v">5 areas of law</div><p>Employment, company, commercial, UAE tax and Dubai tenancy.</p></div>
+                    <div><div class="k">Judged on</div><div class="v">Drafts unchanged</div><p>How often the lawyer sends the drafted reply as it stands.</p></div>
+                </div>
+                <p class="muted" style="margin-top:22px;font-size:0.9rem;">Plymio Legal runs on the same engine as Plymio's pension-advisory pilot in the Nordics: a licensed expert's knowledge, cited and supervised.</p>
+            </div>
+        </section>
+
+        <!-- CLOSING -->
+        <section class="closing reveal">
+            <div class="wrap">
+                <div class="label">Law firms in the UAE</div>
+                <h2>Put your judgment in front of every SME client.</h2>
+                <p class="lede">We are selecting a small number of founding partner firms for the pilot.</p>
+                <div class="cta-row">
+                    <a href="contact.html?interest=Plymio%20Legal" class="btn-primary">Start a conversation</a>
+                    <a href="https://plymio.com/legal" class="btn-secondary" target="_blank" rel="noopener">Try the demo</a>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="footer-left">
+                <img src="ArqOne%20Labs%20Logo.gif" alt="ArqOne Labs" style="height:31px;width:auto;">
+                <span style="color:var(--gray-400);">-</span> Enterprise-grade capability for growing businesses
+            </div>
+            <div class="footer-right">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms &amp; Conditions</a>
+                <span class="footer-copy">&copy; 2026 ArqOne Labs</span>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const nav = document.getElementById('main-nav');
+        window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60));
+        const reveals = document.querySelectorAll('.reveal');
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+            }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+            reveals.forEach(el => observer.observe(el));
+        } else {
+            reveals.forEach(el => el.classList.add('visible'));
+        }
+    </script>
+</body>
+</html>
